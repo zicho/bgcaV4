@@ -13,12 +13,13 @@
 		"format": "prettier --plugin-search-dir . --write .",
 		"test:integration": "playwright test",
 		"test:unit": "vitest",
-		"generate": "drizzle-kit generate:pg --config=./src/drizzle.config.ts"
+		"generate": "drizzle-kit generate:pg"
 	},
 	"devDependencies": {
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
+		"@types/pg": "^8.10.2",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"drizzle-kit": "^0.19.2",
@@ -36,8 +37,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@lucia-auth/adapter-postgresql": "^1.0.1",
 		"drizzle-orm": "^0.27.0",
 		"lucia-auth": "^1.8.0",
+		"pg": "^8.11.1",
 		"postgres": "^3.3.5"
 	}
 }
