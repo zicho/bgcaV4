@@ -1,11 +1,11 @@
 import { relations } from 'drizzle-orm';
-import { pgTable, bigint, varchar, boolean, text, timestamp, jsonb } from 'drizzle-orm/pg-core';
+import { pgTable, bigint, varchar, boolean, text, timestamp, jsonb, serial } from 'drizzle-orm/pg-core';
 
 export const auth_user = pgTable('auth_user', {
 	id: varchar('id', {
 		length: 15 // change this when using custom user ids
 	}).primaryKey(),
-	role: text('user').$type<'super_admin' | 'admin' | 'user'>(),
+	role: text('role').$type<'super_admin' | 'admin' | 'user'>().default('user'),
 	username: text('username'),
 	createdAt: timestamp('created_at'),
 	updatedAt: timestamp('updated_at')
@@ -47,13 +47,13 @@ export const auth_key = pgTable('auth_key', {
 });
 
 export const game = pgTable('game', {
-	id: varchar('id', { length: 15 }).primaryKey()
-	// other user attributes
+	id: serial('id').primaryKey(),
+	name: text("name")
 });
 
 export const user_game = pgTable('user_game', {
 	userId: varchar('user_id').references(() => auth_user.id),
-	gameId: varchar('game_id').references(() => game.id)
+	gameId: serial('game_id').references(() => game.id)
 });
 
 export const usersRelations = relations(auth_user, ({ one }) => ({
@@ -64,7 +64,8 @@ export const usersRelations = relations(auth_user, ({ one }) => ({
 }));
 
 export const profileInfo = pgTable('profile_info', {
-	id: varchar('id', { length: 15 }).primaryKey(),
+	id: serial('id').primaryKey(),
 	userId: varchar('user_id').references(() => auth_user.id),
+	signature: text("signature"),
 	description: text("description")
 });

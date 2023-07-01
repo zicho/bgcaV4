@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "pg",
-  "id": "359ace4b-3874-456c-bf4b-fdf37ef6ac3b",
+  "id": "c8845429-71b0-40e6-9e2b-2e9a81630470",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "auth_key": {
@@ -114,8 +114,8 @@
           "primaryKey": true,
           "notNull": true
         },
-        "user": {
-          "name": "user",
+        "role": {
+          "name": "role",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -149,7 +149,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(15)",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         }
@@ -164,7 +164,7 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "varchar(15)",
+          "type": "serial",
           "primaryKey": true,
           "notNull": true
         },
@@ -211,9 +211,9 @@
         },
         "game_id": {
           "name": "game_id",
-          "type": "varchar",
+          "type": "serial",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         }
       },
       "indexes": {},

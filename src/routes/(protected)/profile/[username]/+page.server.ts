@@ -23,8 +23,6 @@ export const load = (async ({ parent, url, params }) => {
 		.where(eq(auth_user.username, params.username))
 		.leftJoin(profileInfo, eq(profileInfo.userId, auth_user.id));
 
-	console.dir(userAndProfile[0]);
-
     const profile = userAndProfile[0]
 
 	if (!profile) {

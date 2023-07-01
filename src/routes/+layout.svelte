@@ -14,10 +14,10 @@
 		<ul class="menu menu-horizontal px-1">
 			{#if data.user}
 				<li><a href="/profile/{data.user.username}" class="hover:text-neutral-content">{data.user.username}</a></li>
-				<li><a href="logout" class="hover:text-neutral-content">Log Out</a></li>
+				<li><a href="/logout" class="hover:text-neutral-content">Log Out</a></li>
 			{:else}
-				<li><a href="login" class="hover:text-neutral-content">Login</a></li>
-				<li><a href="register" class="hover:text-neutral-content">Register</a></li>
+				<li><a href="/login" class="hover:text-neutral-content">Login</a></li>
+				<li><a href="/register" class="hover:text-neutral-content">Register</a></li>
 			{/if}
 		</ul>
 	</div>
