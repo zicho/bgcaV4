@@ -13,7 +13,15 @@ module.exports = {
 			// 	'2xl': '6rem'
 			// }
 		},
-		extend: {}
+		extend: {
+			typography: {
+				DEFAULT: {
+				  css: {
+					maxWidth: '100%', // add required value here
+				  }
+				}
+			  }
+		}
 	},
 	plugins: [require('@tailwindcss/typography'), require('daisyui')]
 };

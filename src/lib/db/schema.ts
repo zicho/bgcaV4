@@ -1,7 +1,7 @@
-import { pgTable, bigint, varchar, boolean, text, timestamp } from 'drizzle-orm/pg-core';
-import postgres from 'pg';
+import { relations } from 'drizzle-orm';
+import { pgTable, bigint, varchar, boolean, text, timestamp, jsonb } from 'drizzle-orm/pg-core';
 
-export const user = pgTable('auth_user', {
+export const auth_user = pgTable('auth_user', {
 	id: varchar('id', {
 		length: 15 // change this when using custom user ids
 	}).primaryKey(),
@@ -11,7 +11,7 @@ export const user = pgTable('auth_user', {
 	updatedAt: timestamp('updated_at')
 });
 
-export const session = pgTable('auth_session', {
+export const auth_session = pgTable('auth_session', {
 	id: varchar('id', {
 		length: 128
 	}).primaryKey(),
@@ -19,7 +19,7 @@ export const session = pgTable('auth_session', {
 		length: 15
 	})
 		.notNull()
-		.references(() => user.id),
+		.references(() => auth_user.id),
 	activeExpires: bigint('active_expires', {
 		mode: 'number'
 	}).notNull(),
@@ -28,7 +28,7 @@ export const session = pgTable('auth_session', {
 	}).notNull()
 });
 
-export const key = pgTable('auth_key', {
+export const auth_key = pgTable('auth_key', {
 	id: varchar('id', {
 		length: 255
 	}).primaryKey(),
@@ -36,7 +36,7 @@ export const key = pgTable('auth_key', {
 		length: 15
 	})
 		.notNull()
-		.references(() => user.id),
+		.references(() => auth_user.id),
 	primaryKey: boolean('primary_key').notNull(),
 	hashedPassword: varchar('hashed_password', {
 		length: 255
@@ -47,13 +47,24 @@ export const key = pgTable('auth_key', {
 });
 
 export const game = pgTable('game', {
-	id: varchar('id', {
-		length: 15 // change this when using custom user ids
-	}).primaryKey()
+	id: varchar('id', { length: 15 }).primaryKey()
 	// other user attributes
 });
 
 export const user_game = pgTable('user_game', {
-	userId: varchar('user_id').references(() => user.id),
+	userId: varchar('user_id').references(() => auth_user.id),
 	gameId: varchar('game_id').references(() => game.id)
+});
+
+export const usersRelations = relations(auth_user, ({ one }) => ({
+	profileInfo: one(profileInfo, {
+		fields: [auth_user.id],
+		references: [profileInfo.userId]
+	})
+}));
+
+export const profileInfo = pgTable('profile_info', {
+	id: varchar('id', { length: 15 }).primaryKey(),
+	userId: varchar('user_id').references(() => auth_user.id),
+	description: text("description")
 });

@@ -13,7 +13,7 @@
 	<div class="flex-none">
 		<ul class="menu menu-horizontal px-1">
 			{#if data.user}
-				<li><a href="logout" class="hover:text-neutral-content">{data.user.username}</a></li>
+				<li><a href="/profile/{data.user.username}" class="hover:text-neutral-content">{data.user.username}</a></li>
 				<li><a href="logout" class="hover:text-neutral-content">Log Out</a></li>
 			{:else}
 				<li><a href="login" class="hover:text-neutral-content">Login</a></li>
