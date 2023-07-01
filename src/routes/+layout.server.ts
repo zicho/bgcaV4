@@ -7,9 +7,6 @@ export const load: LayoutServerLoad = async ({ locals, route, url }) => {
 
 	if (route?.id?.includes('(protected)')) {
 		if (!session) throw redirect(302, handleLoginRedirect(url));
-
-        console.dir(user)
-
 		return { user };
 	}
 };

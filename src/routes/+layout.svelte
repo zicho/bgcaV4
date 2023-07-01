@@ -1,6 +1,6 @@
 <script lang="ts">
 	import '../app.css';
-	import type { PageData } from './$types';
+	import type { PageData } from './(protected)/$types';
 
 	export let data: PageData;
 </script>
@@ -9,6 +9,7 @@
 	<div class="flex-1">
 		<a href="/" class="btn btn-ghost normal-case text-xl">App</a>
 	</div>
+
 	<div class="flex-none">
 		<ul class="menu menu-horizontal px-1">
 			{#if data.user}
