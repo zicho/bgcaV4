@@ -1,19 +1,41 @@
 <script lang="ts">
+import { browser } from '$app/environment';
 	import '../app.css';
 	import type { PageData } from './(protected)/$types';
+	import { realtimeStore } from '$lib/stores/realTimeStore';
+	import 'notyf/notyf.min.css'; 
 
 	export let data: PageData;
+
+	$: data.user && realtimeStore.sub(data.user.username);
+	$: data.user && console.dir("User is " + data.user.username);
+
 </script>
 
 <div class="navbar bg-neutral text-neutral-content">
-	<div class="flex-1">
+	<div class="flex-1"> 
 		<a href="/" class="btn btn-ghost normal-case text-xl">App</a>
 	</div>
 
 	<div class="flex-none">
 		<ul class="menu menu-horizontal px-1">
 			{#if data.user}
-				<li><a href="/profile/{data.user.username}" class="hover:text-neutral-content">{data.user.username}</a></li>
+				<li>
+					<a href="/profile/{data.user.username}" class="hover:text-neutral-content"
+						>{data.user.username}</a
+					>
+				</li>
+				<li>
+					<a href="/invites" class="hover:text-neutral-content"
+						>Invites <span class=" badge badge-sm indicator-item">0</span></a
+					>
+				</li>
+				<li>
+					<a href="/inbox" class="hover:text-neutral-content"
+						>Inbox <span class=" badge badge-sm indicator-item">0</span></a
+					>
+				</li>
+
 				<li><a href="/logout" class="hover:text-neutral-content">Log Out</a></li>
 			{:else}
 				<li><a href="/login" class="hover:text-neutral-content">Login</a></li>
@@ -23,6 +45,6 @@
 	</div>
 </div>
 
-<div class="py-6 lg:py-10 px-6 lg:px-16 h-screen bg-neutral-content">
+<div class="py-6 lg:py-10 px-6 lg:px-16 ">
 	<slot />
 </div>
