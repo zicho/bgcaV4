@@ -1,10 +1,14 @@
-import { pgTable, bigint, varchar, boolean } from 'drizzle-orm/pg-core';
+import { pgTable, bigint, varchar, boolean, text, timestamp } from 'drizzle-orm/pg-core';
+import postgres from 'pg';
 
 export const user = pgTable('auth_user', {
 	id: varchar('id', {
 		length: 15 // change this when using custom user ids
-	}).primaryKey()
-	// other user attributes
+	}).primaryKey(),
+	role: text('user').$type<'super_admin' | 'admin' | 'user'>(),
+	username: text('username'),
+	createdAt: timestamp('created_at'),
+	updatedAt: timestamp('updated_at')
 });
 
 export const session = pgTable('auth_session', {
@@ -40,4 +44,16 @@ export const key = pgTable('auth_key', {
 	expires: bigint('expires', {
 		mode: 'number'
 	})
+});
+
+export const game = pgTable('game', {
+	id: varchar('id', {
+		length: 15 // change this when using custom user ids
+	}).primaryKey()
+	// other user attributes
+});
+
+export const user_game = pgTable('user_game', {
+	userId: varchar('user_id').references(() => user.id),
+	gameId: varchar('game_id').references(() => game.id)
 });
