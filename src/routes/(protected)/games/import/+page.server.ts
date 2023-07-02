@@ -16,9 +16,11 @@ export const actions: Actions = {
 		const form = await superValidate(request, bggImportSchema);
 		if (!form.valid) return fail(400, { form });
 
+		const { user } = await locals.auth.validateUser();
+
 		const { nickname } = form.data;
 
-		await importBggCollection(nickname).then(() => {
+		await importBggCollection(nickname, user.user_id).then(() => {
 			throw redirect(302, '/games');
 		});
 	}

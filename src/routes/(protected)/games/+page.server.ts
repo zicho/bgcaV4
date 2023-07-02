@@ -7,12 +7,16 @@ export const load = (async ({ parent }) => {
 	let user_id = (await parent()).user.user_id;
 
 	const gameCollection = await db
-		.select()
+		.select({
+			name: games.name
+		})
 		.from(usersToGames)
 		.where(eq(usersToGames.userId, user_id))
 		.leftJoin(games, eq(usersToGames.gameId, games.id));
 
     // console.dir(gameCollection)
 
-	return {};
+	return {
+		games: gameCollection
+	};
 }) satisfies PageServerLoad;

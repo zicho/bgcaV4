@@ -6,11 +6,9 @@ import {
 	boolean,
 	text,
 	timestamp,
-	jsonb,
 	serial,
 	integer,
 	smallint,
-	decimal,
 	primaryKey
 } from 'drizzle-orm/pg-core';
 
