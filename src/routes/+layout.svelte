@@ -3,6 +3,7 @@
 	import type { PageData } from './(protected)/$types';
 	import { realtimeStore } from '$lib/stores/realTimeStore';
 	import 'notyf/notyf.min.css';
+	import NavbarLink from '$lib/components/ui/NavbarLink.svelte';
 
 	export let data: PageData;
 
@@ -11,35 +12,19 @@
 
 <div class="navbar bg-neutral text-neutral-content sticky top-0 z-50">
 	<div class="flex-1">
-		<a href="/" class="btn btn-ghost normal-case text-xl">App</a>
+		<a href="/" class="btn btn-ghost normal-case text-xl">BGCA</a>
 	</div>
 
 	<div class="flex-none">
 		<ul class="menu menu-horizontal px-1 bg-neutral text-neutral-content">
 			{#if data.user}
-				<li>
-					<a href="/profile/{data.user.username}" class="hover:text-neutral-content"
-						>{data.user.username}</a
-					>
-				</li>
-				<li>
-					<a href="/games" class="hover:text-neutral-content">Games</a>
-				</li>
-				<!-- <li>
-					<a href="/invites" class="hover:text-neutral-content"
-						>Invites <span class=" badge badge-sm indicator-item">0</span></a
-					>
-				</li>
-				<li>
-					<a href="/inbox" class="hover:text-neutral-content"
-						>Inbox <span class=" badge badge-sm indicator-item">0</span></a
-					>
-				</li> -->
-
-				<li><a href="/logout" class="hover:text-neutral-content">Log Out</a></li>
+				<NavbarLink url="/profile/{data.user.username}" displayText="Profile" icon="fa-user" />
+				<NavbarLink url="/games" displayText="Games" icon="fa-dice" />
+				<NavbarLink url="/events" displayText="Events" icon="fa-calendar-alt" />
+				<NavbarLink url="/logout" displayText="Sign Out" icon="fa-sign-out" />
 			{:else}
-				<li><a href="/login" class="hover:text-neutral-content">Login</a></li>
-				<li><a href="/register" class="hover:text-neutral-content">Register</a></li>
+				<NavbarLink url="/login" displayText="Login" icon="fa-sign-in" />
+				<NavbarLink url="/register" displayText="Register" icon="fa-user-plus" />
 			{/if}
 		</ul>
 	</div>
@@ -50,10 +35,9 @@
 </div>
 
 <footer class="footer items-center p-4 bg-neutral text-neutral-content sticky bottom-0">
-	
 	<div class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
-	  <a href="/rules">Rules</a> |
-	  <a href="/contact">Contact</a> |
-	  <a href="/about">About</a>
+		<a href="/rules">Rules</a> |
+		<a href="/contact">Contact</a> |
+		<a href="/about">About</a>
 	</div>
-  </footer>
+</footer>

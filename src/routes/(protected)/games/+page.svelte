@@ -1,4 +1,6 @@
 <script lang="ts">
+	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
+	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -8,18 +10,11 @@
 	<title>Games</title>
 </svelte:head>
 
-<div class="prose">
-	<div class="grid md:grid-cols-2 md:mb-0 mb-8">
-		<div>
-			<h1>Your games</h1>
-		</div>
-		<div>
-			<a href="/games/import" class="md:float-right btn btn-primary w-full md:btn-wide"
-				>Import collection</a
-			>
-		</div>
-	</div>
+<PageHeaderToolbar title="Games" subheader="Organize your game collection">
+	<PageHeaderToolbarButton displayText="Import collection" url="/games/import" icon="fa-import" />
+</PageHeaderToolbar>
 
+<div class="prose">
 	{#if data.games.length > 0}
 		{#each data.games as game}
 			<span>{game.name}</span><br />

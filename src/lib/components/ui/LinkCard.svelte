@@ -12,7 +12,10 @@
         <!-- Description of the card is passed as a slot -->
 		<slot />
 		<div class="card-actions justify-end mt-8">
-			<a href={url} target="_blank" class="btn btn-primary w-full">Homepage</a>
+			<a href={url} target="_blank" class="btn btn-primary w-full">
+                <i class="fa fa-external-link" aria-hidden="true"></i>
+                Homepage
+            </a>
 		</div>
 	</div>
 </div>

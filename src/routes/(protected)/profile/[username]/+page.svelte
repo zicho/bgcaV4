@@ -1,5 +1,8 @@
 <script lang="ts">
+	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
+	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
 	import type { PageData } from './$types';
+
 	export let data: PageData;
 </script>
 
@@ -9,26 +12,21 @@
 	</title>
 </svelte:head>
 
-<div class="prose">
+<PageHeaderToolbar
+	title={data.isProfileYours ? 'Your profile' : `${data.profile.username}`}
+	subheader={data.isProfileYours ? 'Edit your profile' : `This is the profile of ${data.profile.username}`}
+>
 	{#if data.isProfileYours}
-		<div class="grid md:grid-cols-2 md:mb-0 mb-8">
-			<div>
-				<h1>Your profile</h1>
-			</div>
-			<div>
-				<a
-					href="/profile/{data.profile.username}/edit"
-					class="md:float-right btn btn-primary w-full md:btn-wide">Edit profile</a
-				>
-			</div>
-		</div>
-	{:else}
-		<h1>
-			Profile of {data.profile.username}
-		</h1>
+		<PageHeaderToolbarButton
+			displayText="Edit profile"
+			url="/profile/{data.profile.username}/edit"
+			icon="fa-edit"
+		/>
 	{/if}
+</PageHeaderToolbar>
 
-	<h2 class="mt-0">Description</h2>
+<div class="prose">
+		<h2 class="mt-0">Description</h2>
 	<p>
 		{#if data.profile.description}
 			{data.profile.description}
