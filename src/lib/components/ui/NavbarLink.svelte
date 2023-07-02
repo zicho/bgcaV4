@@ -5,5 +5,5 @@
 </script>
 
 <li>
-	<a href={url} class="hover:text-neutral-content"><i class="fa {icon}" />{displayText}</a>
+	<a href={url} class="hover:text-neutral-content"><i class="fa {icon}" /><span class="hidden sm:block">{displayText}</span></a>
 </li>

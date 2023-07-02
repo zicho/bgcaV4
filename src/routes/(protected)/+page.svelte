@@ -21,4 +21,6 @@
 	<p>Welcome to our gaming events hub!
 		In the toolbar above you can quickly reach some of the core features of the site.
 		You can add games to your collection, edit your profile, look for gaming events or connect with other users. Let the games begin!</p>
+
+		<p><strong>Please note</strong> that while i <i>try</i> to make this site mobile friendly, it is primarily a desktop experience. If you experience any usability issues on mobile, feel free to <a href="/contact">contact me!</a></p>
 </div>
