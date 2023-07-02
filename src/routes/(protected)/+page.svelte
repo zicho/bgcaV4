@@ -1,8 +1,24 @@
+<script lang="ts">
+	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
+	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
+	import type { PageData } from './$types';
+	export let data: PageData;
+</script>
+
 <svelte:head>
 	<title>Home</title>
 </svelte:head>
 
-<div class="prose">
-	<h1>Welcome to SvelteKit</h1>
-	<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<PageHeaderToolbar title="Home" subheader="Welcome, {data.user.username}!">
+	<PageHeaderToolbarButton displayText="Go to your profile" url="/profile/{data.user.username}" icon="fa-user"/>
+	<PageHeaderToolbarButton displayText="Find users" url="/users" icon="fa-person-circle-plus"/>
+	
+	<PageHeaderToolbarButton displayText="Find events" url="/events/find" icon="fa-search"/>
+	<PageHeaderToolbarButton displayText="Import collection" url="/games/import" icon="fa-download" />
+</PageHeaderToolbar>
+
+<div class="prose md:w-1/2">
+	<p>Welcome to our gaming events hub!
+		In the toolbar above you can quickly reach some of the core features of the site.
+		You can add games to your collection, edit your profile, look for gaming events or connect with other users. Let the games begin!</p>
 </div>

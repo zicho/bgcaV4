@@ -8,7 +8,8 @@ export const load = (async ({ parent }) => {
 
 	const gameCollection = await db
 		.select({
-			name: games.name
+			name: games.name,
+			thumbnail: games.thumbnailUrl,
 		})
 		.from(usersToGames)
 		.where(eq(usersToGames.userId, user_id))
