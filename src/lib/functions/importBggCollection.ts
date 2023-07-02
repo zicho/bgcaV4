@@ -14,8 +14,9 @@ export async function importBggCollection(username: string, user_id: string) {
 		// insert games first
 		await db.insert(games).values(entities).onConflictDoNothing({ target: games.bggId });
 
-		// then get game IDs (our own primary key) based on added bggIds
+		// then insert game ids in collection tables to map user to games
 
+		// we need to get game IDs (our own primary key) based on added bggIds
 		let gameIds = await db
 			.select({
 				gameId: games.id
@@ -28,17 +29,10 @@ export async function importBggCollection(username: string, user_id: string) {
 				)
 			);
 
-    // insert game ids in collection tables to map user to games
+		// map game ids to user id
+		const mapped = gameIds.map(({ gameId }) => ({ userId: user_id, gameId }));
 
-    // map game ids to user id
-    const mapped = gameIds.map(({ gameId }) => ({ userId: user_id, gameId }));
-
-    await db
-      .insert(usersToGames)
-      .values(mapped)
-      .onConflictDoNothing();
-
-		console.dir(gameIds);
+		await db.insert(usersToGames).values(mapped).onConflictDoNothing();
 	} catch (error) {
 		console.error('Error:', error);
 		// Handle any errors that occur during the request

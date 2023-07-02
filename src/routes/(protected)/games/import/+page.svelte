@@ -7,11 +7,18 @@
 	const { form, errors, constraints, enhance, message } = superForm(data.form);
 </script>
 
+<svelte:head>Import collection</svelte:head>
+
 <div class="prose mb-8">
 	<h1>Import your BoardGameGeek Collection</h1>
 	<p>
 		Instead of manually adding your games, you can import them from BGG if you have an account
 		there. Enter your BGG nickname below to import your collection!
+	</p>
+	<p>
+		<strong>Note: </strong> This feature uses an
+		<a href="https://bgg-json.azurewebsites.net/" target="_blank">external API</a>. If you experience issues using
+		this feature, please make sure that service (or BoardGameGeek itself) is working properly.
 	</p>
 </div>
 
@@ -37,6 +44,8 @@
 				<span class="label-text-alt">Make sure you spell it right!</span>
 			</label>
 		</div>
-		<button type="submit" class="btn btn-primary w-full mt-8">Import</button>
+		
+		<button type="submit" class="btn btn-primary w-full my-8">Import</button>
+		<i class="mt-8"><strong>Note: </strong>If your collection is large, this may take a while. Be patient.</i>
 	</form>
 </div>

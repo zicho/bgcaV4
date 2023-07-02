@@ -11,7 +11,7 @@
 	<title>Login</title>
 </svelte:head>
 
-<div class="flex flex-col items-center justify-center pb-48 h-screen">
+<div class="flex flex-col items-center justify-center">
 	<div class="w-full md:w-1/2 lg:w-1/3">
 		<form use:enhance method="post" class="px-8 pt-6 pb-8 bg-base-100 shadow-lg">
 			<h1 class="font-bold tracking-tight text-2xl mb-8">Sign into your account</h1>
@@ -70,9 +70,3 @@
 		{/if}
 	</div>
 </div>
-
-<style>
-	:global(body) {
-		overflow: hidden;
-	}
-</style>
