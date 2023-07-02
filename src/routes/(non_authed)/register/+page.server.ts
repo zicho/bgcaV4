@@ -17,7 +17,12 @@ export const actions: Actions = {
 	default: async ({ request, locals }) => {
 		const form = await superValidate(request, registerSchema);
 
-		if (!form.valid) return fail(400, { form });
+		if (!form.valid) {
+			if ('username' in form.errors) {
+				return message(form, "Username can only contain letters, numbers and underscores,");
+			}
+			return fail(400, { form });
+		}
 
 		const { username, password } = form.data;
 
@@ -32,6 +37,7 @@ export const actions: Actions = {
 					username
 				}
 			});
+
 			const key = await auth.useKey('username', username, password);
 			const session = await auth.createSession(key.userId);
 			locals.auth.setSession(session);

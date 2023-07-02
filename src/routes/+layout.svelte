@@ -18,7 +18,8 @@
 	<div class="flex-none">
 		<ul class="menu menu-horizontal px-1 bg-neutral text-neutral-content">
 			{#if data.user}
-				<NavbarLink url="/profile/{data.user.username}" displayText="Profile" icon="fa-user" />
+			
+				<NavbarLink url="/profile/{data.user.username}" displayText="{data.user.username}" icon="fa-user" />
 				<NavbarLink url="/games" displayText="Games" icon="fa-dice" />
 				<NavbarLink url="/events" displayText="Events" icon="fa-calendar-alt" />
 				<NavbarLink url="/logout" displayText="Sign Out" icon="fa-sign-out" />

@@ -27,7 +27,6 @@
 					placeholder="Desired username"
 					aria-label="Desired username"
 					aria-invalid={$errors.username ? 'true' : undefined}
-					{...$constraints.username}
 					required
 					class="input input-bordered w-full"
 				/>

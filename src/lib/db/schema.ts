@@ -18,8 +18,8 @@ export const auth_user = pgTable('auth_user', {
 	}).primaryKey(),
 	role: text('role').$type<'super_admin' | 'admin' | 'user'>().default('user'),
 	username: text('username'),
-	createdAt: timestamp('created_at'),
-	updatedAt: timestamp('updated_at')
+	createdAt: timestamp('created_at').defaultNow(),
+	updatedAt: timestamp('updated_at').defaultNow()
 });
 
 export const auth_session = pgTable('auth_session', {
