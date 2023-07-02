@@ -51,10 +51,17 @@
 				/>
 			</div>
 
+			<div class="flex items-center justify-center ">
+				<button class="btn btn-primary w-full mt-4" type="submit"> Sign In </button>
+			</div>
+
+			<hr class="my-8"/>
 			<div class="flex items-center justify-center">
-				<button class="btn btn-primary w-full" type="submit"> Sign In </button>
+				<a href="/register" class="btn btn-secondary w-full"> Register </a>
 			</div>
 		</form>
+
+
 
 		{#if $message}
 			<div class="shadow-lg p-8 bg-error my-8 text-center">

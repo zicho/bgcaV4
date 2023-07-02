@@ -1,8 +1,8 @@
-import { profileInfo } from '$lib/db/schema';
+import { userProfiles } from '$lib/db/schema';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
 
-export const upsertProfileSchema = createInsertSchema(profileInfo, {
+export const upsertProfileSchema = createInsertSchema(userProfiles, {
 	description: z
 		.string({})
 		.max(200, { message: "Profile description can't exceed 200 characters." })

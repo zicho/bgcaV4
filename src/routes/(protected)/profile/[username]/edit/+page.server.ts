@@ -6,14 +6,14 @@ import postgres from 'postgres';
 import { SECRET_PG_HOST } from '$env/static/private';
 import * as schema from '$lib/db/schema';
 import { drizzle } from 'drizzle-orm/postgres-js';
-import { auth_user, profileInfo } from '$lib/db/schema';
+import { auth_user, userProfiles } from '$lib/db/schema';
 import { eq } from 'drizzle-orm';
 
 const client = postgres(SECRET_PG_HOST);
 const db = drizzle(client, { schema });
 
 export const load = (async (event) => {
-	let username = (await event.parent()).user.username;
+	let { username, user_id } = (await event.parent()).user;
 	if (event.params.username !== username) throw redirect(302, `/profile/${username}`);
 
 	const form = await superValidate(event, upsertProfileSchema);
@@ -21,12 +21,11 @@ export const load = (async (event) => {
 	const data = (
 		await db
 			.select({
-				description: profileInfo.description,
-				signature: profileInfo.signature
+				description: userProfiles.description,
+				signature: userProfiles.signature
 			})
-			.from(profileInfo)
-			.where(eq(auth_user.username, event.params.username))
-			.leftJoin(auth_user, eq(profileInfo.userId, auth_user.id))
+			.from(userProfiles)
+			.where(eq(userProfiles.userId, user_id))
 	)[0];
 
 	form.data = { ...data };
@@ -46,7 +45,7 @@ export const actions: Actions = {
 				.select()
 				.from(auth_user)
 				.where(eq(auth_user.username, params.username as string))
-				.leftJoin(profileInfo, eq(profileInfo.userId, auth_user.id))
+				.leftJoin(userProfiles, eq(userProfiles.userId, auth_user.id))
 		)[0];
 
 		const parsedFormModel = upsertProfileSchema.parse({
@@ -54,14 +53,14 @@ export const actions: Actions = {
 		});
 
 		await db
-			.insert(profileInfo)
+			.insert(userProfiles)
 			.values({
-				id: data.profile_info?.id,
+				id: data.user_profiles?.id,
 				userId: data.auth_user.id,
 				...parsedFormModel
 			})
 			.onConflictDoUpdate({
-				target: profileInfo.id,
+				target: userProfiles.id,
 				set: { ...parsedFormModel }
 			});
 

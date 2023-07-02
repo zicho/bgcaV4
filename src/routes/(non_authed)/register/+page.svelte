@@ -72,7 +72,7 @@
 				/>
 			</div>
 			<div class="flex items-center justify-center">
-				<button class="btn btn-primary w-full" type="submit"> Sign In </button>
+				<button class="btn btn-primary w-full mt-4" type="submit">Confirm registration</button>
 			</div>
 		</form>
 

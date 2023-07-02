@@ -2,7 +2,7 @@ import type { PageServerLoad } from './$types';
 import { SECRET_PG_HOST } from '$env/static/private';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import { auth_user, profileInfo } from '$lib/db/schema';
+import { auth_user, userProfiles } from '$lib/db/schema';
 import * as schema from '$lib/db/schema';
 import { eq } from 'drizzle-orm';
 import { error } from '@sveltejs/kit';
@@ -17,13 +17,13 @@ export const load = (async ({ parent, url, params }) => {
 	const userAndProfile = await db
 		.select({
 			username: auth_user.username,
-			description: profileInfo.description
+			description: userProfiles.description
 		})
 		.from(auth_user)
 		.where(eq(auth_user.username, params.username))
-		.leftJoin(profileInfo, eq(profileInfo.userId, auth_user.id));
+		.leftJoin(userProfiles, eq(userProfiles.userId, auth_user.id));
 
-    const profile = userAndProfile[0]
+	const profile = userAndProfile[0];
 
 	if (!profile) {
 		throw error(404, {

@@ -1,5 +1,4 @@
 <script lang="ts">
-import { browser } from '$app/environment';
 	import '../app.css';
 	import type { PageData } from './(protected)/$types';
 	import { realtimeStore } from '$lib/stores/realTimeStore';
@@ -26,6 +25,11 @@ import { browser } from '$app/environment';
 					>
 				</li>
 				<li>
+					<a href="/games" class="hover:text-neutral-content"
+						>Games</a
+					>
+				</li>
+				<!-- <li>
 					<a href="/invites" class="hover:text-neutral-content"
 						>Invites <span class=" badge badge-sm indicator-item">0</span></a
 					>
@@ -34,7 +38,7 @@ import { browser } from '$app/environment';
 					<a href="/inbox" class="hover:text-neutral-content"
 						>Inbox <span class=" badge badge-sm indicator-item">0</span></a
 					>
-				</li>
+				</li> -->
 
 				<li><a href="/logout" class="hover:text-neutral-content">Log Out</a></li>
 			{:else}
