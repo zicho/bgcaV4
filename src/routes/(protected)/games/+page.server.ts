@@ -12,7 +12,7 @@ export const load = (async ({ parent }) => {
 		.where(eq(usersToGames.userId, user_id))
 		.leftJoin(games, eq(usersToGames.gameId, games.id));
 
-    console.dir(gameCollection)
+    // console.dir(gameCollection)
 
 	return {};
 }) satisfies PageServerLoad;

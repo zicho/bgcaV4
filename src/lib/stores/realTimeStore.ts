@@ -81,8 +81,6 @@ class RealtimeStore {
 	sub(username: string): void {
 		if (browser) {
 			this.unsub();
-
-            console.dir(username + " has subbed")
             this.username = username;
 
 			this.supabase
@@ -97,14 +95,9 @@ class RealtimeStore {
 				)
 				.subscribe();
 		}
-
-		console.log('Subbed');
 	}
 
 	handleEvent(payload: IPayload): void {
-
-        console.log("Event for user " + this.username)
-
 		if (payload.table === 'profile_info' && payload.eventType === EventType.UPDATE) {
 			this.notyf?.success("<a href='/'>mnoruenreåi0o</a>");
 		}

@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit';
-import { handleLoginRedirect } from '$lib/util/handleLoginRedirect';
+import { handleLoginRedirect } from '$lib/functions/handleLoginRedirect';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals, route, url }) => {

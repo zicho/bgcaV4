@@ -62,10 +62,10 @@ export const auth_key = pgTable('auth_key', {
 export const games = pgTable('games', {
 	id: serial('id').primaryKey(),
 	name: text('name'),
-	bggId: integer('bggId'),
+	bggId: integer('bggId'), // NOTE: THIS NEEDS TO HAVE A _UNIQUE_ CONSTRAINT IN DATABASE. MUST BE ADDED MANUALLY. DRIZZLE NOT SUPPORTING IT! (YET)
 	minNumberOfPlayers: smallint('minNumberOfPlayers'),
 	maxNumberOfPlayers: smallint('maxNumberOfPlayers'),
-	bggRating: decimal('avgBggRating'),
+	bggRating: text('avgBggRating'),
 	thumbnailUrl: text('thumbnailUrl'),
 	imageUrl: text('imageUrl')
 });

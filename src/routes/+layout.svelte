@@ -7,8 +7,6 @@
 	export let data: PageData;
 
 	$: data.user && realtimeStore.sub(data.user.username);
-	$: data.user && console.dir("User is " + data.user.username);
-
 </script>
 
 <div class="navbar bg-neutral text-neutral-content">

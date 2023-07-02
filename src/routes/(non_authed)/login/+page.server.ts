@@ -2,7 +2,7 @@ import { redirect, type Actions, fail, error } from '@sveltejs/kit';
 import { auth } from '$lib/server/lucia';
 import { loginSchema } from '$lib/validationSchemas/loginSchema';
 import { message, superValidate } from 'sveltekit-superforms/server';
-import { parseLuciaError } from '$lib/util/parseLuciaError';
+import { parseLuciaError } from '$lib/functions/parseLuciaError';
 import type { LuciaError } from 'lucia-auth';
 import type { PageServerLoad } from './$types';
 

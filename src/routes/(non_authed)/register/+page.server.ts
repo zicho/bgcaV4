@@ -3,7 +3,7 @@ import { auth } from '$lib/server/lucia';
 import { registerSchema } from '$lib/validationSchemas/registerSchema';
 import type { PageServerLoad } from './$types';
 import { message, superValidate } from 'sveltekit-superforms/server';
-import { parseLuciaError } from '$lib/util/parseLuciaError';
+import { parseLuciaError } from '$lib/functions/parseLuciaError';
 import type { LuciaError } from 'lucia-auth';
 
 export const load = (async (event) => {
