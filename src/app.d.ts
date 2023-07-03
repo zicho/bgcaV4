@@ -5,6 +5,12 @@ declare global {
 		interface Locals {
 			auth: import('lucia').AuthRequest;
 		}
+		interface PageData {
+			flash?: {
+				type: 'success' | 'error';
+				message: string;
+			};
+		}
 	}
 }
 

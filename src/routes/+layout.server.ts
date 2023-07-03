@@ -1,8 +1,9 @@
 import { redirect } from '@sveltejs/kit';
 import { handleLoginRedirect } from '$lib/functions/handleLoginRedirect';
 import type { LayoutServerLoad } from './$types';
+import { loadFlashMessage } from "sveltekit-flash-message/server"
 
-export const load: LayoutServerLoad = async ({ locals, route, url }) => {
+export const load: LayoutServerLoad = loadFlashMessage(async ({ locals, route, url }) => {
 	const { session, user } = await locals.auth.validateUser();
 
 	if (route?.id?.includes('(protected)')) {
@@ -10,4 +11,4 @@ export const load: LayoutServerLoad = async ({ locals, route, url }) => {
 	} 
 
 	return { user };
-};
+});

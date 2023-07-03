@@ -1,4 +1,4 @@
-import { redirect, type Actions, fail } from '@sveltejs/kit';
+import { type Actions, fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms/server';
 import { upsertProfileSchema } from '$lib/validationSchemas/upsertProfileSchema';
@@ -8,6 +8,7 @@ import * as schema from '$lib/db/schema';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import { auth_user, userProfiles } from '$lib/db/schema';
 import { eq } from 'drizzle-orm';
+import { redirect } from 'sveltekit-flash-message/server';
 
 const client = postgres(SECRET_PG_HOST);
 const db = drizzle(client, { schema });
@@ -36,7 +37,9 @@ export const load = (async (event) => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-	default: async ({ request, params }) => {
+	default: async (event) => {
+		const { request, params } = event;
+
 		const form = await superValidate(request, upsertProfileSchema);
 		if (!form.valid) return fail(400, { form });
 
@@ -64,10 +67,14 @@ export const actions: Actions = {
 				set: { ...parsedFormModel }
 			});
 
-			throw redirect(302, `/profile/${params.username}`)
-
-		return {
-			form
-		};
+		throw redirect(
+			302,
+			`/profile/${params.username}`,
+			{
+				type: 'success',
+				message: `Your profile has been updated!`
+			},
+			event
+		);
 	}
 };

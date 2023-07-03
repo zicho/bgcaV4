@@ -14,7 +14,9 @@
 
 <PageHeaderToolbar
 	title={data.isProfileYours ? 'Your profile' : `${data.profile.username}`}
-	subheader={data.isProfileYours ? 'Edit your profile' : `This is the profile of ${data.profile.username}`}
+	subheader={data.isProfileYours
+		? 'Edit your profile'
+		: `This is the profile of ${data.profile.username}`}
 >
 	{#if data.isProfileYours}
 		<PageHeaderToolbarButton
@@ -26,12 +28,13 @@
 </PageHeaderToolbar>
 
 <div class="prose">
-		<h2 class="mt-0">Description</h2>
+	<h2 class="mt-0">Description</h2>
 	<p>
 		{#if data.profile.description}
 			{data.profile.description}
 		{:else if data.isProfileYours}
-			<a href="/profile/{data.profile.username}/edit">Edit your profile to add a description!</a>
+			<p><i>You have not written a description yet! <a href="/profile/{data.profile.username}/edit">Do it!</a></i></p>
+			
 		{:else}
 			<i>This user has not written a description yet :(</i>
 		{/if}

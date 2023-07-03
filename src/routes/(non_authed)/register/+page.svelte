@@ -12,7 +12,7 @@
 </svelte:head>
 
 <div class="flex flex-col items-center justify-center">
-	<div class="w-full md:w-1/2 lg:w-1/3">
+	<section class="w-full md:w-1/2 lg:w-1/3">
 		<form use:enhance method="post" class="px-8 pt-6 pb-8 bg-base-100 shadow-lg">
 			<h1 class="font-bold tracking-tight text-2xl mb-8">Register a new account</h1>
 			<div class="mb-4">
@@ -80,5 +80,5 @@
 				<span class="text-error-content">{$message}</span>
 			</div>
 		{/if}
-	</div>
+	</section>
 </div>
