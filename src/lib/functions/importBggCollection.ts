@@ -3,11 +3,28 @@ import { games, usersToGames } from '$lib/db/schema';
 import { parseIntoGame, type IBggGameSimple } from '$lib/interfaces/bgg/IBggGameSimple';
 import { inArray } from 'drizzle-orm';
 
-export async function importBggCollection(username: string, user_id: string) {
+type BggGameImportResult = {
+	numberOfGamesImported?: number;
+	status: 'success' | 'error' | 'info' | 'warning';
+	message: string;
+};
+
+export async function importBggCollection(
+	username: string,
+	user_id: string
+): Promise<BggGameImportResult> {
 	try {
 		const response = await fetch(`https://bgg-json.azurewebsites.net/collection/${username}`);
 		const data = await response.json();
+
 		const parsedBggGameData: IBggGameSimple[] = data.map((item: any) => item as IBggGameSimple);
+
+		if (parsedBggGameData.length == 0) {
+			return {
+				status: 'warning',
+				message: `No games found for user '${username}'`
+			};
+		}
 
 		const entities = parsedBggGameData.map(parseIntoGame);
 
@@ -32,9 +49,28 @@ export async function importBggCollection(username: string, user_id: string) {
 		// map game ids to user id
 		const mapped = gameIds.map(({ gameId }) => ({ userId: user_id, gameId }));
 
-		await db.insert(usersToGames).values(mapped).onConflictDoNothing();
+		const insertedGames = await db
+			.insert(usersToGames)
+			.values(mapped)
+			.onConflictDoNothing()
+			.returning({ insertedId: usersToGames.gameId });
+
+		if (insertedGames.length > 0) {
+			return {
+				status: 'success',
+				message: `Imported ${insertedGames.length} games!`
+			};
+		} else {
+			return {
+				status: 'info',
+				message: 'Import could not find any games not already in your collection.'
+			};
+		}
 	} catch (error) {
 		console.error('Error:', error);
-		// Handle any errors that occur during the request
+		return {
+			status: 'error',
+			message: `Unknown error`
+		};
 	}
 }

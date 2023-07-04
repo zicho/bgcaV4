@@ -7,7 +7,7 @@ declare global {
 		}
 		interface PageData {
 			flash?: {
-				type: 'success' | 'error';
+				type: 'success' | 'error' | 'info' | 'warning';
 				message: string;
 			};
 		}

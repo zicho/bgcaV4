@@ -19,12 +19,16 @@
 
 	<h2>Thanks to</h2>
 
-	<a class="font-semibold" href="https://boardgamegeek.com/" target="_blank">BoardGameGeek</a>, for maintaining an
-	excellent website which hosts most of the data used here.<br />
-	<a class="font-semibold" href="https://github.com/ervwalter" target="_blank">ervwalter</a>, creator of the <a href="https://github.com/ervwalter/bgg-json" target="_blank">The BGG JSON API</a><br />
-	<a class="font-semibold" href="https://www.youtube.com/@huntabyte" target="_blank">Huntabyte</a>, for making excellent
-	SvelteKit content, without which this website would probably not have existed at all.<br />
-	<a class="font-semibold" href="https://github.com/ciscoheat/" target="_blank">Ciscoheat</a>, for the awesome
+	<a class="font-semibold" href="https://boardgamegeek.com/" target="_blank">BoardGameGeek</a>, for
+	maintaining an excellent website which hosts most of the data used here.<br />
+	<a class="font-semibold" href="https://github.com/ervwalter" target="_blank">ervwalter</a>,
+	creator of the <a href="https://github.com/ervwalter/bgg-json" target="_blank">BGG JSON API</a><br
+	/>
+	<a class="font-semibold" href="https://www.youtube.com/@huntabyte" target="_blank">Huntabyte</a>,
+	for making excellent SvelteKit content, without which this website would probably not have existed
+	at all.<br />
+	<a class="font-semibold" href="https://github.com/ciscoheat/" target="_blank">Ciscoheat</a>, for
+	the awesome
 	<a href="https://github.com/ciscoheat/sveltekit-superforms" target="_blank">Superforms</a>
 	and
 	<a href="https://github.com/ciscoheat/sveltekit-flash-message" target="_blank">Flash Message</a>
