@@ -60,6 +60,8 @@ export const auth_key = pgTable('auth_key', {
 export const games = pgTable('games', {
 	id: serial('id').primaryKey(),
 	name: text('name').notNull(),
+	slug: text('slug').notNull(),
+	desc: text('description'),
 	yearPublished: smallint('yearPublished'),
 	bggId: integer('bggId'), // NOTE: THIS NEEDS TO HAVE A _UNIQUE_ CONSTRAINT IN DATABASE. MUST BE ADDED MANUALLY. DRIZZLE NOT SUPPORTING IT! (YET)
 	minNumberOfPlayers: smallint('minNumberOfPlayers'),

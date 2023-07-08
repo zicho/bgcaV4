@@ -11,6 +11,8 @@ export const load = (async ({ parent }) => {
 			id: games.id,
 			bggId: games.bggId,
 			name: games.name,
+			desc: games.desc,
+			slug: games.slug,
 			rating: games.averageRating,
 			thumbnail: games.thumbnailUrl,
 			yearPublished: games.yearPublished

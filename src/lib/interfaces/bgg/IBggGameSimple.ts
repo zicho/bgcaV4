@@ -1,3 +1,5 @@
+import { createSlug } from '$lib/functions/util/createSlug';
+
 export interface IBggGameSimple {
 	gameId: number;
 	name: string;
@@ -14,11 +16,12 @@ export interface IBggGameSimple {
 export function parseIntoGame(dto: IBggGameSimple) {
 	return {
 		...dto,
+		slug: createSlug(dto.name),
 		bggId: dto.gameId,
 		minNumberOfPlayers: dto.minPlayers,
 		maxNumberOfPlayers: dto.maxPlayers,
 		averageRating: dto.averageRating,
 		thumbnailUrl: dto.thumbnail,
-		imageUrl: dto.image,
+		imageUrl: dto.image
 	};
 }
