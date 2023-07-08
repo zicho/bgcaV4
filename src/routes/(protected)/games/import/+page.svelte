@@ -2,15 +2,21 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import type { PageData } from './$types';
 	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
+	import { onMount } from 'svelte';
 
 	export let data: PageData;
 
-	const { form, errors, constraints, enhance, message } = superForm(data.form);
+	const { form, errors, constraints, enhance, delayed } = superForm(data.form, {
+		delayMs: 0
+	});
 </script>
 
-<PageHeaderToolbar title="Import your BoardGameGeek collection" subheader="Save yourself the hassle!" />
+<PageHeaderToolbar
+	title="Import your BoardGameGeek collection"
+	subheader="Save yourself the hassle!"
+/>
 
-<div class="prose mb-8">
+<div class="prose">
 	<p>
 		Instead of manually adding your games, you can import them from BGG if you have an account
 		there. Enter your BGG nickname below to import your collection!
@@ -46,7 +52,9 @@
 			</label>
 		</div>
 
-		<button type="submit" class="btn btn-primary w-full my-8">Import</button>
+		<button disabled={$delayed} type="submit" class="btn btn-primary w-full my-8">
+			{@html !$delayed ? 'Import' : '<i class="fa-2xl fas fa-cog fa-spin"></i>'}</button
+		>
 		<i class="mt-8"
 			><strong>Note: </strong>If your collection is large, this may take a while. Be patient.</i
 		>

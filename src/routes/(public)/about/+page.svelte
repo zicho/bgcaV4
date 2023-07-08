@@ -1,5 +1,6 @@
 <script lang="ts">
 	import LinkCard from '$lib/components/ui/LinkCard.svelte';
+	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -9,8 +10,9 @@
 	<title>About</title>
 </svelte:head>
 
+<PageHeaderToolbar title="About" />
+
 <section class="prose">
-	<h1>About</h1>
 	<p>
 		This web page is a non-profit and non-commercial project built and maintained by <a
 			href="https://github.com/zicho">zicho (Github)</a

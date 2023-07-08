@@ -8,7 +8,7 @@ export interface IBggGameSimple {
 	playingTime: number;
 	isExpansion: boolean;
 	yearPublished: number;
-	bggRating: string;
+	averageRating: string;
 }
 
 export function parseIntoGame(dto: IBggGameSimple) {
@@ -17,7 +17,7 @@ export function parseIntoGame(dto: IBggGameSimple) {
 		bggId: dto.gameId,
 		minNumberOfPlayers: dto.minPlayers,
 		maxNumberOfPlayers: dto.maxPlayers,
-		bggRating: dto.bggRating,
+		averageRating: dto.averageRating,
 		thumbnailUrl: dto.thumbnail,
 		imageUrl: dto.image,
 	};

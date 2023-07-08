@@ -8,14 +8,14 @@
 	import { page } from '$app/stores';
 	import { Toaster } from 'svelte-sonner';
 	import FlashMessage from '$lib/components/ui/FlashMessage.svelte';
-	import { beforeNavigate } from '$app/navigation';
+	import { afterNavigate } from '$app/navigation';
 
 	export let data: PageData;
 
 	$: data.user && realtimeStore.sub(data.user.username);
 	const flash = initFlash(page);
 
-	beforeNavigate((nav) => {
+	afterNavigate((nav) => {
 		if ($flash && nav.from?.url.toString() !== nav.to?.url.toString()) {
 			$flash = undefined;
 		}

@@ -26,6 +26,8 @@ export async function importBggCollection(
 			};
 		}
 
+		console.dir(parsedBggGameData)
+
 		const entities = parsedBggGameData.map(parseIntoGame);
 
 		// insert games first
@@ -70,7 +72,7 @@ export async function importBggCollection(
 		console.error('Error:', error);
 		return {
 			status: 'error',
-			message: `Unknown error`
+			message: `Unknown error. Service might be down. Try again later.`
 		};
 	}
 }
