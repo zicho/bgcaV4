@@ -1,18 +1,17 @@
 <script lang="ts">
-	import LinkCard from '$lib/components/ui/LinkCard.svelte';
 	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
 	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
-	import { desc } from 'drizzle-orm';
 	import type { PageData } from './$types';
 	import DataTable from '$lib/components/table/DataTable.svelte';
-	import DataTableHeader from '$lib/components/table/DataTableHeader.svelte';
-	import DataTableHeaderContainer from '$lib/components/table/DataTableHeaderContainer.svelte';
-	import DataTableDataContainer from '$lib/components/table/DataTableDataContainer.svelte';
-	import DataTableImageCell from '$lib/components/table/DataTableImageCell.svelte';
-	import DataTableTitleCell from '$lib/components/table/DataTableTitleCell.svelte';
-	import DataTableTextCell from '$lib/components/table/DataTableTextCell.svelte';
-	import DataTableLinkButtonCell from '$lib/components/table/DataTableLinkButtonCell.svelte';
-	import DataTableRow from '$lib/components/table/DataTableRow.svelte';
+	import Header from '$lib/components/table/Header.svelte';
+	import Body from '$lib/components/table/Body.svelte';
+	import ImageCell from '$lib/components/table/ImageCell.svelte';
+	import TitleCell from '$lib/components/table/TitleCell.svelte';
+	import TextCell from '$lib/components/table/TextCell.svelte';
+	import LinkButtonCell from '$lib/components/table/LinkButtonCell.svelte';
+	import Row from '$lib/components/table/Row.svelte';
+	import TitleCellSubheader from '$lib/components/table/TitleCellSubheader.svelte';
+	import HeaderContainer from '$lib/components/table/HeaderContainer.svelte';
 
 	export let data: PageData;
 </script>
@@ -30,27 +29,29 @@
 		>No games yet. <a class="link" href="/games/import">Import your collection</a> or add games manually.</span
 	>
 {:else}
-	<DataTable width={8}>
-		<DataTableHeaderContainer width={8} slot="headers">
-			<DataTableHeader />
-			<DataTableHeader title="Title" />
-			<DataTableHeader title="About" width={4} />
-			<DataTableHeader title="Rating" />
-			<DataTableHeader />
-		</DataTableHeaderContainer>
-		<DataTableDataContainer width={8} slot="data">
+	<DataTable>
+		<HeaderContainer slot="headers">
+			<Header />
+			<Header title="Title" />
+			<Header title="About" wide />
+			<Header title="Rating" />
+			<Header />
+		</HeaderContainer>
+		<Body slot="data">
 			{#each data.games as game}
-				<DataTableRow width={8} href="/games/{game.bggId}/{game.slug}">
-					<DataTableImageCell src={game.thumbnail} alt="Image of {game.name} box cover art" />
-					<DataTableTitleCell title={game.name} />
-					<DataTableTextCell width={4} content={game.desc} />
-					<DataTableTextCell content={game.rating} />
-					<DataTableLinkButtonCell
+				<Row href="/games/{game.bggId}/{game.slug}">
+					<ImageCell src={game.thumbnail} alt="Image of {game.name} box cover art" />
+					<TitleCell title={game.name}>
+						<TitleCellSubheader content={game.yearPublished} />
+					</TitleCell>
+					<TextCell wide content={game.desc} />
+					<TextCell content={game.rating} />
+					<LinkButtonCell
 						href="https://boardgamegeek.com/boardgame/{game.bggId}"
 						text="View on BGG"
 					/>
-				</DataTableRow>
+				</Row>
 			{/each}
-		</DataTableDataContainer>
+		</Body>
 	</DataTable>
 {/if}

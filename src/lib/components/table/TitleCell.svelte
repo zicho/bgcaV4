@@ -6,6 +6,6 @@
 <div class="p-4 col-span-{width} flex items-center">
 	<div class="flex flex-col">
 		<div class="font-bold overflow-hidden">{title}</div>
-		<slot name="subheaders" />
+		<slot />
 	</div>
 </div>
