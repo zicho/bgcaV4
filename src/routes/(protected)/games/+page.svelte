@@ -4,14 +4,12 @@
 	import type { PageData } from './$types';
 	import DataTable from '$lib/components/table/DataTable.svelte';
 	import Header from '$lib/components/table/Header.svelte';
-	import Body from '$lib/components/table/Body.svelte';
 	import ImageCell from '$lib/components/table/ImageCell.svelte';
 	import TitleCell from '$lib/components/table/TitleCell.svelte';
 	import TextCell from '$lib/components/table/TextCell.svelte';
 	import LinkButtonCell from '$lib/components/table/LinkButtonCell.svelte';
 	import Row from '$lib/components/table/Row.svelte';
 	import TitleCellSubheader from '$lib/components/table/TitleCellSubheader.svelte';
-	import HeaderContainer from '$lib/components/table/HeaderContainer.svelte';
 
 	export let data: PageData;
 </script>
@@ -30,14 +28,14 @@
 	>
 {:else}
 	<DataTable>
-		<HeaderContainer slot="headers">
+		<slot slot="headers">
 			<Header />
 			<Header title="Title" />
 			<Header title="About" wide />
 			<Header title="Rating" />
 			<Header />
-		</HeaderContainer>
-		<Body slot="data">
+		</slot>
+		<slot slot="data">
 			{#each data.games as game}
 				<Row href="/games/{game.bggId}/{game.slug}">
 					<ImageCell src={game.thumbnail} alt="Image of {game.name} box cover art" />
@@ -52,6 +50,6 @@
 					/>
 				</Row>
 			{/each}
-		</Body>
+		</slot>
 	</DataTable>
 {/if}
