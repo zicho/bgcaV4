@@ -19,15 +19,13 @@ export const load = (async (event) => {
 
 	const form = await superValidate(event, upsertProfileSchema);
 
-	const data = (
-		await db
-			.select({
-				description: userProfiles.description,
-				signature: userProfiles.signature
-			})
-			.from(userProfiles)
-			.where(eq(userProfiles.userId, user_id))
-	)[0];
+	const data = await db.query.userProfiles.findFirst({
+		columns: {
+			description: true,
+			signature: true
+		},
+		where: eq(userProfiles.userId, user_id)
+	});
 
 	form.data = { ...data };
 
@@ -38,18 +36,16 @@ export const load = (async (event) => {
 
 export const actions: Actions = {
 	default: async (event) => {
-		const { request, params } = event;
+		const { request, params, locals } = event;
 
 		const form = await superValidate(request, upsertProfileSchema);
 		if (!form.valid) return fail(400, { form });
 
-		const data = (
-			await db
-				.select()
-				.from(auth_user)
-				.where(eq(auth_user.username, params.username as string))
-				.leftJoin(userProfiles, eq(userProfiles.userId, auth_user.id))
-		)[0];
+		const { user } = await locals.auth.validateUser();
+
+		const data = await db.query.userProfiles.findFirst({
+			where: eq(userProfiles.userId, user.user_id)
+		});
 
 		const parsedFormModel = upsertProfileSchema.parse({
 			...form.data
@@ -58,8 +54,8 @@ export const actions: Actions = {
 		await db
 			.insert(userProfiles)
 			.values({
-				id: data.user_profiles?.id,
-				userId: data.auth_user.id,
+				id: data?.id,
+				userId: user.user_id,
 				...parsedFormModel
 			})
 			.onConflictDoUpdate({
