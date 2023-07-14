@@ -1,29 +1,24 @@
 import { db } from '$lib/db/client';
 import type { PageServerLoad } from './$types';
-import { games, usersToGames } from '$lib/db/schema';
-import { eq } from 'drizzle-orm';
+import { games as g } from '$lib/db/schema';
 
 export const load = (async ({ parent }) => {
-	let user_id = (await parent()).user.user_id;
-
-	const gameCollection = await db
+	const games = await db
 		.select({
-			id: games.id,
-			bggId: games.bggId,
-			name: games.name,
-			desc: games.desc,
-			slug: games.slug,
-			rating: games.averageRating,
-			thumbnail: games.thumbnailUrl,
-			yearPublished: games.yearPublished
+			id: g.id,
+			bggId: g.bggId,
+			name: g.name,
+			desc: g.desc,
+			slug: g.slug,
+			rating: g.averageRating,
+			thumbnail: g.thumbnailUrl,
+			yearPublished: g.yearPublished
 		})
-		.from(usersToGames)
-		.where(eq(usersToGames.userId, user_id))
-		.leftJoin(games, eq(usersToGames.gameId, games.id));
+		.from(g);
 
     // console.dir(gameCollection)
 
 	return {
-		games: gameCollection
+		games
 	};
 }) satisfies PageServerLoad;

@@ -14,8 +14,8 @@
 	export let data: PageData;
 </script>
 
-<PageHeaderToolbar title="Games" subheader="Find and view games">
-	<PageHeaderToolbarButton displayText="View your collection" url="/games/collection" icon="fa-list" />
+<PageHeaderToolbar title="Collection" subheader="Organize your game collection">
+	<PageHeaderToolbarButton displayText="Import collection" url="/games/import" icon="fa-download" />
 </PageHeaderToolbar>
 
 {#if data.games.length == 0}
