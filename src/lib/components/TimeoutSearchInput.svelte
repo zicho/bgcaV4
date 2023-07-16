@@ -33,7 +33,6 @@
 	<input
 		name="query"
 		id="query"
-		autofocus
 		bind:value={searchQuery}
 		on:input={resetTimer}
 		placeholder="Search by title"

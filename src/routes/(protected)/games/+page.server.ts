@@ -10,13 +10,21 @@ export const load = (async ({ url }) => {
 	let page = Number(url.searchParams.get('page'));
 	let limit = Number(url.searchParams.get('limit'));
 
+	const validLimitValues = [10, 25, 50, 100];
+
 	if (!limit) {
+		limit = 10;
+	} else if (!isNumber(limit.toString())) {
+		limit = 10;
+	} else if (!validLimitValues.includes(limit)) {
 		limit = 10;
 	}
 
 	if (!page) {
 		page = 1;
 	}
+
+	console.dir(searchParam)
 
 	if (!searchParam) {
 		searchParam = '';
@@ -32,8 +40,8 @@ export const load = (async ({ url }) => {
 	const totalPages = Math.ceil(totalHits / limit);
 
 	if ((page > totalPages || page < 1) && !searchParam) {
-		console.dir(searchParam)
-		console.dir("poo")
+		console.dir(searchParam);
+		console.dir('poo');
 		throw redirect(302, `/games`);
 	}
 

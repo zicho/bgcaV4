@@ -5,7 +5,8 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	$: ({ page, totalPages, totalHits, searchParam } = data);
+	$: ({ page, totalPages, totalHits, searchParam, limit } = data);
+	let form: HTMLFormElement;
 </script>
 
 <PageHeaderToolbar title="Games" subheader="Find and view games">
@@ -19,18 +20,30 @@
 <div class="overflow-x-auto">
 	<div class="flex items-center justify-between py-4 mb-4">
 		<TimeoutSearchInput />
+		<span class="mr-4 w-fit whitespace-nowrap label-text">Results per page</span>
+		<form class=" mr-1 w-auto flex flex-row"  bind:this={form} on:change={() => form.requestSubmit()}>
+			<select name="limit" id="limit" class="select select-bordered">
+				<option selected={limit == 10}>10</option>
+				<option selected={limit == 25}>25</option>
+				<option selected={limit == 50}>50</option>
+				<option selected={limit == 100}>100</option>
+			</select>
+			<noscript>
+				<button type="submit" class="btn btn-primary ml-4">Update</button>
+			</noscript>
+		</form>
 	</div>
 
 	<div class="flex items-center justify-between">
 		<div>
 			<a
 				class="btn btn-secondary lg:btn-wide"
-				href="/games?search={searchParam}"
+				href="/games?search={searchParam}&limit={limit}"
 				class:btn-disabled={page == 1}>First</a
 			>
 			<a
 				class="btn btn-primary lg:btn-wide"
-				href="/games?page={page - 1}&search={searchParam}"
+				href="/games?page={page - 1}&search={searchParam}&limit={limit}"
 				class:btn-disabled={page == 1 || totalPages == 0}
 				>Previous
 			</a>
@@ -47,6 +60,7 @@
 					disabled={totalPages == 0}
 					value={page}
 				/>
+				
 			</form>
 			<span class="ml-2"
 				>of {totalPages} <span class="label-text font-thin">({totalHits} hits)</span></span
@@ -56,12 +70,12 @@
 		<div>
 			<a
 				class="btn btn-primary lg:btn-wide"
-				href="/games?page={page + 1}&search={searchParam}"
+				href="/games?page={page + 1}&search={searchParam}&limit={limit}"
 				class:btn-disabled={page == totalPages || totalPages == 0}>Next</a
 			>
 			<a
 				class="btn btn-secondary lg:btn-wide"
-				href="/games?page={totalPages}&search={searchParam}"
+				href="/games?page={totalPages}&search={searchParam}&limit={limit}"
 				class:btn-disabled={page == totalPages || totalPages == 0}>Last</a
 			>
 		</div>
@@ -93,7 +107,7 @@
 									</div>
 								</div>
 								<div>
-									<div class="font-bold hover:underline">
+									<div class="font-bold hover:underline min-w-[200px]">
 										<a href="/games/{game.bggId}">{game.name}</a>
 									</div>
 									<div class="text-sm opacity-50">{game.yearPublished}</div>
