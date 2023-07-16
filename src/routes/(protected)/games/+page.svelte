@@ -32,6 +32,7 @@
 				class="btn btn-primary lg:btn-wide"
 				href="/games?page={page - 1}&search={searchParam}"
 				class:btn-disabled={page == 1 || totalPages == 0}>Previous</a
+				class:btn-disabled={page == 1 || totalPages == 0}>Previous</a
 			>
 		</div>
 
@@ -69,7 +70,6 @@
 		</div>
 	{:else}
 		<table class="table w-full table-auto">
-			<!-- head -->
 			<thead>
 				<tr>
 					<th class="w-auto px-0 min-w-10rem">Name</th>
