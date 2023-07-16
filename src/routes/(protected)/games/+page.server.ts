@@ -22,9 +22,13 @@ export const load = (async ({ url }) => {
 		searchParam = '';
 	}
 
-	console.log(searchParam);
+	const totalHits = (
+		await db
+			.select({ count: sql<number>`count(*)` })
+			.from(g)
+			.where(ilike(g.name, `%${searchParam}%`))
+	)[0].count;
 
-	const totalHits = (await db.select({ count: sql<number>`count(*)` }).from(g))[0].count;
 	const totalPages = Math.ceil(totalHits / limit);
 
 	if (page > totalPages || page < 1) {
@@ -43,10 +47,9 @@ export const load = (async ({ url }) => {
 			yearPublished: g.yearPublished
 		})
 		.from(g)
+		.where(ilike(g.name, `%${searchParam}%`))
 		.limit(limit)
 		.offset((page - 1) * limit);
-
-	if (searchParam) query = query.where(ilike(g.name, searchParam));
 
 	const pageResult = await query;
 
@@ -56,7 +59,7 @@ export const load = (async ({ url }) => {
 		games: pageResult,
 		page,
 		limit,
-		query: searchParam,
+		searchParam,
 		totalHits,
 		totalPages
 	};

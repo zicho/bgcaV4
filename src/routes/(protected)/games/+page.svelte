@@ -6,7 +6,7 @@
 
 	export let data: PageData;
 
-	$: ({ games, page, totalPages, totalHits, limit } = data);
+	$: ({ games, page, totalPages, totalHits, limit, searchParam } = data);
 
 	let test = 0;
 </script>
@@ -26,11 +26,14 @@
 
 	<div class="flex items-center justify-between">
 		<div>
-			<a class="btn btn-secondary lg:btn-wide" href="/games" class:btn-disabled={page == 1}>First</a
+			<a
+				class="btn btn-secondary lg:btn-wide"
+				href="/games?search={searchParam}"
+				class:btn-disabled={page == 1}>First</a
 			>
 			<a
 				class="btn btn-primary lg:btn-wide"
-				href="/games?page={page - 1}"
+				href="/games?page={page - 1}&search={searchParam}"
 				class:btn-disabled={page == 1}>Previous</a
 			>
 		</div>
@@ -52,20 +55,18 @@
 		<div>
 			<a
 				class="btn btn-primary lg:btn-wide"
-				href="/games?page={page + 1}"
+				href="/games?page={page + 1}&search={searchParam}"
 				class:btn-disabled={page == totalPages}>Next</a
 			>
 			<a
 				class="btn btn-secondary lg:btn-wide"
-				href="/games?page={totalPages}"
+				href="/games?page={totalPages}&search={searchParam}"
 				class:btn-disabled={page == totalPages}>Last</a
 			>
 		</div>
 	</div>
 	{#if data.games.length == 0}
-		<span
-			>No results.</span
-		>
+		<span>No results.</span>
 	{:else}
 		<table class="table w-full table-auto">
 			<!-- head -->
