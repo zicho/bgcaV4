@@ -66,7 +66,9 @@
 		</div>
 	</div>
 	{#if data.games.length == 0}
-		<span>No results.</span>
+		<div class="prose-lg text-center mt-16">
+			<span>No results!</span>
+		</div>
 	{:else}
 		<table class="table w-full table-auto">
 			<!-- head -->

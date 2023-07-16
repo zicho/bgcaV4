@@ -38,6 +38,6 @@
 		on:input={resetTimer}
 		placeholder="Search by title"
 		aria-label="Search by title"
-		class="input input-bordered"
+		class="input input-bordered w-full md:w-auto mr-1"
 	/>
 </form>
