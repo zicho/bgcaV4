@@ -5,10 +5,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-
-	$: ({ games, page, totalPages, totalHits, limit, searchParam } = data);
-
-	let test = 0;
+	$: ({ page, totalPages, totalHits, searchParam } = data);
 </script>
 
 <PageHeaderToolbar title="Games" subheader="Find and view games">
@@ -20,7 +17,7 @@
 </PageHeaderToolbar>
 
 <div class="overflow-x-auto">
-	<div class="flex items-center justify-between py-4">
+	<div class="flex items-center justify-between py-4 mb-4">
 		<TimeoutSearchInput />
 	</div>
 
@@ -34,7 +31,7 @@
 			<a
 				class="btn btn-primary lg:btn-wide"
 				href="/games?page={page - 1}&search={searchParam}"
-				class:btn-disabled={page == 1}>Previous</a
+				class:btn-disabled={page == 1 || totalPages == 0}>Previous</a
 			>
 		</div>
 
@@ -46,22 +43,23 @@
 					class="w-16 px-2 py-1 border border-gray-300 rounded-md"
 					type="text"
 					name="page"
+					disabled={totalPages == 0}
 					value={page}
 				/>
 			</form>
-			<span class="ml-2">of {totalPages}</span>
+			<span class="ml-2">of {totalPages} <span class="label-text font-thin">({totalHits} hits)</span></span>
 		</div>
 
 		<div>
 			<a
 				class="btn btn-primary lg:btn-wide"
 				href="/games?page={page + 1}&search={searchParam}"
-				class:btn-disabled={page == totalPages}>Next</a
+				class:btn-disabled={page == totalPages || totalPages == 0}>Next</a
 			>
 			<a
 				class="btn btn-secondary lg:btn-wide"
 				href="/games?page={totalPages}&search={searchParam}"
-				class:btn-disabled={page == totalPages}>Last</a
+				class:btn-disabled={page == totalPages || totalPages == 0}>Last</a
 			>
 		</div>
 	</div>
@@ -82,9 +80,9 @@
 			</thead>
 			<tbody>
 				{#each data.games as game}
-					<tr class="hover">
-						<td class="px-0">
-							<div class="flex items-center space-x-3">
+					<tr>
+						<td class="px-0 ">
+							<div class="flex items-center space-x-3 ">
 								<div class="avatar">
 									<div class="w-32 h-32">
 										<a href="/games/{game.bggId}">
@@ -100,13 +98,16 @@
 								</div>
 							</div>
 						</td>
-						<td class="hidden md:block text-clip">
-							{#if game.desc}
-								{game.desc}
-							{:else}
-								<i class="text-secondary">Description missing</i>
-							{/if}
+						<td>
+							<div class="hidden md:block flex items-center justify-center">
+								{#if game.desc}
+									{game.desc}
+								{:else}
+									<i class="text-secondary">Description missing</i>
+								{/if}
+							</div>
 						</td>
+
 						<td>
 							<div class="badge-neutral text-xl p-4">{game.rating?.substring(0, 3)}</div>
 							<!-- <span class="text-lg">{game.rating?.substring(0, 3)}</span> -->

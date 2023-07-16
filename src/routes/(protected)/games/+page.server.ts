@@ -49,6 +49,7 @@ export const load = (async ({ url }) => {
 			yearPublished: g.yearPublished
 		})
 		.from(g)
+		.orderBy(g.name)
 		.where(ilike(g.name, `%${searchParam}%`))
 		.limit(limit)
 		.offset((page - 1) * limit);
