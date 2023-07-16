@@ -31,9 +31,9 @@
 			<a
 				class="btn btn-primary lg:btn-wide"
 				href="/games?page={page - 1}&search={searchParam}"
-				class:btn-disabled={page == 1 || totalPages == 0}>Previous</a
-				class:btn-disabled={page == 1 || totalPages == 0}>Previous</a
-			>
+				class:btn-disabled={page == 1 || totalPages == 0}
+				>Previous
+			</a>
 		</div>
 
 		<div class="flex items-center">
@@ -48,7 +48,9 @@
 					value={page}
 				/>
 			</form>
-			<span class="ml-2">of {totalPages} <span class="label-text font-thin">({totalHits} hits)</span></span>
+			<span class="ml-2"
+				>of {totalPages} <span class="label-text font-thin">({totalHits} hits)</span></span
+			>
 		</div>
 
 		<div>
@@ -81,8 +83,8 @@
 			<tbody>
 				{#each data.games as game}
 					<tr>
-						<td class="px-0 ">
-							<div class="flex items-center space-x-3 ">
+						<td class="px-0">
+							<div class="flex items-center space-x-3">
 								<div class="avatar">
 									<div class="w-32 h-32">
 										<a href="/games/{game.bggId}">
