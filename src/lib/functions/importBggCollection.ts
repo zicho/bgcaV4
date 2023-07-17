@@ -26,8 +26,6 @@ export async function importBggCollection(
 			};
 		}
 
-		console.dir(parsedBggGameData)
-
 		const entities = parsedBggGameData.map(parseIntoGame);
 
 		// insert games first

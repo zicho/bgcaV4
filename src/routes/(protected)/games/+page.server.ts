@@ -24,8 +24,6 @@ export const load = (async ({ url }) => {
 		page = 1;
 	}
 
-	console.dir(searchParam)
-
 	if (!searchParam) {
 		searchParam = '';
 	}
@@ -40,8 +38,6 @@ export const load = (async ({ url }) => {
 	const totalPages = Math.ceil(totalHits / limit);
 
 	if ((page > totalPages || page < 1) && !searchParam) {
-		console.dir(searchParam);
-		console.dir('poo');
 		throw redirect(302, `/games`);
 	}
 
@@ -64,15 +60,13 @@ export const load = (async ({ url }) => {
 
 	const pageResult = await query;
 
-	// console.dir(gameCollection)
-
 	return {
 		games: pageResult,
-		page,
-		limit,
 		searchParam,
-		totalHits,
-		totalPages
+		page: Number(page),
+		limit: Number(limit),
+		totalHits: Number(totalHits),
+		totalPages: Number(totalPages)
 	};
 }) satisfies PageServerLoad;
 
