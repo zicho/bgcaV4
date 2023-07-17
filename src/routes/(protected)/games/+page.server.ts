@@ -1,7 +1,7 @@
 import { db } from '$lib/db/client';
 import type { PageServerLoad } from './$types';
 import { games as g } from '$lib/db/schema';
-import { ilike, like, sql } from 'drizzle-orm';
+import { ilike, sql } from 'drizzle-orm';
 import { redirect, type Actions } from '@sveltejs/kit';
 import { isNumber } from '$lib/functions/validators/isNumber';
 
@@ -41,7 +41,7 @@ export const load = (async ({ url }) => {
 		throw redirect(302, `/games`);
 	}
 
-	let query = db
+	const pageResult = await db
 		.select({
 			id: g.id,
 			bggId: g.bggId,
@@ -57,8 +57,6 @@ export const load = (async ({ url }) => {
 		.where(ilike(g.name, `%${searchParam}%`))
 		.limit(limit)
 		.offset((pageNo - 1) * limit);
-
-	const pageResult = await query;
 
 	return {
 		games: pageResult,

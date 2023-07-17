@@ -2,50 +2,67 @@
 	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
 	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
 	import type { PageData } from './$types';
-	import DataTable from '$lib/components/table_old/DataTable.svelte';
-	import Header from '$lib/components/table_old/Header.svelte';
-	import ImageCell from '$lib/components/table_old/ImageCell.svelte';
-	import TitleCell from '$lib/components/table_old/TitleCell.svelte';
-	import TextCell from '$lib/components/table_old/TextCell.svelte';
-	import LinkButtonCell from '$lib/components/table_old/LinkButtonCell.svelte';
-	import Row from '$lib/components/table_old/Row.svelte';
-	import TitleCellSubheader from '$lib/components/table_old/TitleCellSubheader.svelte';
+	import Table from '$lib/components/table/Table.svelte';
 
 	export let data: PageData;
+	$: ({ pageNo, totalPages, totalHits, searchParam, limit } = data);
 </script>
 
 <PageHeaderToolbar title="Collection" subheader="Organize your game collection">
 	<PageHeaderToolbarButton displayText="Import collection" url="/games/import" icon="fa-download" />
 </PageHeaderToolbar>
 
-{#if data.games.length == 0}
-	<span
-		>No games yet. <a class="link" href="/games/import">Import your collection</a> or add games manually.</span
-	>
-{:else}
-	<DataTable>
-		<slot slot="headers">
-			<Header />
-			<Header title="Title" />
-			<Header title="About" wide />
-			<Header title="Rating" />
-			<Header />
-		</slot>
-		<slot slot="data">
-			{#each data.games as game}
-				<Row href="/games/{game.bggId}/{game.slug}">
-					<ImageCell src={game.thumbnail} alt="Image of {game.name} box cover art" />
-					<TitleCell title={game.name}>
-						<TitleCellSubheader content={game.yearPublished} />
-					</TitleCell>
-					<TextCell wide content={game.desc} />
-					<TextCell content={game.rating} />
-					<LinkButtonCell
-						href="https://boardgamegeek.com/boardgame/{game.bggId}"
-						text="View on BGG"
-					/>
-				</Row>
-			{/each}
-		</slot>
-	</DataTable>
-{/if}
+<Table
+	{pageNo}
+	{totalPages}
+	{totalHits}
+	{searchParam}
+	{limit}
+	resultsAreEmpty={data.games.length == 0}
+>
+	<slot slot="headers">
+		<th class="w-auto px-0">Name</th>
+		<th class="w-full hidden md:table-cell">About</th>
+		<th class="w-auto">Rating</th>
+		<th class="w-auto hidden md:block" />
+	</slot>
+	<slot slot="body">
+		{#each data.games as game}
+			<tr>
+				<td class="px-0">
+					<div class="flex items-center space-x-3">
+						<div class="avatar">
+							<div class="w-32 h-32">
+								<a href="/games/{game.bggId}">
+									<img src={game.thumbnail} alt="{game.name} cover art" />
+								</a>
+							</div>
+						</div>
+						<div>
+							<div class="font-bold hover:underline min-w-[200px]">
+								<a href="/games/{game.bggId}">{game.name}</a>
+							</div>
+							<div class="text-sm opacity-50">{game.yearPublished}</div>
+						</div>
+					</div>
+				</td>
+				<td>
+					<div class="hidden md:block flex items-center justify-center">
+						{#if game.desc}
+							{game.desc}
+						{:else}
+							<i class="text-secondary">Description missing</i>
+						{/if}
+					</div>
+				</td>
+
+				<td>
+					<div class="badge-neutral text-xl p-4">{game.rating?.substring(0, 3)}</div>
+				</td>
+				<th class="hidden md:table-cell px-0">
+					<a href="/games/{game.bggId}" class="btn btn-secondary">details</a>
+				</th>
+			</tr>
+		{/each}
+	</slot>
+</Table>

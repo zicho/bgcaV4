@@ -1,5 +1,4 @@
 <script lang="ts">
-	import TimeoutSearchInput from '$lib/components/TimeoutSearchInput.svelte';
 	import Table from '$lib/components/table/Table.svelte';
 	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
 	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
@@ -7,7 +6,6 @@
 
 	export let data: PageData;
 	$: ({ pageNo, totalPages, totalHits, searchParam, limit } = data);
-	let form: HTMLFormElement;
 </script>
 
 <PageHeaderToolbar title="Games" subheader="Find and view games">
