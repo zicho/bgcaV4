@@ -35,14 +35,15 @@
 				<NavbarLink
 					url="/profile/{data.user.username}"
 					displayText={data.user.username}
+					aria="View and edit user profile"
 					icon="fa-user"
 				/>
-				<NavbarLink url="/games" displayText="Games" icon="fa-dice" />
-				<NavbarLink url="/events" displayText="Events" icon="fa-calendar-alt" />
-				<NavbarLink url="/logout" displayText="Sign Out" icon="fa-sign-out" />
+				<NavbarLink url="/games" displayText="Games" aria="Find and organize games" icon="fa-dice" />
+				<NavbarLink url="/events" displayText="Events" aria="Find and organize events" icon="fa-calendar-alt" />
+				<NavbarLink url="/logout" displayText="Sign Out" aria="Sign out" icon="fa-sign-out" />
 			{:else}
-				<NavbarLink url="/login" displayText="Login" icon="fa-sign-in" />
-				<NavbarLink url="/register" displayText="Register" icon="fa-user-plus" />
+				<NavbarLink url="/login" displayText="Login" aria="Log in" icon="fa-sign-in" />
+				<NavbarLink url="/register" displayText="Register" aria="Register a new user" icon="fa-user-plus" />
 			{/if}
 		</ul>
 	</div>

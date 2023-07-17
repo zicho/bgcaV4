@@ -27,7 +27,7 @@
 	resultsAreEmpty={data.games.length == 0}
 >
 	<slot slot="headers">
-		<th class="w-auto px-0 min-w-10rem">Name</th>
+		<th class="w-auto px-0">Name</th>
 		<th class="w-full hidden md:table-cell">About</th>
 		<th class="w-auto">Rating</th>
 		<th class="w-auto hidden md:block" />
