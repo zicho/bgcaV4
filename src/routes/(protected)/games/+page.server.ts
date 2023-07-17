@@ -7,7 +7,7 @@ import { isNumber } from '$lib/functions/validators/isNumber';
 
 export const load = (async ({ url }) => {
 	let searchParam = url.searchParams.get('search');
-	let page = Number(url.searchParams.get('page'));
+	let pageNo = Number(url.searchParams.get('page'));
 	let limit = Number(url.searchParams.get('limit'));
 
 	const validLimitValues = [10, 25, 50, 100];
@@ -20,8 +20,8 @@ export const load = (async ({ url }) => {
 		limit = 10;
 	}
 
-	if (!page) {
-		page = 1;
+	if (!pageNo) {
+		pageNo = 1;
 	}
 
 	if (!searchParam) {
@@ -37,7 +37,7 @@ export const load = (async ({ url }) => {
 
 	const totalPages = Math.ceil(totalHits / limit);
 
-	if ((page > totalPages || page < 1) && !searchParam) {
+	if ((pageNo > totalPages || pageNo < 1) && !searchParam) {
 		throw redirect(302, `/games`);
 	}
 
@@ -56,30 +56,16 @@ export const load = (async ({ url }) => {
 		.orderBy(g.name)
 		.where(ilike(g.name, `%${searchParam}%`))
 		.limit(limit)
-		.offset((page - 1) * limit);
+		.offset((pageNo - 1) * limit);
 
 	const pageResult = await query;
 
 	return {
 		games: pageResult,
 		searchParam,
-		page: Number(page),
+		pageNo: Number(pageNo),
 		limit: Number(limit),
 		totalHits: Number(totalHits),
 		totalPages: Number(totalPages)
 	};
 }) satisfies PageServerLoad;
-
-export const actions: Actions = {
-	default: async ({ request }) => {
-		const form = await request.formData();
-
-		const page = form.get('page') as string;
-
-		if (!isNumber(page)) {
-			throw redirect(302, `/games`);
-		}
-
-		throw redirect(302, `/games?page=${page}`);
-	}
-};

@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
-	export let hitsPerPage: number = 10;
+	export let limit: number = 10;
 	export let queryParam: string = 'search';
 	export let searchParam: string = '';
 	export let pageNo: number = 1;
@@ -13,7 +13,7 @@
 
 	let timer: NodeJS.Timeout | null = null;
 	let searchQuery: string = '';
-	let optionForm: HTMLFormElement;
+	let searchForm: HTMLFormElement;
 
 	function startTimer() {
 		if (timer) {
@@ -21,7 +21,7 @@
 		}
 
 		timer = setTimeout(() => {
-			runSearch();
+			searchForm.requestSubmit();
 		}, 1000);
 	}
 
@@ -29,20 +29,12 @@
 		clearTimeout(timer as NodeJS.Timeout);
 		startTimer();
 	}
-
-	function runSearch() {
-		goto(
-			searchQuery
-				? `${$page.url.pathname}?${queryParam}=${searchQuery}&limit=${hitsPerPage}`
-				: `${$page.url.pathname}?$limit=${hitsPerPage}`
-		);
-	}
 </script>
 
 <div class="overflow-x-auto">
-	<div class="flex items-center justify-between py-4 mb-4">
-		<form method="get" class="w-full flex flex-row items-center">
-			<label for={queryParam} class="mr-4 label-text">Search title</label>
+	<div class="flex items-center justify-between py-4 mb-4 w-auto flex flex-row items-center ">
+		<form bind:this={searchForm} on:change={() => searchForm.requestSubmit()} class="space-x-2">
+			<label for={queryParam} class="label-text">Search title</label>
 			<input
 				name={queryParam}
 				id={queryParam}
@@ -52,22 +44,16 @@
 				aria-label="Search by title"
 				class="input input-bordered w-full md:w-auto mr-1"
 			/>
-		</form>
-		<span class="mr-4 w-fit whitespace-nowrap label-text">Results per page</span>
-		<form
-			class=" mr-1 w-auto flex flex-row"
-			bind:this={optionForm}
-			on:change={() => optionForm.requestSubmit()}
-		>
+			<label for="limit" class="label-text">Results per page</label>
 			<select name="limit" id="limit" class="select select-bordered">
-				<option selected={hitsPerPage == 10}>10</option>
-				<option selected={hitsPerPage == 25}>25</option>
-				<option selected={hitsPerPage == 50}>50</option>
-				<option selected={hitsPerPage == 100}>100</option>
+				<option selected={limit == 10}>10</option>
+				<option selected={limit == 25}>25</option>
+				<option selected={limit == 50}>50</option>
+				<option selected={limit == 100}>100</option>
 			</select>
-            <!-- If user does not have JS, enable this form by adding a button (not needed for JS users!) -->
+			<!-- If user does not have JS, enable this form by adding a button (not needed for JS users!) -->
 			<noscript>
-				<button type="submit" class="btn btn-primary ml-4">Update</button>
+				<button type="submit" class="btn btn-primary">Update</button>
 			</noscript>
 		</form>
 	</div>
@@ -76,12 +62,12 @@
 		<div>
 			<a
 				class="btn btn-secondary lg:btn-wide"
-				href="/games?search={searchParam}&limit={hitsPerPage}"
+				href="/games?search={searchParam}&limit={limit}"
 				class:btn-disabled={pageNo == 1}>First</a
 			>
 			<a
 				class="btn btn-primary lg:btn-wide"
-				href="/games?page={pageNo - 1}&search={searchParam}&limit={hitsPerPage}"
+				href="/games?page={pageNo - 1}&search={searchParam}&limit={limit}"
 				class:btn-disabled={pageNo == 1 || totalPages == 0}
 				>Previous
 			</a>
@@ -107,12 +93,12 @@
 		<div>
 			<a
 				class="btn btn-primary lg:btn-wide"
-				href="/games?page={pageNo + 1}&search={searchParam}&limit={hitsPerPage}"
+				href="/games?page={pageNo + 1}&search={searchParam}&limit={limit}"
 				class:btn-disabled={pageNo == totalPages || totalPages == 0}>Next</a
 			>
 			<a
 				class="btn btn-secondary lg:btn-wide"
-				href="/games?page={totalPages}&search={searchParam}&limit={hitsPerPage}"
+				href="/games?page={totalPages}&search={searchParam}&limit={limit}"
 				class:btn-disabled={pageNo == totalPages || totalPages == 0}>Last</a
 			>
 		</div>
@@ -125,11 +111,11 @@
 		<table class="table w-full table-auto">
 			<thead>
 				<tr>
-                    <slot name="headers"></slot>
+					<slot name="headers" />
 				</tr>
 			</thead>
 			<tbody>
-                <slot name="body"></slot>
+				<slot name="body" />
 			</tbody>
 		</table>
 	{/if}

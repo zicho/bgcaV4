@@ -6,7 +6,7 @@
 	import type { PageData } from './$types';
 
 	export let data: PageData;
-	$: ({ page, totalPages, totalHits, searchParam, limit } = data);
+	$: ({ pageNo, totalPages, totalHits, searchParam, limit } = data);
 	let form: HTMLFormElement;
 </script>
 
@@ -19,11 +19,11 @@
 </PageHeaderToolbar>
 
 <Table
-	pageNo={page}
+	{pageNo}
 	{totalPages}
 	{totalHits}
 	{searchParam}
-	hitsPerPage={limit}
+	{limit}
 	resultsAreEmpty={data.games.length == 0}
 >
 	<slot slot="headers">
