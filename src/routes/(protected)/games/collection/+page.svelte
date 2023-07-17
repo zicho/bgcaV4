@@ -2,14 +2,14 @@
 	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
 	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
 	import type { PageData } from './$types';
-	import DataTable from '$lib/components/table/DataTable.svelte';
-	import Header from '$lib/components/table/Header.svelte';
-	import ImageCell from '$lib/components/table/ImageCell.svelte';
-	import TitleCell from '$lib/components/table/TitleCell.svelte';
-	import TextCell from '$lib/components/table/TextCell.svelte';
-	import LinkButtonCell from '$lib/components/table/LinkButtonCell.svelte';
-	import Row from '$lib/components/table/Row.svelte';
-	import TitleCellSubheader from '$lib/components/table/TitleCellSubheader.svelte';
+	import DataTable from '$lib/components/table_old/DataTable.svelte';
+	import Header from '$lib/components/table_old/Header.svelte';
+	import ImageCell from '$lib/components/table_old/ImageCell.svelte';
+	import TitleCell from '$lib/components/table_old/TitleCell.svelte';
+	import TextCell from '$lib/components/table_old/TextCell.svelte';
+	import LinkButtonCell from '$lib/components/table_old/LinkButtonCell.svelte';
+	import Row from '$lib/components/table_old/Row.svelte';
+	import TitleCellSubheader from '$lib/components/table_old/TitleCellSubheader.svelte';
 
 	export let data: PageData;
 </script>
