@@ -64,8 +64,8 @@
 		</div>
 	</div>
 
-	<div class="flex items-center justify-between mb-4">
-		<div>
+	<div class="flex items-center justify-between mb-4 ">
+		<div class="space-x-4">
 			<a
 				class="btn btn-secondary lg:btn-wide"
 				href="{$page.url.pathname}?search={searchParam}&limit={limit}"
@@ -97,7 +97,7 @@
 			>
 		</div>
 
-		<div>
+		<div class="space-x-4">
 			<a
 				class="btn btn-primary lg:btn-wide"
 				href="{$page.url.pathname}?page={pageNo + 1}&search={searchParam}&limit={limit}"

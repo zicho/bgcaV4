@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
+	import { page } from '$app/stores';
 	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
 	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
 	import type { PageData } from './$types';
@@ -8,18 +10,21 @@
 
 <PageHeaderToolbar title={data.game?.name} subheader={data.game?.yearPublished?.toString()}>
 	{#if data.inCollection}
-	<form method="post" action="/games/manage/remove" class="flex flex-row w-full">
+		<form use:enhance method="post" action="?/remove" class="flex flex-row w-full">
+			<input type="hidden" id="id" name="id" value={data.game?.id} />
+			<input type="hidden" id="redirect_to" name="redirect_to" value={$page.url} />
+			<button class="btn btn-secondary w-full md:btn-wide" type="submit"
+				><i class="fa fa-minus" />Remove from collection</button
+			>
+		</form>
+	{:else}
+	<form use:enhance method="post" action="?/add" class="flex flex-row w-full">
 		<input type="hidden" id="id" name="id" value={data.game?.id} />
-		<button class="btn btn-secondary w-full md:btn-wide" type="submit"
-			><i class="fa fa-minus" />Remove from collection</button
+		<input type="hidden" id="redirect_to" name="redirect_to" value={$page.url} />
+		<button class="btn btn-primary w-full md:btn-wide" type="submit"
+			><i class="fa fa-plus" />Add to collection</button
 		>
 	</form>
-	{:else}
-		<PageHeaderToolbarButton
-			displayText="Add to collection"
-			url="/events/create"
-			icon="fa-plus"
-		/>
 	{/if}
 
 	<PageHeaderToolbarButton displayText="Create event" url="/events/create" icon="fa-calendar" />
