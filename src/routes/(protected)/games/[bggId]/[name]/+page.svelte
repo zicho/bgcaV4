@@ -8,12 +8,12 @@
 
 <PageHeaderToolbar title={data.game?.name} subheader={data.game?.yearPublished?.toString()}>
 	{#if data.inCollection}
-		<PageHeaderToolbarButton
-			displayText="Remove from collection"
-			url="/events/create"
-            className="secondary"
-			icon="fa-minus"
-		/>
+	<form method="post" action="/games/manage/remove" class="flex flex-row w-full">
+		<input type="hidden" id="id" name="id" value={data.game?.id} />
+		<button class="btn btn-secondary w-full md:btn-wide" type="submit"
+			><i class="fa fa-minus" />Remove from collection</button
+		>
+	</form>
 	{:else}
 		<PageHeaderToolbarButton
 			displayText="Add to collection"
