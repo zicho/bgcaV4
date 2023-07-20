@@ -1,5 +1,5 @@
 import { db } from '$lib/db/client';
-import { games } from '$lib/db/schema';
+import { games } from '$lib/db';
 import { eq } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
 import { error, redirect } from '@sveltejs/kit';

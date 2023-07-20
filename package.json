@@ -43,7 +43,7 @@
 		"@lucia-auth/adapter-postgresql": "^1.0.1",
 		"@supabase/supabase-js": "^2.26.0",
 		"@tailwindcss/typography": "^0.5.9",
-		"drizzle-orm": "^0.27.0",
+		"drizzle-orm": "^0.27.2",
 		"drizzle-zod": "^0.4.4",
 		"lucia-auth": "^1.8.0",
 		"notyf": "^3.10.0",

@@ -6,10 +6,7 @@ import {
 	boolean,
 	text,
 	timestamp,
-	serial,
-	integer,
-	smallint,
-	primaryKey
+	serial
 } from 'drizzle-orm/pg-core';
 
 export const auth_user = pgTable('auth_user', {
@@ -55,59 +52,6 @@ export const auth_key = pgTable('auth_key', {
 	expires: bigint('expires', {
 		mode: 'number'
 	})
-});
-
-export const games = pgTable('games', {
-	id: serial('id').primaryKey(),
-	name: text('name').notNull(),
-	slug: text('slug').notNull(),
-	desc: text('description'),
-	yearPublished: smallint('yearPublished'),
-	bggId: integer('bggId'), // NOTE: THIS NEEDS TO HAVE A _UNIQUE_ CONSTRAINT IN DATABASE. MUST BE ADDED MANUALLY. DRIZZLE NOT SUPPORTING IT! (YET)
-	minNumberOfPlayers: smallint('minNumberOfPlayers'),
-	maxNumberOfPlayers: smallint('maxNumberOfPlayers'),
-	averageRating: text('averageRating'),
-	thumbnailUrl: text('thumbnailUrl'),
-	imageUrl: text('imageUrl')
-});
-
-export const usersRelations = relations(auth_user, ({ many }) => ({
-	usersToGames: many(usersToGames)
-}));
-
-export const gamesRelations = relations(games, ({ many }) => ({
-	usersToGames: many(usersToGames)
-}));
-
-export const usersToGames = pgTable(
-	'users_to_games',
-	{
-		userId: varchar('user_id')
-			.notNull()
-			.references(() => auth_user.id),
-		gameId: serial('game_id')
-			.notNull()
-			.references(() => games.id)
-	},
-	(t) => ({
-		pk: primaryKey(t.userId, t.gameId)
-	})
-);
-
-export const usersToGamesRelations = relations(usersToGames, ({ one }) => ({
-	group: one(games, {
-		fields: [usersToGames.gameId],
-		references: [games.id]
-	}),
-	user: one(auth_user, {
-		fields: [usersToGames.userId],
-		references: [auth_user.id]
-	})
-}));
-
-export const invites = pgTable('invites', {
-	userId: varchar('user_id').references(() => auth_user.id),
-	gameId: serial('game_id').references(() => games.id)
 });
 
 export const userProfileRelations = relations(auth_user, ({ one }) => ({

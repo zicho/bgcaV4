@@ -1,5 +1,5 @@
 import { db } from '$lib/db/client';
-import { games } from '$lib/db/schema';
+import { games } from '$lib/db';
 import { parseIntoGame, type IBggGameDetailed } from '$lib/interfaces/bgg/IBggGameDetailed';
 import { eq } from 'drizzle-orm';
 

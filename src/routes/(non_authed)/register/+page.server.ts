@@ -7,7 +7,7 @@ import { parseLuciaError } from '$lib/functions/parseLuciaError';
 import type { LuciaError } from 'lucia-auth';
 import { redirect } from 'sveltekit-flash-message/server';
 import { db } from '$lib/db/client';
-import { auth_user } from '$lib/db/schema';
+import { auth_user } from '$lib/db';
 import { eq } from 'drizzle-orm';
 
 export const load = (async (event) => {

@@ -1,6 +1,6 @@
 import { eq, and, type AnyColumn } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
-import { games, usersToGames } from '$lib/db/schema';
+import { games, usersToGames } from '$lib/db';
 import { db } from '$lib/db/client';
 import { isNumber } from '$lib/functions/validators/isNumber';
 import { error, type Actions } from '@sveltejs/kit';

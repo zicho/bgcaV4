@@ -1,5 +1,5 @@
 import { db } from '$lib/db/client';
-import { games, usersToGames } from '$lib/db/schema';
+import { games, usersToGames } from '$lib/db';
 import { parseIntoGame, type IBggGameSimple } from '$lib/interfaces/bgg/IBggGameSimple';
 import { inArray } from 'drizzle-orm';
 

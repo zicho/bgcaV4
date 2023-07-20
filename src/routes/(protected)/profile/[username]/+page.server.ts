@@ -2,8 +2,8 @@ import type { PageServerLoad } from './$types';
 import { SECRET_PG_HOST } from '$env/static/private';
 import { drizzle } from 'drizzle-orm/postgres-js';
 import postgres from 'postgres';
-import { auth_user, userProfiles } from '$lib/db/schema';
-import * as schema from '$lib/db/schema';
+import { auth_user, userProfiles } from '$lib/db';
+import * as schema from '$lib/db';
 import { eq } from 'drizzle-orm';
 import { error } from '@sveltejs/kit';
 

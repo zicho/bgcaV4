@@ -1,6 +1,6 @@
 import { db } from '$lib/db/client';
 import type { PageServerLoad } from './$types';
-import { games as g } from '$lib/db/schema';
+import { games as g } from '$lib/db';
 import { ilike, sql } from 'drizzle-orm';
 import { redirect, type Actions } from '@sveltejs/kit';
 import { isNumber } from '$lib/functions/validators/isNumber';

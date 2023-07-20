@@ -1,5 +1,5 @@
 import { db } from '$lib/db/client';
-import { auth_user } from '$lib/db/schema';
+import { auth_user } from '$lib/db';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {

@@ -4,9 +4,9 @@ import { superValidate } from 'sveltekit-superforms/server';
 import { upsertProfileSchema } from '$lib/validationSchemas/upsertProfileSchema';
 import postgres from 'postgres';
 import { SECRET_PG_HOST } from '$env/static/private';
-import * as schema from '$lib/db/schema';
+import * as schema from '$lib/db';
 import { drizzle } from 'drizzle-orm/postgres-js';
-import { auth_user, userProfiles } from '$lib/db/schema';
+import { auth_user, userProfiles } from '$lib/db';
 import { eq } from 'drizzle-orm';
 import { redirect } from 'sveltekit-flash-message/server';
 
