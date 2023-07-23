@@ -14,7 +14,7 @@ export const games = pgTable('games', {
 	slug: text('slug').notNull(),
 	desc: text('description'),
 	yearPublished: smallint('yearPublished'),
-	bggId: integer('bggId'), // NOTE: THIS NEEDS TO HAVE A _UNIQUE_ CONSTRAINT IN DATABASE. MUST BE ADDED MANUALLY. DRIZZLE NOT SUPPORTING IT! (YET)
+	bggId: integer('bggId').unique(), // NOTE: THIS NEEDS TO HAVE A _UNIQUE_ CONSTRAINT IN DATABASE. MUST BE ADDED MANUALLY. DRIZZLE NOT SUPPORTING IT! (YET)
 	minNumberOfPlayers: smallint('minNumberOfPlayers'),
 	maxNumberOfPlayers: smallint('maxNumberOfPlayers'),
 	averageRating: text('averageRating'),

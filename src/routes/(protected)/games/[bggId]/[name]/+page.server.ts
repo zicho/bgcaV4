@@ -1,11 +1,11 @@
 import { eq, and, type AnyColumn } from 'drizzle-orm';
 import type { PageServerLoad } from './$types';
-import { games, usersToGames } from '$lib/db';
 import { db } from '$lib/db/client';
 import { isNumber } from '$lib/functions/validators/isNumber';
 import { error, type Actions } from '@sveltejs/kit';
 import { importBggGame } from '$lib/functions/importBggGame';
 import { redirect } from 'sveltekit-flash-message/server';
+import { usersToGames, games } from '$lib/db/schema/games';
 
 export const load = (async ({ params, parent }) => {
 	if (!isNumber(params.bggId)) {
@@ -75,12 +75,10 @@ export const actions: Actions = {
 		const url = form.get('redirect_to') as string;
 		const { user } = await locals.auth.validateUser();
 
-		await db
-			.insert(usersToGames)
-			.values({
-				userId: user.user_id,
-				gameId: id
-			});
+		await db.insert(usersToGames).values({
+			userId: user.user_id,
+			gameId: id
+		});
 
 		throw redirect(
 			302,

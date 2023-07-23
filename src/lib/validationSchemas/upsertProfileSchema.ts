@@ -1,4 +1,4 @@
-import { userProfiles } from '$lib/db';
+import { userProfiles } from '$lib/db/schema/users';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
 

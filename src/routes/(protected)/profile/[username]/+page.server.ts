@@ -1,18 +1,13 @@
 import type { PageServerLoad } from './$types';
-import { SECRET_PG_HOST } from '$env/static/private';
-import { drizzle } from 'drizzle-orm/postgres-js';
-import postgres from 'postgres';
-import { auth_user, userProfiles } from '$lib/db';
-import * as schema from '$lib/db';
+import { auth_user, userProfiles } from '$lib/db/schema/users';
+
 import { eq } from 'drizzle-orm';
 import { error } from '@sveltejs/kit';
+import { db } from '$lib/db/client';
 
 export const load = (async ({ parent, url, params }) => {
 	let username = (await parent()).user.username;
 	const isProfileYours = username === params.username;
-
-	const client = postgres(SECRET_PG_HOST);
-	const db = drizzle(client, { schema });
 
 	const userAndProfile = await db
 		.select({

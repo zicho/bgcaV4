@@ -3,16 +3,18 @@
 	import type { PageData } from './(protected)/$types';
 	import { realtimeStore } from '$lib/stores/realTimeStore';
 	import 'notyf/notyf.min.css';
-	import NavbarLink from '$lib/components/ui/NavbarLink.svelte';
 	import { initFlash } from 'sveltekit-flash-message/client';
 	import { page } from '$app/stores';
 	import { Toaster } from 'svelte-sonner';
 	import FlashMessage from '$lib/components/ui/FlashMessage.svelte';
 	import { afterNavigate } from '$app/navigation';
+	import Navbar from '$lib/components/ui/Navbar.svelte';
 
 	export let data: PageData;
 
-	$: data.user && realtimeStore.sub(data.user.username);
+	$: ({ user } = data);
+	$: data.user && realtimeStore.sub(data.user?.username);
+
 	const flash = initFlash(page);
 
 	afterNavigate((nav) => {
@@ -23,31 +25,7 @@
 </script>
 
 <Toaster richColors />
-
-<div class="navbar bg-neutral text-neutral-content sticky top-0 z-50">
-	<div class="flex-1">
-		<a href="/" class="btn btn-ghost normal-case text-xl">BGCA</a>
-	</div>
-
-	<div class="flex-none">
-		<ul class="menu menu-horizontal px-1 bg-neutral text-neutral-content">
-			{#if data.user}
-				<NavbarLink
-					url="/profile/{data.user.username}"
-					displayText={data.user.username}
-					aria="View and edit user profile"
-					icon="fa-user"
-				/>
-				<NavbarLink url="/games" displayText="Games" aria="Find and organize games" icon="fa-dice" />
-				<NavbarLink url="/events" displayText="Events" aria="Find and organize events" icon="fa-calendar-alt" />
-				<NavbarLink url="/logout" displayText="Sign Out" aria="Sign out" icon="fa-sign-out" />
-			{:else}
-				<NavbarLink url="/login" displayText="Login" aria="Log in" icon="fa-sign-in" />
-				<NavbarLink url="/register" displayText="Register" aria="Register a new user" icon="fa-user-plus" />
-			{/if}
-		</ul>
-	</div>
-</div>
+<Navbar {user} />
 
 {#if $flash}
 	<FlashMessage message={$flash.message} type={$flash.type} />

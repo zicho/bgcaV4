@@ -5,6 +5,9 @@
 	export let icon: string = 'fa-check';
 </script>
 
-<li>
-	<a href={url} aria-label={aria} class="hover:text-neutral-content"><i class="fa {icon}" /><span class="hidden sm:block">{displayText}</span></a>
+<li class="flex justify-start ">
+	<a href={url} aria-label={aria} class="lg:hover:text-neutral-content flex items-center">
+		<i class={`fa ${icon} w-8 md:w-auto text-xl md:text-base` } />
+		<span class="text-xl md:text-base">{displayText}</span>
+	</a>
 </li>

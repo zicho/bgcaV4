@@ -2,16 +2,11 @@ import { type Actions, fail } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { superValidate } from 'sveltekit-superforms/server';
 import { upsertProfileSchema } from '$lib/validationSchemas/upsertProfileSchema';
-import postgres from 'postgres';
-import { SECRET_PG_HOST } from '$env/static/private';
-import * as schema from '$lib/db';
-import { drizzle } from 'drizzle-orm/postgres-js';
-import { auth_user, userProfiles } from '$lib/db';
+
+import { userProfiles } from '$lib/db/schema/users';
 import { eq } from 'drizzle-orm';
 import { redirect } from 'sveltekit-flash-message/server';
-
-const client = postgres(SECRET_PG_HOST);
-const db = drizzle(client, { schema });
+import { db } from '$lib/db/client';
 
 export const load = (async (event) => {
 	let { username, user_id } = (await event.parent()).user;
