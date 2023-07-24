@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/stores';
-
 	export let limit: number = 10;
 	export let queryParam: string = 'search';
 	export let searchParam: string = '';
@@ -13,6 +13,7 @@
 	let timer: NodeJS.Timeout | null = null;
 	let searchQuery: string = '';
 	let searchForm: HTMLFormElement;
+	let inputField: HTMLInputElement;
 
 	function startTimer() {
 		if (timer) {
@@ -28,61 +29,69 @@
 		clearTimeout(timer as NodeJS.Timeout);
 		startTimer();
 	}
+
+	afterNavigate(() => {
+		inputField.focus();
+	});
 </script>
 
 <div class="overflow-x-auto">
-	<div class="flex items-center justify-between py-4 w-auto flex flex-row items-center">
+	<div class="flex flex-col xl:flex-row xl:space-y-0 space-y-4  py-4 items-center justify-between ">
 		<form
 			id="searchForm"
 			bind:this={searchForm}
 			on:change={() => searchForm.requestSubmit()}
-			class="space-x-2"
+			class="space-x-0 space-y-2 flex-col xl:space-y-0 xl:space-x-2 xl:flex-row w-full"
 		>
-			<label for={queryParam} class="label-text">Search title</label>
+			<label for={queryParam} class="label-text ">Search title</label>
 			<input
+				bind:this={inputField}
 				name={queryParam}
 				id={queryParam}
 				bind:value={searchQuery}
 				on:input={resetTimer}
 				placeholder="Search by title"
 				aria-label="Search by title"
-				class="input input-bordered w-full md:w-auto mr-1"
+				class="input input-bordered w-full md:w-auto"
 			/>
 			<label for="limit" class="label-text">Results per page</label>
-			<select name="limit" id="limit" class="select select-bordered">
+			<select name="limit" id="limit" class="select select-bordered xl:mt-0 w-full xl:w-auto">
 				<option selected={limit == 10}>10</option>
 				<option selected={limit == 25}>25</option>
 				<option selected={limit == 50}>50</option>
 				<option selected={limit == 100}>100</option>
 			</select>
 		</form>
-		<div class="mr-auto ml-4">
+		<div class="mr-auto flex items-center w-full xl:w-auto ">
 			<!-- If user does not have JS, enable this form by adding a button (not needed for JS users!) -->
-			<noscript>
-				<button type="submit" form="searchForm" class="btn btn-primary">Update</button>
-			</noscript>
+			<!-- <noscript> -->
+				<button type="submit" form="searchForm" class="w-full xl:w-auto  btn btn-primary">Update</button>
+			<!-- </noscript> -->
 		</div>
 	</div>
 
-	<div class="flex items-center justify-between mb-4 ">
-		<div class="space-x-4">
+	<div class="flex items-center justify-between mb-4 flex-col xl:space-x-2 xl:flex-row">
+		<div class="space-x-0 xl:space-x-4 space-y-2 xl:space-y-0 flex flex-col xl:flex-row w-full">
 			<a
-				class="btn btn-secondary lg:btn-wide"
+				class="btn btn-secondary flex-1"
 				href="{$page.url.pathname}?search={searchParam}&limit={limit}"
-				class:btn-disabled={pageNo == 1}>First</a
+				class:btn-disabled={pageNo == 1}
 			>
+				First
+			</a>
 			<a
-				class="btn btn-primary lg:btn-wide"
+				class="btn btn-primary flex-1"
 				href="{$page.url.pathname}?page={pageNo - 1}&search={searchParam}&limit={limit}"
 				class:btn-disabled={pageNo == 1 || totalPages == 0}
-				>Previous
+			>
+				Previous
 			</a>
 		</div>
-
-		<div class="flex items-center">
+	
+		<div class="py-4 xl:py-0 flex items-center justify-center w-full">
 			<span class="mr-2">Page</span>
-
-			<form method="get">
+	
+			<form method="get" >
 				<label for="page" class="hidden" />
 				<input
 					class="w-16 px-2 py-1 border border-gray-300 rounded-md"
@@ -92,26 +101,31 @@
 					value={pageNo}
 				/>
 			</form>
-			<span class="ml-2"
-				>of {totalPages} <span class="label-text font-thin">({totalHits} hits)</span></span
-			>
+			<span class="ml-2">
+				of {totalPages} <span class="label-text font-thin">({totalHits} hits)</span>
+			</span>
 		</div>
-
-		<div class="space-x-4">
+	
+		<div class="space-x-0 xl:space-x-4 space-y-2 xl:space-y-0 flex flex-col xl:flex-row w-full justify-end">
 			<a
-				class="btn btn-primary lg:btn-wide"
+				class="btn btn-primary flex-1"
 				href="{$page.url.pathname}?page={pageNo + 1}&search={searchParam}&limit={limit}"
-				class:btn-disabled={pageNo == totalPages || totalPages == 0}>Next</a
+				class:btn-disabled={pageNo == totalPages || totalPages == 0}
 			>
+				Next
+			</a>
 			<a
-				class="btn btn-secondary lg:btn-wide"
+				class="btn btn-secondary flex-1"
 				href="{$page.url.pathname}?page={totalPages}&search={searchParam}&limit={limit}"
-				class:btn-disabled={pageNo == totalPages || totalPages == 0}>Last</a
+				class:btn-disabled={pageNo == totalPages || totalPages == 0}
 			>
+				Last
+			</a>
 		</div>
 	</div>
+	
 	{#if resultsAreEmpty}
-		<div class="prose-lg text-center mt-16">
+		<div class="prose-xl text-center mt-16">
 			<span>{resultsAreEmptyMessage}</span>
 		</div>
 	{:else}

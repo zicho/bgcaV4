@@ -13,8 +13,6 @@
 		authOnly: boolean;
 	}
 
-	let navbarLinks: INavbarLink[];
-
 	// reactive to changes in user state
 	$: navbarLinks = [
 		{
@@ -59,7 +57,7 @@
 			icon: 'fa-user-plus',
 			authOnly: false
 		}
-	];
+	] satisfies INavbarLink[];
 
 	$: menuDataAuthenticated = navbarLinks.filter((item) => item.authOnly);
 	$: menuDataNotAuthenticated = navbarLinks.filter((item) => !item.authOnly);
