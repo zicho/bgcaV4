@@ -37,7 +37,7 @@ export const load = (async ({ url }) => {
 
 	const totalPages = Math.ceil(totalHits / limit);
 
-	if ((pageNo > totalPages || pageNo < 1) && !searchParam) {
+	if ((pageNo > totalPages || pageNo < 1) && !searchParam && totalPages != 0) {
 		throw redirect(302, `/games`);
 	}
 
