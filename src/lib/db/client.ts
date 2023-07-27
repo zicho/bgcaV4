@@ -6,5 +6,3 @@ import * as schema from '$lib/db/schema/_index';
 const client = postgres(SECRET_PG_HOST);
 
 export const db = drizzle(client, { schema });
-
-

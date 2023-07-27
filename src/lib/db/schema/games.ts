@@ -3,7 +3,7 @@ import {
 	pgTable, varchar, text, serial,
 	integer,
 	smallint,
-	primaryKey
+	primaryKey, unique
 } from 'drizzle-orm/pg-core';
 import { auth_user } from './users';
 import { events } from './events';

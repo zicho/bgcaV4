@@ -6,6 +6,9 @@ import { redirect, type Actions } from '@sveltejs/kit';
 import { isNumber } from '$lib/functions/validators/isNumber';
 
 export const load = (async ({ url }) => {
+
+	// todo: refactor this to avoid redundancy where using tables
+
 	let searchParam = url.searchParams.get('search');
 	let pageNo = Number(url.searchParams.get('page'));
 	let limit = Number(url.searchParams.get('limit'));
@@ -37,7 +40,7 @@ export const load = (async ({ url }) => {
 
 	const totalPages = Math.ceil(totalHits / limit);
 
-	if ((pageNo > totalPages || pageNo < 1) && !searchParam && totalPages != 0) {
+	if ((pageNo > totalPages || pageNo < 1) && !searchParam && totalPages != 0) { // totalpages != 0 is needed to not crash when getting empty results, should get a nicer fix
 		throw redirect(302, `/games`);
 	}
 
