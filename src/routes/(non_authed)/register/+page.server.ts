@@ -33,30 +33,9 @@ export const actions: Actions = {
 			return message(form, 'Invalid password');
 		}
 
-		// TODO: update lucia. it seems to create user even when error gets thrown for duplicate username. do workaround for now
-
-		// workaround
-		// const existingUser = await db.query.auth_user.findFirst({
-		// 	columns: {
-		// 		username: true
-		// 	},
-		// 	where: eq(auth_user.username, username)
-		// });
-
-		// if (existingUser) {
-		// 	return message(form, 'Username already taken');
-		// }
-
-		// console.dir('user: ' + existingUser);
-		// END workaround
-
 		try {
-			const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-			const userId = generateRandomString(15, alphabet);
-
-			console.dir('creating user');
 			const user = await auth.createUser({
-				userId: userId,
+				userId: generateRandomString(15),
 				key: {
 					providerId: 'username', // auth method
 					providerUserId: username.toLowerCase(), // unique id when using "username" auth method
@@ -72,7 +51,7 @@ export const actions: Actions = {
 				attributes: {}
 			});
 
-			locals.auth.setSession(session); 
+			locals.auth.setSession(session);
 
 			throw redirect(
 				302,
@@ -91,34 +70,5 @@ export const actions: Actions = {
 			console.dir(e); // todo: log?
 			return message(form, 'Failed to create user');
 		}
-
-		// const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-
-		// try {
-		// 	const userId = generateRandomString(15, alphabet);
-
-		// 	await auth.createUser({
-		// 		userId: userId,
-		// 		key: {
-		// 			providerId: 'username',
-		// 			providerUserId: username,
-		// 			password
-		// 		},
-		// 		attributes: {
-		// 			username
-		// 		}
-		// 	});
-
-		// 	await auth.createSession({
-		// 		userId,
-		// 		attributes: {
-		// 			username
-		// 		},
-		// 	});
-		// } catch (err) {
-		// 	// console.dir(err);
-		// 	console.dir("prprporpåpkpewoq")
-		// 	return message(form, parseLuciaError(err as unknown as LuciaError));
-		// }
 	}
 };
