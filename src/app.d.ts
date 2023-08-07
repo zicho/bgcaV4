@@ -1,7 +1,7 @@
 declare global {
 	namespace App {
 		interface Locals {
-			auth: import('lucia').AuthRequest;
+			auth: import('lucia').AuthRequest<IUser>;
 		}
 		interface PageData {
 			flash?: {
