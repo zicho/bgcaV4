@@ -54,7 +54,7 @@ export const actions: Actions = {
 
 		await db
 			.delete(usersToGames)
-			.where(and(eq(usersToGames.gameId, id), eq(usersToGames.userId, user.user_id)));
+			.where(and(eq(usersToGames.gameId, id), eq(usersToGames.userId, user.userId)));
 
 		throw redirect(
 			302,

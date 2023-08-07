@@ -6,7 +6,7 @@ import { isNumber } from '$lib/functions/validators/isNumber';
 import { redirect } from '@sveltejs/kit';
 
 export const load = (async ({ parent, url }) => {
-	let user_id = (await parent()).user.user_id;
+	let user_id = (await parent()).user.userId;
 
 	let searchParam = url.searchParams.get('search');
 	let pageNo = Number(url.searchParams.get('page'));
