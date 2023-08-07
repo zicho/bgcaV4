@@ -45,7 +45,6 @@ export const auth_key = pgTable('auth_key', {
 	})
 		.notNull()
 		.references(() => auth_user.id),
-	primaryKey: boolean('primary_key').notNull(),
 	hashedPassword: varchar('hashed_password', {
 		length: 255
 	}),

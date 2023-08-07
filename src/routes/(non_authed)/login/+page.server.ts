@@ -3,7 +3,7 @@ import { auth } from '$lib/server/lucia';
 import { loginSchema } from '$lib/validationSchemas/loginSchema';
 import { message, superValidate } from 'sveltekit-superforms/server';
 import { parseLuciaError } from '$lib/functions/parseLuciaError';
-import type { LuciaError } from 'lucia-auth';
+import { LuciaError } from 'lucia';
 import type { PageServerLoad } from './$types';
 
 export const load = (async (event) => {
@@ -21,12 +21,23 @@ export const actions: Actions = {
 		const { username, password } = form.data;
 
 		try {
-			const key = await auth.useKey('username', username, password);
-			const session = await auth.createSession(key.userId);
-			locals.auth.setSession(session);
-		} catch (err) {
-			console.dir(err);
-			return message(form, parseLuciaError(err as unknown as LuciaError));
+			const key = await auth.useKey('username', username.toLowerCase(), password);
+			const session = await auth.createSession({
+				userId: key.userId,
+				attributes: {}
+			});
+			locals.auth.setSession(session); // set session cookie
+		} catch (e) {
+			if (
+				e instanceof LuciaError &&
+				(e.message === 'AUTH_INVALID_KEY_ID' || e.message === 'AUTH_INVALID_PASSWORD')
+			) {
+				// user does not exist
+				// or invalid password
+				return message(form, 'Incorrect username or password.');
+			}
+
+			return message(form, 'An unknown error occurred.');
 		}
 
 		throw redirect(302, '/');

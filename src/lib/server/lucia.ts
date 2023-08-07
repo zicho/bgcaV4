@@ -1,27 +1,26 @@
-import { drizzle } from 'drizzle-orm/node-postgres';
 import { SECRET_PG_HOST } from '$env/static/private';
 import { dev } from '$app/environment';
-import lucia from 'lucia-auth';
+import { lucia } from 'lucia';
 import postgres from 'pg';
-import { sveltekit } from 'lucia-auth/middleware';
+
 import { pg } from '@lucia-auth/adapter-postgresql';
+import { sveltekit } from 'lucia/middleware';
 
 const connectionPool = new postgres.Pool({
 	connectionString: SECRET_PG_HOST
-	// ...
 });
 
-const db = drizzle(connectionPool);
-
 export const auth = lucia({
-	adapter: pg(connectionPool),
+	adapter: pg(connectionPool, {
+		user: 'auth_user',
+		key: 'auth_key',
+		session: 'auth_session'
+	}),
 	env: dev ? 'DEV' : 'PROD',
 	middleware: sveltekit(),
-	transformDatabaseUser: (user) => {
+	getUserAttributes: (data) => {
 		return {
-			...user,
-			user_id: user.id,
-			username: user.username
+			username: data.username
 		};
 	}
 });

@@ -19,7 +19,7 @@ export const actions: Actions = {
 		const form = await superValidate(request, bggImportSchema);
 		if (!form.valid) return fail(400, { form });
 
-		const { user } = await locals.auth.validateUser();
+		const { user } = await locals.auth.validate();
 
 		const { nickname } = form.data;
 

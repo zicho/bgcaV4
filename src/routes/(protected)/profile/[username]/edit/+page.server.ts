@@ -9,18 +9,26 @@ import { redirect } from 'sveltekit-flash-message/server';
 import { db } from '$lib/db/client';
 
 export const load = (async (event) => {
-	let { username, user_id } = (await event.parent()).user;
+	let { username, userId } = (await event.parent()).user;
+	let u = (await event.parent()).user;
+
+	console.dir(u)
 	if (event.params.username !== username) throw redirect(302, `/profile/${username}`);
 
 	const form = await superValidate(event, upsertProfileSchema);
+
+	
+	// console.dir(user_id)
 
 	const data = await db.query.userProfiles.findFirst({
 		columns: {
 			description: true,
 			signature: true
 		},
-		where: eq(userProfiles.userId, user_id)
+		where: eq(userProfiles.userId, userId)
 	});
+
+	console.dir(data)
 
 	form.data = { ...data };
 
@@ -36,10 +44,10 @@ export const actions: Actions = {
 		const form = await superValidate(request, upsertProfileSchema);
 		if (!form.valid) return fail(400, { form });
 
-		const { user } = await locals.auth.validateUser();
+		const { user } = await locals.auth.validate();
 
 		const data = await db.query.userProfiles.findFirst({
-			where: eq(userProfiles.userId, user.user_id)
+			where: eq(userProfiles.userId, user.userId)
 		});
 
 		const parsedFormModel = upsertProfileSchema.parse({
@@ -50,7 +58,7 @@ export const actions: Actions = {
 			.insert(userProfiles)
 			.values({
 				id: data?.id,
-				userId: user.user_id,
+				userId: user.userId,
 				...parsedFormModel
 			})
 			.onConflictDoUpdate({
