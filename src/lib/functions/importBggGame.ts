@@ -14,7 +14,7 @@ export async function importBggGame(bggId: number) {
 		const response = await fetch(`https://bgg-json.azurewebsites.net/thing/${bggId}`);
 		const data = await response.json();
 		const model = parseIntoGame(data);
-		
+
 		const game = await db
 			.update(games)
 			.set({ desc: model.description })
@@ -22,7 +22,6 @@ export async function importBggGame(bggId: number) {
 			.returning();
 
 		return game;
-		
 	} catch (error) {
 		console.error('Error:', error);
 		return {

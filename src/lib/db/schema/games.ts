@@ -1,9 +1,13 @@
 import { relations } from 'drizzle-orm';
 import {
-	pgTable, varchar, text, serial,
+	pgTable,
+	varchar,
+	text,
+	serial,
 	integer,
 	smallint,
-	primaryKey, unique
+	primaryKey,
+	unique
 } from 'drizzle-orm/pg-core';
 import { auth_user } from './users';
 import { events } from './events';
@@ -59,5 +63,5 @@ export const usersToGamesRelations = relations(usersToGames, ({ one }) => ({
 export const game_invites = pgTable('game_invites', {
 	userId: varchar('user_id').references(() => auth_user.id),
 	eventId: serial('game_id').references(() => events.id),
-	inviteGreeting: varchar('inviteText', { length: 80 }),
+	inviteGreeting: varchar('inviteText', { length: 80 })
 });

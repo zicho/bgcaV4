@@ -33,8 +33,13 @@
 		{#if data.profile.description}
 			{data.profile.description}
 		{:else if data.isProfileYours}
-			<p><i>You have not written a description yet! <a href="/profile/{data.profile.username}/edit">Do it!</a></i></p>
-			
+			<p>
+				<i
+					>You have not written a description yet! <a href="/profile/{data.profile.username}/edit"
+						>Do it!</a
+					></i
+				>
+			</p>
 		{:else}
 			<i>This user has not written a description yet :(</i>
 		{/if}

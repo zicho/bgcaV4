@@ -18,13 +18,13 @@
 			>
 		</form>
 	{:else}
-	<form use:enhance method="post" action="?/add" class="flex flex-row w-full">
-		<input type="hidden" id="id" name="id" value={data.game?.id} />
-		<input type="hidden" id="redirect_to" name="redirect_to" value={$page.url} />
-		<button class="btn btn-primary w-full md:btn-wide" type="submit"
-			><i class="fa fa-plus" />Add to collection</button
-		>
-	</form>
+		<form use:enhance method="post" action="?/add" class="flex flex-row w-full">
+			<input type="hidden" id="id" name="id" value={data.game?.id} />
+			<input type="hidden" id="redirect_to" name="redirect_to" value={$page.url} />
+			<button class="btn btn-primary w-full md:btn-wide" type="submit"
+				><i class="fa fa-plus" />Add to collection</button
+			>
+		</form>
 	{/if}
 
 	<PageHeaderToolbarButton displayText="Create event" url="/events/create" icon="fa-calendar" />

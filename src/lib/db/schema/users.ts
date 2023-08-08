@@ -1,13 +1,5 @@
 import { relations } from 'drizzle-orm';
-import {
-	pgTable,
-	bigint,
-	varchar,
-	boolean,
-	text,
-	timestamp,
-	serial
-} from 'drizzle-orm/pg-core';
+import { pgTable, bigint, varchar, boolean, text, timestamp, serial } from 'drizzle-orm/pg-core';
 
 export const auth_user = pgTable('auth_user', {
 	id: varchar('id', {

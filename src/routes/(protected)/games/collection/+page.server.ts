@@ -34,9 +34,7 @@ export const load = (async ({ parent, url }) => {
 		await db
 			.select({ count: sql<number>`count(*)` })
 			.from(usersToGames)
-			.where(and(
-				eq(usersToGames.userId, user_id),
-				ilike(games.name, `%${searchParam}%`)))
+			.where(and(eq(usersToGames.userId, user_id), ilike(games.name, `%${searchParam}%`)))
 			.leftJoin(games, eq(usersToGames.gameId, games.id))
 	)[0].count;
 
@@ -58,9 +56,7 @@ export const load = (async ({ parent, url }) => {
 			yearPublished: games.yearPublished
 		})
 		.from(usersToGames)
-		.where(and(
-			eq(usersToGames.userId, user_id),
-			ilike(games.name, `%${searchParam}%`)))
+		.where(and(eq(usersToGames.userId, user_id), ilike(games.name, `%${searchParam}%`)))
 		.leftJoin(games, eq(usersToGames.gameId, games.id))
 		.limit(limit)
 		.offset((pageNo - 1) * limit);

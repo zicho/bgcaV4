@@ -36,14 +36,14 @@
 </script>
 
 <div class="overflow-x-auto">
-	<div class="flex flex-col xl:flex-row xl:space-y-0 space-y-4  py-4 items-center justify-between ">
+	<div class="flex flex-col xl:flex-row xl:space-y-0 space-y-4 py-4 items-center justify-between">
 		<form
 			id="searchForm"
 			bind:this={searchForm}
 			on:change={() => searchForm.requestSubmit()}
 			class="space-x-0 space-y-2 flex-col xl:space-y-0 xl:space-x-2 xl:flex-row w-full"
 		>
-			<label for={queryParam} class="label-text ">Search title</label>
+			<label for={queryParam} class="label-text">Search title</label>
 			<input
 				bind:this={inputField}
 				name={queryParam}
@@ -62,10 +62,12 @@
 				<option selected={limit == 100}>100</option>
 			</select>
 		</form>
-		<div class="mr-auto flex items-center w-full xl:w-auto ">
+		<div class="mr-auto flex items-center w-full xl:w-auto">
 			<!-- If user does not have JS, enable this form by adding a button (not needed for JS users!) -->
 			<!-- <noscript> -->
-				<button type="submit" form="searchForm" class="w-full xl:w-auto  btn btn-primary">Update</button>
+			<button type="submit" form="searchForm" class="w-full xl:w-auto btn btn-primary"
+				>Update</button
+			>
 			<!-- </noscript> -->
 		</div>
 	</div>
@@ -87,11 +89,11 @@
 				Previous
 			</a>
 		</div>
-	
+
 		<div class="py-4 xl:py-0 flex items-center justify-center w-full">
 			<span class="mr-2">Page</span>
-	
-			<form method="get" >
+
+			<form method="get">
 				<label for="page" class="hidden" />
 				<input
 					class="w-16 px-2 py-1 border border-gray-300 rounded-md"
@@ -105,8 +107,10 @@
 				of {totalPages} <span class="label-text font-thin">({totalHits} hits)</span>
 			</span>
 		</div>
-	
-		<div class="space-x-0 xl:space-x-4 space-y-2 xl:space-y-0 flex flex-col xl:flex-row w-full justify-end">
+
+		<div
+			class="space-x-0 xl:space-x-4 space-y-2 xl:space-y-0 flex flex-col xl:flex-row w-full justify-end"
+		>
 			<a
 				class="btn btn-primary flex-1"
 				href="{$page.url.pathname}?page={pageNo + 1}&search={searchParam}&limit={limit}"
@@ -123,7 +127,7 @@
 			</a>
 		</div>
 	</div>
-	
+
 	{#if resultsAreEmpty}
 		<div class="prose-xl text-center mt-16">
 			<span>{resultsAreEmptyMessage}</span>

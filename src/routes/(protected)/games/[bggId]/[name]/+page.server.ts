@@ -51,7 +51,7 @@ export const actions: Actions = {
 
 		const id = Number(form.get('id'));
 		const url = form.get('redirect_to') as string;
-		const { user } = await locals.auth.validate() as Session;
+		const { user } = (await locals.auth.validate()) as Session;
 
 		await db
 			.delete(usersToGames)
@@ -74,7 +74,7 @@ export const actions: Actions = {
 
 		const id = Number(form.get('id'));
 		const url = form.get('redirect_to') as string;
-		const { user } = await locals.auth.validate() as Session;
+		const { user } = (await locals.auth.validate()) as Session;
 
 		await db.insert(usersToGames).values({
 			userId: user.userId,

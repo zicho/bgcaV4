@@ -35,5 +35,5 @@ export const eventPlayersRelations = relations(event_players, ({ one }) => ({
 	player: one(auth_user, {
 		fields: [event_players.playerId],
 		references: [auth_user.id]
-	}),
+	})
 }));

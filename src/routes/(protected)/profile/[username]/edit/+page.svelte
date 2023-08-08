@@ -30,9 +30,9 @@
 					{...$constraints.description}
 					class="textarea textarea-bordered h-36 w-full"
 				/>
-                <label for="description" class="label">
-                    <span class="label-text-alt">This text introduces you to other users on this site</span>
-                  </label>
+				<label for="description" class="label">
+					<span class="label-text-alt">This text introduces you to other users on this site</span>
+				</label>
 				<div>
 					<label class="label" for="signature">
 						<span class="font-bold">Signature</span>
@@ -48,9 +48,9 @@
 						{...$constraints.signature}
 						class="input input-bordered w-full"
 					/>
-                    <label for="signature" class="label">
-                        <span class="label-text-alt">Your signature gets added to posts you make</span>
-                      </label>
+					<label for="signature" class="label">
+						<span class="label-text-alt">Your signature gets added to posts you make</span>
+					</label>
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary w-full mt-8">Save</button>

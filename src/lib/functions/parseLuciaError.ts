@@ -7,7 +7,7 @@ export function parseLuciaError(err: LuciaError): string {
 		case 'AUTH_INVALID_KEY_ID':
 			return 'This user does not exist';
 		case 'AUTH_INVALID_PASSWORD':
-            return 'Incorrect password';
+			return 'Incorrect password';
 		default:
 			return 'Unknown error';
 	}

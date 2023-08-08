@@ -105,10 +105,7 @@
 		<div class="drawer-side">
 			<label for="mobile-menu-open" class="drawer-overlay" />
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-			<ul
-				class="menu p-4 w-80 h-full bg-base-200 text-base-content"
-				on:click={closeMenu}
-			>
+			<ul class="menu p-4 w-80 h-full bg-base-200 text-base-content" on:click={closeMenu}>
 				{#if user}
 					{#each menuDataAuthenticated as link}
 						<NavbarLink

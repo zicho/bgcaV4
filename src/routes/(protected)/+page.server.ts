@@ -3,16 +3,15 @@ import { auth_user } from '$lib/db/schema/users';
 import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
+	const users = await db
+		.select({
+			username: auth_user.username
+		})
+		.from(auth_user)
+		.orderBy(auth_user.createdAt)
+		.limit(10);
 
-    const users = await db
-    .select({
-        username: auth_user.username,
-    })
-    .from(auth_user)
-    .orderBy(auth_user.createdAt)
-    .limit(10);
-
-    return {
-        users
-    };
+	return {
+		users
+	};
 }) satisfies PageServerLoad;

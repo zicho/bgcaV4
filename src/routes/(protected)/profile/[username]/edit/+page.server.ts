@@ -39,7 +39,7 @@ export const actions: Actions = {
 		const form = await superValidate(request, upsertProfileSchema);
 		if (!form.valid) return fail(400, { form });
 
-		const { user } = await locals.auth.validate() as Session;
+		const { user } = (await locals.auth.validate()) as Session;
 
 		const data = await db.query.userProfiles.findFirst({
 			where: eq(userProfiles.userId, user.userId)

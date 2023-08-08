@@ -3,7 +3,6 @@ import { PUBLIC_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
 import { Toaster, toast } from 'svelte-sonner';
 
-
 enum EventType {
 	INSERT = 'INSERT',
 	UPDATE = 'UPDATE',
@@ -29,7 +28,7 @@ interface IPayload {
 
 class RealtimeStore {
 	private supabase: SupabaseClient = createClient(PUBLIC_SUPABASE_URL, PUBLIC_ANON_KEY);
-    private username?: string;
+	private username?: string;
 
 	unsub(): void {
 		if (browser) {
@@ -50,7 +49,7 @@ class RealtimeStore {
 	sub(username: string): void {
 		if (browser) {
 			this.unsub();
-            this.username = username;
+			this.username = username;
 
 			this.supabase
 				.channel('schema-db-changes')
@@ -67,12 +66,10 @@ class RealtimeStore {
 	}
 
 	handleEvent(payload: IPayload): void {
-
-		console.log(payload)
+		console.log(payload);
 
 		if (payload.table === 'profile_info' && payload.eventType === EventType.UPDATE) {
-			toast.success("test");
-
+			toast.success('test');
 		}
 	}
 }
