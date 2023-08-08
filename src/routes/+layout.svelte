@@ -6,7 +6,7 @@
 	import { page } from "$app/stores";
 	import { Toaster } from "svelte-sonner";
 	import FlashMessage from "$lib/components/ui/FlashMessage.svelte";
-	import { afterNavigate, beforeNavigate } from "$app/navigation";
+	import { beforeNavigate } from "$app/navigation";
 	import Navbar from "$lib/components/ui/Navbar.svelte";
 
 	export let data: PageData;

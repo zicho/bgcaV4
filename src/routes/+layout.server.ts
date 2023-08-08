@@ -9,8 +9,6 @@ export const load: LayoutServerLoad = loadFlash(async (event) => {
 
 	if (route?.id?.includes("(protected)")) {
 		if (!session) {
-
-
 			const redirectToUrl = url.pathname + url.search;
 			console.dir(redirectToUrl);
 
