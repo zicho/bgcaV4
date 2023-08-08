@@ -3,9 +3,13 @@
 	import { page } from "$app/stores";
 	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
 	import PageHeaderToolbarButton from "$lib/components/ui/PageHeaderToolbarButton.svelte";
+	import { onMount } from "svelte";
 	import type { PageData } from "./$types";
+	import { invalidateAll } from "$app/navigation";
 
 	export let data: PageData;
+
+	onMount(async () => await invalidateAll());
 </script>
 
 <PageHeaderToolbar title={data.game?.name} subheader={data.game?.yearPublished?.toString()}>
