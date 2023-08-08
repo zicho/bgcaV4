@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { IUser } from '$lib/data/interfaces/IUser';
 	import NavbarLink from '$lib/components/ui/NavbarLink.svelte';
+	import type { User } from 'lucia';
 
-	export let user: IUser;
+	export let user: User;
 	let open: boolean;
 
 	interface INavbarLink {
@@ -62,7 +62,7 @@
 	$: menuDataAuthenticated = navbarLinks.filter((item) => item.authOnly);
 	$: menuDataNotAuthenticated = navbarLinks.filter((item) => !item.authOnly);
 
-	const closeMenu = (event) => (open = false);
+	const closeMenu = (event: Event) => (open = false);
 </script>
 
 <div class="navbar bg-neutral text-neutral-content sticky top-0 z-50">
@@ -96,15 +96,16 @@
 	</div>
 
 	<div class="drawer flex md:hidden justify-end drawer-end">
-		<input id="my-drawer" type="checkbox" class="drawer-toggle" bind:checked={open} />
+		<input id="mobile-menu-open" type="checkbox" class="drawer-toggle" bind:checked={open} />
 		<div class="drawer-content">
 			<!-- Page content here -->
-			<label for="my-drawer" class="mr-4 swap swap-rotate"><i class="fa fa-bars" /></label>
+			<label for="mobile-menu-open" class="mr-4 swap swap-rotate"><i class="fa fa-bars" /></label>
 		</div>
+		<!-- svelte-ignore a11y-click-events-have-key-events -->
 		<div class="drawer-side">
-			<label for="my-drawer" class="drawer-overlay" />
+			<label for="mobile-menu-open" class="drawer-overlay" />
+			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<ul
-				for="my-drawer"
 				class="menu p-4 w-80 h-full bg-base-200 text-base-content"
 				on:click={closeMenu}
 			>
@@ -134,10 +135,10 @@
 	<!-- <div class="flex-none md:hidden flex">
 		<ul class="menu menu-horizontal px-1 bg-neutral text-neutral-content">
 			<NavbarLink displayText="Open menu" aria="Open menu" icon="fa-bars" />
-			<label for="my-drawer" class="btn btn-primary drawer-button">Open drawer</label>
+			<label for="mobile-menu-open" class="btn btn-primary drawer-button">Open drawer</label>
 		</ul>
 		<div class="drawer-side">
-			<label for="my-drawer" class="drawer-overlay" />
+			<label for="mobile-menu-open" class="drawer-overlay" />
 			<ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
 				<li><a>Sidebar Item 1</a></li>
 				<li><a>Sidebar Item 2</a></li>

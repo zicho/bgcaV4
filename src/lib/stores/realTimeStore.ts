@@ -1,7 +1,8 @@
 import { browser } from '$app/environment';
 import { PUBLIC_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
-import { Notyf } from 'notyf';
+import { Toaster, toast } from 'svelte-sonner';
+
 
 enum EventType {
 	INSERT = 'INSERT',
@@ -28,39 +29,7 @@ interface IPayload {
 
 class RealtimeStore {
 	private supabase: SupabaseClient = createClient(PUBLIC_SUPABASE_URL, PUBLIC_ANON_KEY);
-	private notyf?: Notyf;
     private username?: string;
-
-	constructor() {
-		if (browser) {
-			this.notyf = new Notyf({
-				// delay time
-				// 0 = infinite duration
-				duration: 5000,
-				// enable ripple effect
-				ripple: true,
-				// custom position
-				position: { x: 'right', y: 'bottom' },
-				// allow users to dismiss notifications via button
-				dismissible: true,
-
-				types: [
-					{
-						type: 'warning', // Notification type
-						duration: 2000,
-						ripple: true,
-						message: 'custom message',
-						background: 'orange',
-						icon: {
-							className: 'material-icons',
-							tagName: 'i',
-							text: 'warning'
-						}
-					}
-				]
-			});
-		}
-	}
 
 	unsub(): void {
 		if (browser) {
@@ -98,8 +67,12 @@ class RealtimeStore {
 	}
 
 	handleEvent(payload: IPayload): void {
+
+		console.log(payload)
+
 		if (payload.table === 'profile_info' && payload.eventType === EventType.UPDATE) {
-			this.notyf?.success("<a href='/'>mnoruenreåi0o</a>");
+			toast.success("test");
+
 		}
 	}
 }

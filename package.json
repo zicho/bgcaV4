@@ -46,7 +46,6 @@
 		"drizzle-orm": "^0.27.2",
 		"drizzle-zod": "^0.4.4",
 		"lucia": "^2.0.0",
-		"notyf": "^3.10.0",
 		"pg": "^8.11.1",
 		"postgres": "^3.3.5",
 		"svelte-sonner": "^0.0.9",

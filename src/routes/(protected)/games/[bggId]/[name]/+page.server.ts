@@ -6,6 +6,7 @@ import { error, type Actions } from '@sveltejs/kit';
 import { importBggGame } from '$lib/functions/importBggGame';
 import { redirect } from 'sveltekit-flash-message/server';
 import { usersToGames, games } from '$lib/db/schema/games';
+import type { Session } from 'lucia';
 
 export const load = (async ({ params, parent }) => {
 	if (!isNumber(params.bggId)) {
@@ -27,7 +28,7 @@ export const load = (async ({ params, parent }) => {
 	const inCollection = await db.query.usersToGames.findFirst({
 		where: and(
 			eq(game?.id as unknown as AnyColumn, usersToGames.gameId),
-			eq(user.user_id, usersToGames.userId)
+			eq(user.userId as unknown as AnyColumn, usersToGames.userId)
 		)
 	});
 
@@ -50,7 +51,7 @@ export const actions: Actions = {
 
 		const id = Number(form.get('id'));
 		const url = form.get('redirect_to') as string;
-		const { user } = await locals.auth.validate();
+		const { user } = await locals.auth.validate() as Session;
 
 		await db
 			.delete(usersToGames)
@@ -73,10 +74,10 @@ export const actions: Actions = {
 
 		const id = Number(form.get('id'));
 		const url = form.get('redirect_to') as string;
-		const { user } = await locals.auth.validate();
+		const { user } = await locals.auth.validate() as Session;
 
 		await db.insert(usersToGames).values({
-			userId: user.user_id,
+			userId: user.userId,
 			gameId: id
 		});
 
