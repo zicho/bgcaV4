@@ -131,24 +131,4 @@
 			</ul>
 		</div>
 	</div>
-
-	<!-- <div class="flex-none md:hidden flex">
-		<ul class="menu menu-horizontal px-1 bg-neutral text-neutral-content">
-			<NavbarLink displayText="Open menu" aria="Open menu" icon="fa-bars" />
-			<label for="mobile-menu-open" class="btn btn-primary drawer-button">Open drawer</label>
-		</ul>
-		<div class="drawer-side">
-			<label for="mobile-menu-open" class="drawer-overlay" />
-			<ul class="menu p-4 w-80 h-full bg-base-200 text-base-content">
-				<li><a>Sidebar Item 1</a></li>
-				<li><a>Sidebar Item 2</a></li>
-			</ul>
-		</div>
-	</div> -->
 </div>
-
-<style>
-	#hide-drawer-checkbox:checked ~ .drawer-side {
-		display: none;
-	}
-</style>
