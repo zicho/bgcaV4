@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { goto } from "$app/navigation";
+	import { page } from "$app/stores";
 
 	let timer: NodeJS.Timeout | null = null;
-	let searchQuery: string = '';
+	let searchQuery: string = "";
 
-	export let queryParam: string = 'search';
+	export let queryParam: string = "search";
 	export let isLoading: boolean = false;
 
 	function startTimer() {

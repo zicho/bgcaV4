@@ -1,13 +1,13 @@
 <script lang="ts">
-	import '../app.css';
-	import type { PageData } from './(protected)/$types';
-	import { realtimeStore } from '$lib/stores/realTimeStore';
-	import { initFlash } from 'sveltekit-flash-message/client';
-	import { page } from '$app/stores';
-	import { Toaster, toast } from 'svelte-sonner';
-	import FlashMessage from '$lib/components/ui/FlashMessage.svelte';
-	import { afterNavigate } from '$app/navigation';
-	import Navbar from '$lib/components/ui/Navbar.svelte';
+	import "../app.css";
+	import type { PageData } from "./(protected)/$types";
+	import { realtimeStore } from "$lib/stores/realTimeStore";
+	import { initFlash } from "sveltekit-flash-message/client";
+	import { page } from "$app/stores";
+	import { Toaster, toast } from "svelte-sonner";
+	import FlashMessage from "$lib/components/ui/FlashMessage.svelte";
+	import { afterNavigate } from "$app/navigation";
+	import Navbar from "$lib/components/ui/Navbar.svelte";
 
 	export let data: PageData;
 
@@ -26,16 +26,16 @@
 		if ($flash?.message) {
 			// todo: style the warning and info alerts if they are gonna be used
 			switch ($flash?.type) {
-				case 'success':
+				case "success":
 					toast.success($flash?.message as string);
 					break;
-				case 'info':
+				case "info":
 					toast($flash?.message as string);
 					break;
-				case 'warning':
+				case "warning":
 					toast($flash?.message as string);
 					break;
-				case 'error':
+				case "error":
 					toast.error($flash?.message as string);
 					break;
 				default:

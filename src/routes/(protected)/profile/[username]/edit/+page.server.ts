@@ -1,17 +1,16 @@
-import { type Actions, fail } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
-import { superValidate } from 'sveltekit-superforms/server';
-import { upsertProfileSchema } from '$lib/validationSchemas/upsertProfileSchema';
+import { type Actions, fail } from "@sveltejs/kit";
+import type { PageServerLoad } from "./$types";
+import { superValidate } from "sveltekit-superforms/server";
+import { upsertProfileSchema } from "$lib/validationSchemas/upsertProfileSchema";
 
-import { userProfiles } from '$lib/db/schema/users';
-import { eq } from 'drizzle-orm';
-import { redirect } from 'sveltekit-flash-message/server';
-import { db } from '$lib/db/client';
-import type { Session } from 'lucia';
+import { userProfiles } from "$lib/db/schema/users";
+import { eq } from "drizzle-orm";
+import { redirect } from "sveltekit-flash-message/server";
+import { db } from "$lib/db/client";
+import type { Session } from "lucia";
 
 export const load = (async (event) => {
-	let { username, userId } = (await event.parent()).user;
-	let u = (await event.parent()).user;
+	const { username, userId } = (await event.parent()).user;
 
 	if (event.params.username !== username) throw redirect(302, `/profile/${username}`);
 
@@ -65,7 +64,7 @@ export const actions: Actions = {
 			302,
 			`/profile/${params.username}`,
 			{
-				type: 'success',
+				type: "success",
 				message: `Your profile has been updated!`
 			},
 			event

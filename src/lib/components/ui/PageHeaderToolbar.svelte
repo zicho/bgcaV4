@@ -1,6 +1,6 @@
 <script lang="ts">
 	export let title: string | undefined;
-	export let subheader: string | undefined = '';
+	export let subheader: string | undefined = "";
 </script>
 
 <svelte:head>

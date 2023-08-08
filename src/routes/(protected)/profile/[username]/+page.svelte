@@ -1,7 +1,7 @@
 <script lang="ts">
-	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
-	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
-	import type { PageData } from './$types';
+	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
+	import PageHeaderToolbarButton from "$lib/components/ui/PageHeaderToolbarButton.svelte";
+	import type { PageData } from "./$types";
 
 	export let data: PageData;
 </script>
@@ -13,9 +13,9 @@
 </svelte:head>
 
 <PageHeaderToolbar
-	title={data.isProfileYours ? 'Your profile' : `${data.profile.username}`}
+	title={data.isProfileYours ? "Your profile" : `${data.profile.username}`}
 	subheader={data.isProfileYours
-		? 'Edit your profile'
+		? "Edit your profile"
 		: `This is the profile of ${data.profile.username}`}
 >
 	{#if data.isProfileYours}

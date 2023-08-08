@@ -1,6 +1,6 @@
 <script lang="ts">
-	import NavbarLink from '$lib/components/ui/NavbarLink.svelte';
-	import type { User } from 'lucia';
+	import NavbarLink from "$lib/components/ui/NavbarLink.svelte";
+	import type { User } from "lucia";
 
 	export let user: User;
 	let open: boolean;
@@ -13,48 +13,55 @@
 		authOnly: boolean;
 	}
 
+	import { writable } from "svelte/store";
+
+	const store = writable([]);
+	$store.length; // incorrect no-unsafe-member-access error
+
+	export let name: string;
+
 	// reactive to changes in user state
 	$: navbarLinks = [
 		{
 			url: `/profile/${user?.username}`,
 			displayText: user?.username,
-			aria: 'View and edit user profile',
-			icon: 'fa-user',
+			aria: "View and edit user profile",
+			icon: "fa-user",
 			authOnly: true
 		},
 		{
-			url: '/games',
-			displayText: 'Games',
-			aria: 'Find and organize games',
-			icon: 'fa-dice',
+			url: "/games",
+			displayText: "Games",
+			aria: "Find and organize games",
+			icon: "fa-dice",
 			authOnly: true
 		},
 		{
-			url: '/events',
-			displayText: 'Events',
-			aria: 'Find and organize events',
-			icon: 'fa-calendar-alt',
+			url: "/events",
+			displayText: "Events",
+			aria: "Find and organize events",
+			icon: "fa-calendar-alt",
 			authOnly: true
 		},
 		{
-			url: '/logout',
-			displayText: 'Sign Out',
-			aria: 'Sign out',
-			icon: 'fa-sign-out',
+			url: "/logout",
+			displayText: "Sign Out",
+			aria: "Sign out",
+			icon: "fa-sign-out",
 			authOnly: true
 		},
 		{
-			url: '/login',
-			displayText: 'Login',
-			aria: 'Log in',
-			icon: 'fa-sign-in',
+			url: "/login",
+			displayText: "Login",
+			aria: "Log in",
+			icon: "fa-sign-in",
 			authOnly: false
 		},
 		{
-			url: '/register',
-			displayText: 'Register',
-			aria: 'Register a new user',
-			icon: 'fa-user-plus',
+			url: "/register",
+			displayText: "Register",
+			aria: "Register a new user",
+			icon: "fa-user-plus",
 			authOnly: false
 		}
 	] satisfies INavbarLink[];

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
-	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
-	import type { PageData } from './$types';
+	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
+	import PageHeaderToolbarButton from "$lib/components/ui/PageHeaderToolbarButton.svelte";
+	import type { PageData } from "./$types";
 	export let data: PageData;
 </script>
 

@@ -1,12 +1,11 @@
-import type { PageServerLoad } from './$types';
-import { auth_user, userProfiles } from '$lib/db/schema/users';
+import type { PageServerLoad } from "./$types";
+import { auth_user, userProfiles } from "$lib/db/schema/users";
+import { eq } from "drizzle-orm";
+import { error } from "@sveltejs/kit";
+import { db } from "$lib/db/client";
 
-import { eq } from 'drizzle-orm';
-import { error } from '@sveltejs/kit';
-import { db } from '$lib/db/client';
-
-export const load = (async ({ parent, url, params }) => {
-	let username = (await parent()).user.username;
+export const load = (async ({ parent, params }) => {
+	const username = (await parent()).user.username;
 	const isProfileYours = username === params.username;
 
 	const userAndProfile = await db

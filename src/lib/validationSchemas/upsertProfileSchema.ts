@@ -1,6 +1,6 @@
-import { userProfiles } from '$lib/db/schema/users';
-import { createInsertSchema } from 'drizzle-zod';
-import { z } from 'zod';
+import { userProfiles } from "$lib/db/schema/users";
+import { createInsertSchema } from "drizzle-zod";
+import { z } from "zod";
 
 export const upsertProfileSchema = createInsertSchema(userProfiles, {
 	description: z

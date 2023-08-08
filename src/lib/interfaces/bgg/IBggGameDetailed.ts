@@ -1,4 +1,4 @@
-import type { IBggGameSimple } from './IBggGameSimple';
+import type { IBggGameSimple } from "./IBggGameSimple";
 
 export interface IBggGameDetailed extends IBggGameSimple {
 	description: string;

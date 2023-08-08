@@ -2,7 +2,7 @@
 	export let displayText: string;
 	export let url: string;
 	export let aria: string;
-	export let icon: string = 'fa-check';
+	export let icon: string = "fa-check";
 </script>
 
 <li class="flex justify-start">

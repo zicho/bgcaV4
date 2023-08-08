@@ -1,13 +1,13 @@
-import { pgTable, serial, date, varchar } from 'drizzle-orm/pg-core';
-import { games } from './games';
-import { relations } from 'drizzle-orm';
-import { auth_user } from './users';
+import { pgTable, serial, date, varchar } from "drizzle-orm/pg-core";
+import { games } from "./games";
+import { relations } from "drizzle-orm";
+import { auth_user } from "./users";
 
-export const events = pgTable('events', {
-	id: serial('id').primaryKey(),
-	date: date('date').notNull(),
-	gameId: serial('game_id').notNull(),
-	organizerId: varchar('organizer_id').notNull()
+export const events = pgTable("events", {
+	id: serial("id").primaryKey(),
+	date: date("date").notNull(),
+	gameId: serial("game_id").notNull(),
+	organizerId: varchar("organizer_id").notNull()
 });
 
 export const eventsRelations = relations(events, ({ one, many }) => ({
@@ -22,9 +22,9 @@ export const eventsRelations = relations(events, ({ one, many }) => ({
 	event_players: many(auth_user)
 }));
 
-export const event_players = pgTable('event_players', {
-	playerId: varchar('player_id'),
-	eventId: serial('event_id')
+export const event_players = pgTable("event_players", {
+	playerId: varchar("player_id"),
+	eventId: serial("event_id")
 });
 
 export const eventPlayersRelations = relations(event_players, ({ one }) => ({

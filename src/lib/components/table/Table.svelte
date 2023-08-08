@@ -1,17 +1,17 @@
 <script lang="ts">
-	import { afterNavigate } from '$app/navigation';
-	import { page } from '$app/stores';
+	import { afterNavigate } from "$app/navigation";
+	import { page } from "$app/stores";
 	export let limit: number = 10;
-	export let queryParam: string = 'search';
-	export let searchParam: string = '';
+	export let queryParam: string = "search";
+	export let searchParam: string = "";
 	export let pageNo: number = 1;
 	export let totalPages: number;
 	export let totalHits: number;
 	export let resultsAreEmpty: boolean;
-	export let resultsAreEmptyMessage: string = 'No results!';
+	export let resultsAreEmptyMessage: string = "No results!";
 
 	let timer: NodeJS.Timeout | null = null;
-	let searchQuery: string = '';
+	let searchQuery: string = "";
 	let searchForm: HTMLFormElement;
 	let inputField: HTMLInputElement;
 

@@ -1,16 +1,16 @@
-import { eq, and, type AnyColumn } from 'drizzle-orm';
-import type { PageServerLoad } from './$types';
-import { db } from '$lib/db/client';
-import { isNumber } from '$lib/functions/validators/isNumber';
-import { error, type Actions } from '@sveltejs/kit';
-import { importBggGame } from '$lib/functions/importBggGame';
-import { redirect } from 'sveltekit-flash-message/server';
-import { usersToGames, games } from '$lib/db/schema/games';
-import type { Session } from 'lucia';
+import { eq, and, type AnyColumn } from "drizzle-orm";
+import type { PageServerLoad } from "./$types";
+import { db } from "$lib/db/client";
+import { isNumber } from "$lib/functions/validators/isNumber";
+import { error, type Actions } from "@sveltejs/kit";
+import { importBggGame } from "$lib/functions/importBggGame";
+import { redirect } from "sveltekit-flash-message/server";
+import { usersToGames, games } from "$lib/db/schema/games";
+import type { Session } from "lucia";
 
 export const load = (async ({ params, parent }) => {
 	if (!isNumber(params.bggId)) {
-		throw error(400, 'Invalid game id in URL');
+		throw error(400, "Invalid game id in URL");
 	}
 
 	const bggId = Number(params.bggId);
@@ -49,8 +49,8 @@ export const actions: Actions = {
 
 		const form = await request.formData();
 
-		const id = Number(form.get('id'));
-		const url = form.get('redirect_to') as string;
+		const id = Number(form.get("id"));
+		const url = form.get("redirect_to") as string;
 		const { user } = (await locals.auth.validate()) as Session;
 
 		await db
@@ -61,7 +61,7 @@ export const actions: Actions = {
 			302,
 			url,
 			{
-				type: 'warning',
+				type: "warning",
 				message: `The game was removed from your collection!`
 			},
 			event
@@ -72,8 +72,8 @@ export const actions: Actions = {
 
 		const form = await request.formData();
 
-		const id = Number(form.get('id'));
-		const url = form.get('redirect_to') as string;
+		const id = Number(form.get("id"));
+		const url = form.get("redirect_to") as string;
 		const { user } = (await locals.auth.validate()) as Session;
 
 		await db.insert(usersToGames).values({
@@ -85,7 +85,7 @@ export const actions: Actions = {
 			302,
 			url,
 			{
-				type: 'success',
+				type: "success",
 				message: `The game was added to your collection!`
 			},
 			event

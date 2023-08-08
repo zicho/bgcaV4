@@ -1,12 +1,12 @@
-import { browser } from '$app/environment';
-import { PUBLIC_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
-import { SupabaseClient, createClient } from '@supabase/supabase-js';
-import { Toaster, toast } from 'svelte-sonner';
+import { browser } from "$app/environment";
+import { PUBLIC_ANON_KEY, PUBLIC_SUPABASE_URL } from "$env/static/public";
+import { SupabaseClient, createClient } from "@supabase/supabase-js";
+import { toast } from "svelte-sonner";
 
 enum EventType {
-	INSERT = 'INSERT',
-	UPDATE = 'UPDATE',
-	DELETE = 'DELETE'
+	INSERT = "INSERT",
+	UPDATE = "UPDATE",
+	DELETE = "DELETE"
 }
 
 interface IPayload {
@@ -33,13 +33,14 @@ class RealtimeStore {
 	unsub(): void {
 		if (browser) {
 			this.supabase
-				.channel('schema-db-changes')
+				.channel("schema-db-changes")
 				.on(
-					'postgres_changes',
+					"postgres_changes",
 					{
-						event: '*',
-						schema: 'public'
+						event: "*",
+						schema: "public"
 					},
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					(payload: any) => console.log(payload)
 				)
 				.unsubscribe();
@@ -52,13 +53,14 @@ class RealtimeStore {
 			this.username = username;
 
 			this.supabase
-				.channel('schema-db-changes')
+				.channel("schema-db-changes")
 				.on(
-					'postgres_changes',
+					"postgres_changes",
 					{
-						event: '*',
-						schema: 'public'
+						event: "*",
+						schema: "public"
 					},
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					(payload: any) => this.handleEvent(payload)
 				)
 				.subscribe();
@@ -68,8 +70,8 @@ class RealtimeStore {
 	handleEvent(payload: IPayload): void {
 		console.log(payload);
 
-		if (payload.table === 'profile_info' && payload.eventType === EventType.UPDATE) {
-			toast.success('test');
+		if (payload.table === "profile_info" && payload.eventType === EventType.UPDATE) {
+			toast.success("test");
 		}
 	}
 }

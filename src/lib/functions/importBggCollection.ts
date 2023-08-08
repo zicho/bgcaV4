@@ -1,11 +1,11 @@
-import { db } from '$lib/db/client';
-import { games, usersToGames } from '$lib/db/schema/games';
-import { parseIntoGame, type IBggGameSimple } from '$lib/interfaces/bgg/IBggGameSimple';
-import { inArray } from 'drizzle-orm';
+import { db } from "$lib/db/client";
+import { games, usersToGames } from "$lib/db/schema/games";
+import { parseIntoGame, type IBggGameSimple } from "$lib/interfaces/bgg/IBggGameSimple";
+import { inArray } from "drizzle-orm";
 
 type BggGameImportResult = {
 	numberOfGamesImported?: number;
-	status: 'success' | 'error' | 'info' | 'warning';
+	status: "success" | "error" | "info" | "warning";
 	message: string;
 };
 
@@ -17,11 +17,12 @@ export async function importBggCollection(
 		const response = await fetch(`https://bgg-json.azurewebsites.net/collection/${username}`);
 		const data = await response.json();
 
-		const parsedBggGameData: IBggGameSimple[] = data.map((item: any) => item as IBggGameSimple);
+		// todo: use inferred drizzle types, not custom interface
+		const parsedBggGameData: IBggGameSimple[] = data.map((item: IBggGameSimple) => item);
 
 		if (parsedBggGameData.length == 0) {
 			return {
-				status: 'warning',
+				status: "warning",
 				message: `No games found for user '${username}'`
 			};
 		}
@@ -34,7 +35,7 @@ export async function importBggCollection(
 		// then insert game ids in collection tables to map user to games
 
 		// we need to get game IDs (our own primary key) based on added bggIds
-		let gameIds = await db
+		const gameIds = await db
 			.select({
 				gameId: games.id
 			})
@@ -57,19 +58,19 @@ export async function importBggCollection(
 
 		if (insertedGames.length > 0) {
 			return {
-				status: 'success',
+				status: "success",
 				message: `Imported ${insertedGames.length} games!`
 			};
 		} else {
 			return {
-				status: 'info',
-				message: 'Import could not find any games not already in your collection.'
+				status: "info",
+				message: "Import could not find any games not already in your collection."
 			};
 		}
 	} catch (error) {
-		console.error('Error:', error);
+		console.error("Error:", error);
 		return {
-			status: 'error',
+			status: "error",
 			message: `Unknown error. Service might be down. Try again later.`
 		};
 	}

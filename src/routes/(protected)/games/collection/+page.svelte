@@ -1,8 +1,8 @@
 <script lang="ts">
-	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
-	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
-	import type { PageData } from './$types';
-	import Table from '$lib/components/table/Table.svelte';
+	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
+	import PageHeaderToolbarButton from "$lib/components/ui/PageHeaderToolbarButton.svelte";
+	import type { PageData } from "./$types";
+	import Table from "$lib/components/table/Table.svelte";
 
 	export let data: PageData;
 	$: ({ pageNo, totalPages, totalHits, searchParam, limit } = data);

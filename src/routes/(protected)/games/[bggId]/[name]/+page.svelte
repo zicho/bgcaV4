@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import { page } from '$app/stores';
-	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
-	import PageHeaderToolbarButton from '$lib/components/ui/PageHeaderToolbarButton.svelte';
-	import type { PageData } from './$types';
+	import { enhance } from "$app/forms";
+	import { page } from "$app/stores";
+	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
+	import PageHeaderToolbarButton from "$lib/components/ui/PageHeaderToolbarButton.svelte";
+	import type { PageData } from "./$types";
 
 	export let data: PageData;
 </script>

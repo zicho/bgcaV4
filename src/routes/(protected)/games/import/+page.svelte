@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { superForm } from 'sveltekit-superforms/client';
-	import type { PageData } from './$types';
-	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
-	import { onMount } from 'svelte';
+	import { superForm } from "sveltekit-superforms/client";
+	import type { PageData } from "./$types";
+	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
+	import { onMount } from "svelte";
 
 	export let data: PageData;
 
@@ -42,7 +42,7 @@
 				bind:value={$form.nickname}
 				placeholder="Enter nickname"
 				aria-label="Enter nickname"
-				aria-invalid={$errors.nickname ? 'true' : undefined}
+				aria-invalid={$errors.nickname ? "true" : undefined}
 				class="input input-bordered w-full"
 				{...$constraints.nickname}
 				required
@@ -53,7 +53,7 @@
 		</div>
 
 		<button disabled={$delayed} type="submit" class="btn btn-primary w-full my-8">
-			{@html !$delayed ? 'Import' : '<i class="fa-2xl fas fa-cog fa-spin"></i>'}</button
+			{@html !$delayed ? "Import" : '<i class="fa-2xl fas fa-cog fa-spin"></i>'}</button
 		>
 		<i class="mt-8"
 			><strong>Note: </strong>If your collection is large, this may take a while. Be patient.</i

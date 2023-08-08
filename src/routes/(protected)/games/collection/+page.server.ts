@@ -1,16 +1,16 @@
-import { db } from '$lib/db/client';
-import type { PageServerLoad } from './$types';
-import { games, usersToGames } from '$lib/db/schema/games';
-import { eq, sql, ilike, and } from 'drizzle-orm';
-import { isNumber } from '$lib/functions/validators/isNumber';
-import { redirect } from '@sveltejs/kit';
+import { db } from "$lib/db/client";
+import type { PageServerLoad } from "./$types";
+import { games, usersToGames } from "$lib/db/schema/games";
+import { eq, sql, ilike, and } from "drizzle-orm";
+import { isNumber } from "$lib/functions/validators/isNumber";
+import { redirect } from "@sveltejs/kit";
 
 export const load = (async ({ parent, url }) => {
-	let user_id = (await parent()).user.userId;
+	const user_id = (await parent()).user.userId;
 
-	let searchParam = url.searchParams.get('search');
-	let pageNo = Number(url.searchParams.get('page'));
-	let limit = Number(url.searchParams.get('limit'));
+	let searchParam = url.searchParams.get("search");
+	let pageNo = Number(url.searchParams.get("page"));
+	let limit = Number(url.searchParams.get("limit"));
 
 	const validLimitValues = [10, 25, 50, 100];
 
@@ -27,7 +27,7 @@ export const load = (async ({ parent, url }) => {
 	}
 
 	if (!searchParam) {
-		searchParam = '';
+		searchParam = "";
 	}
 
 	const totalHits = (

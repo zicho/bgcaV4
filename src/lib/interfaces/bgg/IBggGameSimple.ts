@@ -1,4 +1,4 @@
-import { createSlug } from '$lib/functions/util/createSlug';
+import { createSlug } from "$lib/functions/util/createSlug";
 
 export interface IBggGameSimple {
 	gameId: number;

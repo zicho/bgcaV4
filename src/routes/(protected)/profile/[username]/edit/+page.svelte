@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { superForm } from 'sveltekit-superforms/client';
-	import type { PageData } from './$types';
+	import { superForm } from "sveltekit-superforms/client";
+	import type { PageData } from "./$types";
 
 	export let data: PageData;
 
@@ -26,7 +26,7 @@
 					bind:value={$form.description}
 					placeholder="Description"
 					aria-label="Description"
-					aria-invalid={$errors.description ? 'true' : undefined}
+					aria-invalid={$errors.description ? "true" : undefined}
 					{...$constraints.description}
 					class="textarea textarea-bordered h-36 w-full"
 				/>
@@ -44,7 +44,7 @@
 						bind:value={$form.signature}
 						placeholder="signature"
 						aria-label="signature"
-						aria-invalid={$errors.signature ? 'true' : undefined}
+						aria-invalid={$errors.signature ? "true" : undefined}
 						{...$constraints.signature}
 						class="input input-bordered w-full"
 					/>

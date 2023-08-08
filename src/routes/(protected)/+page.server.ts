@@ -1,6 +1,6 @@
-import { db } from '$lib/db/client';
-import { auth_user } from '$lib/db/schema/users';
-import type { PageServerLoad } from './$types';
+import { db } from "$lib/db/client";
+import { auth_user } from "$lib/db/schema/users";
+import type { PageServerLoad } from "./$types";
 
 export const load = (async () => {
 	const users = await db

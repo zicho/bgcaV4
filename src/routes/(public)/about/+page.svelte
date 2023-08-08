@@ -1,7 +1,7 @@
 <script lang="ts">
-	import LinkCard from '$lib/components/ui/LinkCard.svelte';
-	import PageHeaderToolbar from '$lib/components/ui/PageHeaderToolbar.svelte';
-	import type { PageData } from './$types';
+	import LinkCard from "$lib/components/ui/LinkCard.svelte";
+	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
+	import type { PageData } from "./$types";
 
 	export let data: PageData;
 </script>

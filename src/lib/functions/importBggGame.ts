@@ -1,13 +1,7 @@
-import { db } from '$lib/db/client';
-import { games } from '$lib/db/schema/games';
-import { parseIntoGame, type IBggGameDetailed } from '$lib/interfaces/bgg/IBggGameDetailed';
-import { eq } from 'drizzle-orm';
-
-type BggGameImportResult = {
-	numberOfGamesImported?: number;
-	status: 'success' | 'error' | 'info' | 'warning';
-	message: string;
-};
+import { db } from "$lib/db/client";
+import { games } from "$lib/db/schema/games";
+import { parseIntoGame } from "$lib/interfaces/bgg/IBggGameDetailed";
+import { eq } from "drizzle-orm";
 
 export async function importBggGame(bggId: number) {
 	try {
@@ -23,9 +17,9 @@ export async function importBggGame(bggId: number) {
 
 		return game;
 	} catch (error) {
-		console.error('Error:', error);
+		console.error("Error:", error);
 		return {
-			status: 'error',
+			status: "error",
 			message: `Unknown error. Service might be down. Try again later.`
 		};
 	}

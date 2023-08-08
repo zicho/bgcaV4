@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { superForm } from 'sveltekit-superforms/client';
-	import type { PageData } from './$types';
+	import { superForm } from "sveltekit-superforms/client";
+	import type { PageData } from "./$types";
 
 	export let data: PageData;
 
@@ -26,7 +26,7 @@
 					bind:value={$form.username}
 					placeholder="Desired username"
 					aria-label="Desired username"
-					aria-invalid={$errors.username ? 'true' : undefined}
+					aria-invalid={$errors.username ? "true" : undefined}
 					required
 					class="input input-bordered w-full"
 				/>
@@ -42,7 +42,7 @@
 					bind:value={$form.password}
 					placeholder="Enter password"
 					aria-label="Enter password"
-					aria-invalid={$errors.password ? 'true' : undefined}
+					aria-invalid={$errors.password ? "true" : undefined}
 					{...$constraints.password}
 					type="password"
 					required
@@ -55,7 +55,7 @@
 					<span class="font-bold">Confirm password</span>
 					{#if $errors.confirm_password}<span class="text-error">{$errors.confirm_password}</span
 						>{/if}
-					{#if $errors['confirm']}<span class="text-error">{$errors['confirm']}</span>{/if}
+					{#if $errors["confirm"]}<span class="text-error">{$errors["confirm"]}</span>{/if}
 				</label>
 				<input
 					name="confirm_password"
@@ -63,7 +63,7 @@
 					bind:value={$form.confirm_password}
 					placeholder="Confirm password"
 					aria-label="Confirm password"
-					aria-invalid={$errors.confirm_password ? 'true' : undefined}
+					aria-invalid={$errors.confirm_password ? "true" : undefined}
 					{...$constraints.confirm_password}
 					type="password"
 					required

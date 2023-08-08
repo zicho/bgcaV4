@@ -1,29 +1,20 @@
-import { relations } from 'drizzle-orm';
-import {
-	pgTable,
-	varchar,
-	text,
-	serial,
-	integer,
-	smallint,
-	primaryKey,
-	unique
-} from 'drizzle-orm/pg-core';
-import { auth_user } from './users';
-import { events } from './events';
+import { relations } from "drizzle-orm";
+import { pgTable, varchar, text, serial, integer, smallint, primaryKey } from "drizzle-orm/pg-core";
+import { auth_user } from "./users";
+import { events } from "./events";
 
-export const games = pgTable('games', {
-	id: serial('id').primaryKey(),
-	name: text('name').notNull(),
-	slug: text('slug').notNull(),
-	desc: text('description'),
-	yearPublished: smallint('yearPublished'),
-	bggId: integer('bggId').unique(), // NOTE: THIS NEEDS TO HAVE A _UNIQUE_ CONSTRAINT IN DATABASE. MUST BE ADDED MANUALLY. DRIZZLE NOT SUPPORTING IT! (YET)
-	minNumberOfPlayers: smallint('minNumberOfPlayers'),
-	maxNumberOfPlayers: smallint('maxNumberOfPlayers'),
-	averageRating: text('averageRating'),
-	thumbnailUrl: text('thumbnailUrl'),
-	imageUrl: text('imageUrl')
+export const games = pgTable("games", {
+	id: serial("id").primaryKey(),
+	name: text("name").notNull(),
+	slug: text("slug").notNull(),
+	desc: text("description"),
+	yearPublished: smallint("yearPublished"),
+	bggId: integer("bggId").unique(), // NOTE: THIS NEEDS TO HAVE A _UNIQUE_ CONSTRAINT IN DATABASE. MUST BE ADDED MANUALLY. DRIZZLE NOT SUPPORTING IT! (YET)
+	minNumberOfPlayers: smallint("minNumberOfPlayers"),
+	maxNumberOfPlayers: smallint("maxNumberOfPlayers"),
+	averageRating: text("averageRating"),
+	thumbnailUrl: text("thumbnailUrl"),
+	imageUrl: text("imageUrl")
 });
 
 export const usersRelations = relations(auth_user, ({ many }) => ({
@@ -35,12 +26,12 @@ export const gamesRelations = relations(games, ({ many }) => ({
 }));
 
 export const usersToGames = pgTable(
-	'users_to_games',
+	"users_to_games",
 	{
-		userId: varchar('user_id')
+		userId: varchar("user_id")
 			.notNull()
 			.references(() => auth_user.id),
-		gameId: serial('game_id')
+		gameId: serial("game_id")
 			.notNull()
 			.references(() => games.id)
 	},
@@ -60,8 +51,8 @@ export const usersToGamesRelations = relations(usersToGames, ({ one }) => ({
 	})
 }));
 
-export const game_invites = pgTable('game_invites', {
-	userId: varchar('user_id').references(() => auth_user.id),
-	eventId: serial('game_id').references(() => events.id),
-	inviteGreeting: varchar('inviteText', { length: 80 })
+export const game_invites = pgTable("game_invites", {
+	userId: varchar("user_id").references(() => auth_user.id),
+	eventId: serial("game_id").references(() => events.id),
+	inviteGreeting: varchar("inviteText", { length: 80 })
 });
