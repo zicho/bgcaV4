@@ -24,6 +24,12 @@
 			url="/profile/{data.profile.username}/edit"
 			icon="fa-edit"
 		/>
+	{:else}
+		<PageHeaderToolbarButton
+			displayText="Send message"
+			url="/message/{data.profile.username}"
+			icon="fa-message"
+		/>
 	{/if}
 </PageHeaderToolbar>
 
