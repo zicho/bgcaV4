@@ -1,7 +1,5 @@
 <script lang="ts">
 	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
-
-	export const prerender = true;
 </script>
 
 <PageHeaderToolbar title="Contact" />
