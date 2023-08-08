@@ -2,11 +2,11 @@
 	import "../app.css";
 	import type { PageData } from "./(protected)/$types";
 	import { realtimeStore } from "$lib/stores/realTimeStore";
-	import { initFlash } from "sveltekit-flash-message/client";
+	import { getFlash } from "sveltekit-flash-message/client";
 	import { page } from "$app/stores";
-	import { Toaster, toast } from "svelte-sonner";
+	import { Toaster } from "svelte-sonner";
 	import FlashMessage from "$lib/components/ui/FlashMessage.svelte";
-	import { afterNavigate } from "$app/navigation";
+	import { afterNavigate, beforeNavigate } from "$app/navigation";
 	import Navbar from "$lib/components/ui/Navbar.svelte";
 
 	export let data: PageData;
@@ -14,9 +14,9 @@
 	$: ({ user } = data);
 	$: data.user && realtimeStore.sub(data.user?.username);
 
-	const flash = initFlash(page);
+	const flash = getFlash(page);
 
-	afterNavigate((nav) => {
+	beforeNavigate((nav) => {
 		if ($flash && nav.from?.url.toString() !== nav.to?.url.toString()) {
 			$flash = undefined;
 		}
