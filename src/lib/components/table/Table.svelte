@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { afterNavigate } from "$app/navigation";
 	import { page } from "$app/stores";
+	import { onMount } from "svelte";
 	export let limit: number = 10;
 	export let queryParam: string = "search";
 	export let searchParam: string = "";
@@ -10,10 +11,16 @@
 	export let resultsAreEmpty: boolean;
 	export let resultsAreEmptyMessage: string = "No results!";
 
+	$: pagesArray = Array.from({ length: totalPages }, (x, i) => i + 1); // [1,2,3,4,5,6,7,8,9,10]
+
 	let timer: NodeJS.Timeout | null = null;
 	let searchQuery: string = "";
 	let searchForm: HTMLFormElement;
 	let inputField: HTMLInputElement;
+
+	let scriptUser: boolean = false;
+
+	onMount(() => (scriptUser = true));
 
 	function startTimer() {
 		if (timer) {
@@ -64,11 +71,11 @@
 		</form>
 		<div class="mr-auto flex items-center w-full xl:w-auto">
 			<!-- If user does not have JS, enable this form by adding a button (not needed for JS users!) -->
-			<!-- <noscript> -->
-			<button type="submit" form="searchForm" class="w-full xl:w-auto btn btn-primary"
-				>Update</button
-			>
-			<!-- </noscript> -->
+			<noscript>
+				<button type="submit" form="searchForm" class="w-full xl:w-auto btn btn-wide btn-primary"
+					>search</button
+				>
+			</noscript>
 		</div>
 	</div>
 
@@ -93,15 +100,28 @@
 		<div class="py-4 xl:py-0 flex items-center justify-center w-full">
 			<span class="mr-2">Page</span>
 
-			<form method="get">
+			<form method="get" bind:this={searchForm} on:change={() => searchForm.requestSubmit()}>
 				<label for="page" class="hidden" />
-				<input
-					class="w-16 px-2 py-1 border border-gray-300 rounded-md"
-					type="text"
-					name="page"
-					disabled={totalPages == 0}
-					value={pageNo}
-				/>
+				{#if !scriptUser}
+					<input
+						class="w-16 p-2 border border-gray-300 rounded-md h-full"
+						type="text"
+						name="page"
+						disabled={totalPages == 0}
+						value={pageNo}
+					/>
+				{:else}
+					<select
+						name="page"
+						id="page"
+						class="select select-bordered xl:mt-0 w-full xl:w-auto"
+						value={pageNo}
+					>
+						{#each pagesArray as page}
+							<option selected>{page}</option>
+						{/each}
+					</select>
+				{/if}
 			</form>
 			<span class="ml-2">
 				of {totalPages} <span class="label-text font-thin">({totalHits} hits)</span>

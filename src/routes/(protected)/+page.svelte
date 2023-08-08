@@ -39,7 +39,7 @@
 	<article class="md:col-span-1 mt-8 md:mt-0">
 		<div class="card p-4 bg-base-100 shadow-md h-full">
 			<h2 class="mb-4 text-xl font-medium">Most recently registered users. Say hello!</h2>
-			<ul class="space-y-2 list-disc ml-4">
+			<ul class="space-y-2 list-disc ml-4 prose">
 				{#each data.users as user}
 					<li class="px-0 text-md font-medium hover:underline">
 						<a href="/profile/{user.username}"

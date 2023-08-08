@@ -1,10 +1,11 @@
 <script lang="ts">
-	import type { PageData } from "./$types";
+	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
 
-	export let data: PageData;
+	export const prerender = true;
 </script>
 
+<PageHeaderToolbar title="Contact" />
+
 <div class="prose">
-	<h1>Contact</h1>
 	<span><strong>Github:</strong> <a href="https://github.com/zicho" target="_blank">zicho</a></span>
 </div>
