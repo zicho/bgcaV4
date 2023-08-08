@@ -13,9 +13,12 @@ export const load = (async (event) => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-	default: async ({ request, locals }) => {
+	default: async ({ request, locals, url }) => {
 		const form = await superValidate(request, loginSchema);
 		if (!form.valid) return fail(400, { form });
+
+		
+
 
 		const { username, password } = form.data;
 
@@ -39,6 +42,8 @@ export const actions: Actions = {
 			return message(form, "An unknown error occurred.");
 		}
 
-		throw redirect(302, "/");
+		const redirectTo = url.searchParams.get("redirect");
+
+		throw redirect(302, redirectTo ? redirectTo : "/");
 	}
 };
