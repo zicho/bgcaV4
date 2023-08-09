@@ -23,6 +23,13 @@
 			authOnly: true
 		},
 		{
+			url: `/messages`,
+			displayText: "Messages",
+			aria: "View and send messages",
+			icon: "fa-message",
+			authOnly: true
+		},
+		{
 			url: "/games",
 			displayText: "Games",
 			aria: "Find and organize games",
