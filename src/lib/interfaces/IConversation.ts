@@ -1,7 +1,7 @@
 import type { IConversationMessage } from "./IConversationMessage";
 
 export interface IConversation {
-    id: string,
+    id: number,
     started_by: string,
     talking_to: string,
     messages: IConversationMessage[]

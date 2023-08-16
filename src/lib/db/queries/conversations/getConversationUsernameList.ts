@@ -14,11 +14,10 @@ export async function getConversationUsernameList(username: string) {
         ),
         );
 
-    const latest = data.map(x =>
-        x.started_by !== username ? x.started_by_username : x.talking_to_username
-    );
 
-    console.dir(latest);
+    const latest = data.map(x =>
+        x.started_by_username !== username ? x.started_by_username : x.talking_to_username
+    );
 
     return latest;
 }

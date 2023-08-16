@@ -34,8 +34,6 @@ export const actions: Actions = {
 
         const form = await superValidate(request, insertConversationMessageSchema);
 
-        console.dir(form);
-
         if (!form.valid) return fail(400, { form });
 
         try {

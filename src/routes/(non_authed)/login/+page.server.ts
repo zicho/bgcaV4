@@ -17,9 +17,6 @@ export const actions: Actions = {
 		const form = await superValidate(request, loginSchema);
 		if (!form.valid) return fail(400, { form });
 
-		
-
-
 		const { username, password } = form.data;
 
 		try {
