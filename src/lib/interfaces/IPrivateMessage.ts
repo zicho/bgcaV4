@@ -1,7 +1,7 @@
 export interface IPrivateMessage {
     username: string,
     content: string,
-    sentAt: string | undefined,
+    sentAt: string,
     unread: boolean,
     isYou: boolean
 }
