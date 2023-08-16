@@ -10,7 +10,7 @@
 
 <PageHeaderToolbar title="Conversation with {data.username}" />
 
-<div class="flex space-x-16">
+<div class="flex space-x-16 grow-1">
 	<div class="flex-col w-1/4 bg-white rounded p-4">
 		<h2
 			class="mb-4 text-xl font-medium
@@ -36,25 +36,7 @@
 		{/each}
 	</div>
 	<div class="flex-col w-3/4">
-		<section>
-			{#each data.conversation.messages as message, i}
-				<div class="chat {message.isYou ? 'chat-end' : 'chat-start'} ">
-					<div class="chat-header">
-						{#if i === 0 || data.conversation.messages[i - 1].username !== message.username}
-							{message.isYou ? "You" : message.username}
-						{/if}
-						<time class="text-xs opacity-50">{formatTimestamp(message.sentAt)}</time>
-					</div>
-					<div class="chat-bubble" class:chat-bubble-primary={!message.isYou}>
-						{message.content}
-					</div>
-				</div>
-			{/each}
-		</section>
-
-		<div class="divider" />
-
-		<section class="mt-4">
+		<section class="mb-4">
 			<form use:enhance method="post" class="flex flex-row">
 				<input
 					name="content"
@@ -72,6 +54,24 @@
 				/>
 				<button type="submit" class="btn btn-primary btn-wide ml-8">Send</button>
 			</form>
+		</section>
+
+		<section class="overflow-y-scroll max-h-screen">
+			<div>
+				{#each data.conversation.messages as message, i}
+					<div class="chat {message.isYou ? 'chat-end' : 'chat-start'} ">
+						<div class="chat-header">
+							{#if i === 0 || data.conversation.messages[i - 1].username !== message.username}
+								{message.isYou ? "You" : message.username}
+							{/if}
+							<time class="text-xs opacity-50">{formatTimestamp(message.sentAt)}</time>
+						</div>
+						<div class="chat-bubble" class:chat-bubble-primary={!message.isYou}>
+							{message.content}
+						</div>
+					</div>
+				{/each}
+			</div>
 		</section>
 	</div>
 </div>
