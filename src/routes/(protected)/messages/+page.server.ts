@@ -52,7 +52,7 @@ export const load = (async (event) => {
         inbox.push({
             username: sender.username as string,
             content: latestMsgContent?.content as string,
-            sentAt: latestMsgContent?.sentAt.toString(),
+            sentAt: latestMsgContent?.sentAt as unknown as string,
             unread: latestMsgContent?.readAt === null,
             isYou: latestMsgContent?.sender === user.userId.toString()
         });
@@ -90,6 +90,6 @@ export const load = (async (event) => {
     // console.dir(allSendersUnique);
 
     return {
-        inbox
+        inbox,
     };
 }) satisfies PageServerLoad;
