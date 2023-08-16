@@ -17,7 +17,7 @@
 			Conversations
 		</h2>
 
-		{#each data.convos as c}
+		{#each data.conversations as c}
 			<a href="/messages/{c}" class="flex hover:bg-accent-content p-2 rounded">
 				<div class="avatar">
 					<div class="w-12 mask mask-squircle">
