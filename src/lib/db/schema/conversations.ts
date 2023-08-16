@@ -14,9 +14,9 @@ export const conversationsRelations = relations(conversations, ({ many }) => ({
     messages: many(conversation_messages),
 }));
 
-export const conversation_messages = pgTable("messages", {
+export const conversation_messages = pgTable("conversation_messages", {
     id: serial("id").primaryKey(),
-    conversationId: serial("conversation_id"),
+    conversationId: serial("conversation_id").notNull(),
     content: text("content").notNull(),
     sentAt: timestamp("sent_at", { mode: "date" }).notNull().defaultNow(),
     readAt: timestamp("read_at", { mode: "date" }),
@@ -24,7 +24,7 @@ export const conversation_messages = pgTable("messages", {
     recipient_username: varchar("recipient_username").notNull(),
 });
 
-export const messagesRelations = relations(conversation_messages, ({ one }) => ({
+export const conversationMessagesRelations = relations(conversation_messages, ({ one }) => ({
     conversation: one(conversations, {
         fields: [conversation_messages.conversationId],
         references: [conversations.id],

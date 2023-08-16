@@ -1,4 +1,4 @@
-export interface IPrivateMessage {
+export interface IConversationMessage {
     username: string,
     content: string,
     sentAt: string,

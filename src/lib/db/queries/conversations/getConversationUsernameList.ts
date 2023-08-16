@@ -1,11 +1,9 @@
 import { db } from "$lib/db/client";
-import { conversations } from "$lib/db/schema/messages";
+import { conversations } from "$lib/db/schema/conversations";
 import { eq, or } from 'drizzle-orm';
 
 
 export async function getConversationUsernameList(username: string) {
-
-
 
     const data = await db
         .select()

@@ -1,28 +1,33 @@
 import { db } from "$lib/db/client";
-import { conversation_messages } from "$lib/db/schema/messages";
-import type { IPrivateMessage } from "$lib/interfaces/IPrivateMessage";
-import { eq, or, and } from 'drizzle-orm';
+import type { IConversation } from "$lib/interfaces/IConversation";
+import type { IConversationMessage } from "$lib/interfaces/IConversationMessage";
 
 
-export async function getConversationMessages(to_username: string, from_username: string) {
+export async function getConversation(to_username: string, from_username: string): Promise<IConversation> {
 
-    const data = await db
-        .select()
-        .from(conversation_messages)
-        .where(or(
-            and(
-                eq(conversation_messages.recipient_username, to_username),
-                eq(conversation_messages.sender_username, from_username),
-            ),
-            and(
-                eq(conversation_messages.recipient_username, from_username),
-                eq(conversation_messages.sender_username, to_username),
-            ),
-        ));
+    const conversation = await db.query.conversations.findFirst({
+        with: {
+            messages: {
+                orderBy: (conversation_messages, { asc }) => [asc(conversation_messages.sentAt)],
+            }
+        },
+        where: ((conversations, { eq, or, and }) =>
+            or(
+                and(
+                    eq(conversations.talking_to_username, to_username),
+                    eq(conversations.started_by_username, from_username),
+                ),
+                and(
+                    eq(conversations.started_by_username, to_username),
+                    eq(conversations.talking_to_username, from_username),
+                ),
+            )),
+        orderBy: (conversations, { desc }) => [desc(conversations.latest_activity)],
+    });
 
-    const messages: IPrivateMessage[] = [];
+    const messages: IConversationMessage[] = [];
 
-    data.forEach(message => {
+    conversation?.messages.forEach(message => {
         messages.push({
             username: message.sender_username as string,
             content: message.content as string,
@@ -32,5 +37,10 @@ export async function getConversationMessages(to_username: string, from_username
         });
     });
 
-    return messages;
+    return {
+        id: conversation?.id as number,
+        started_by: conversation?.started_by as string,
+        talking_to: conversation?.talking_to as string,
+        messages: messages
+    };
 }

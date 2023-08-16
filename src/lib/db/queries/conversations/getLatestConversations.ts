@@ -1,5 +1,5 @@
 import { db } from "$lib/db/client";
-import type { IPrivateMessage } from "$lib/interfaces/IPrivateMessage";
+import type { IConversationMessage } from "$lib/interfaces/IConversationMessage";
 
 export async function getLatestConversationsForUsername(username: string) {
     const conversations = await db.query.conversations.findMany({
@@ -22,7 +22,7 @@ export async function getLatestConversationsForUsername(username: string) {
         orderBy: (conversations, { desc }) => [desc(conversations.latest_activity)],
     });
 
-    const messages: IPrivateMessage[] = [];
+    const messages: IConversationMessage[] = [];
 
     conversations.forEach(conversation => {
 

@@ -1,12 +1,12 @@
 <script lang="ts">
 	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
 	import PageHeaderToolbarButton from "$lib/components/ui/PageHeaderToolbarButton.svelte";
-	import type { IPrivateMessage } from "$lib/interfaces/IPrivateMessage";
+	import type { IConversationMessage } from "$lib/interfaces/IPrivateMessage";
 	import type { PageData } from "./$types";
 
 	export let data: PageData;
 
-	let inbox = data.inbox as IPrivateMessage[];
+	let inbox = data.inbox as IConversationMessage[];
 </script>
 
 <PageHeaderToolbar title="Messages" subheader="Stay in touch with people">
