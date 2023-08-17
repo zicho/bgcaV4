@@ -40,8 +40,6 @@ export const actions: Actions = {
                 form.data.content
             );
 
-            console.log("yee")
-
             return { success: true };
         } catch {
             console.dir(form);

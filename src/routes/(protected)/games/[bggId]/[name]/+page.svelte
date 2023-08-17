@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { enhance } from "$app/forms";
-	import { page } from "$app/stores";
 	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
 	import PageHeaderToolbarButton from "$lib/components/ui/PageHeaderToolbarButton.svelte";
 	import { onMount } from "svelte";
@@ -13,10 +12,33 @@
 </script>
 
 <PageHeaderToolbar title={data.game?.name} subheader={data.game?.yearPublished?.toString()}>
+	<form use:enhance method="post" action="?/swap_favorite_status">
+		<input type="hidden" id="id" name="id" value={data.game?.id} />
+
+		<div class="flex md:hidden">
+			{#if data.favorite}
+				<button class="btn btn-secondary w-full md:btn-wide" type="submit"
+					><i class="fa fa-heart" />Remove favorite</button
+				>
+			{:else}
+				<button class="btn btn-primary w-full md:btn-wide" type="submit"
+					><i class="fa fa-regular fa-heart" />Add as favorite</button
+				>
+			{/if}
+		</div>
+
+		<button type="submit" class="btn btn-ghost md:flex hidden">
+			{#if data.favorite}
+				<i class="fa fa-heart text-secondary text-2xl swap-on fill-current"></i>
+			{:else}
+				<i class="fa fa-regular fa-heart swap-off text-2xl fill-current"></i>
+			{/if}
+		</button>
+	</form>
+
 	{#if data.inCollection}
 		<form use:enhance method="post" action="?/remove" class="flex flex-row w-full">
 			<input type="hidden" id="id" name="id" value={data.game?.id} />
-			<input type="hidden" id="redirect_to" name="redirect_to" value={$page.url} />
 			<button class="btn btn-secondary w-full md:btn-wide" type="submit"
 				><i class="fa fa-minus" />Remove from collection</button
 			>
@@ -24,7 +46,6 @@
 	{:else}
 		<form use:enhance method="post" action="?/add" class="flex flex-row w-full">
 			<input type="hidden" id="id" name="id" value={data.game?.id} />
-			<input type="hidden" id="redirect_to" name="redirect_to" value={$page.url} />
 			<button class="btn btn-primary w-full md:btn-wide" type="submit"
 				><i class="fa fa-plus" />Add to collection</button
 			>
@@ -56,6 +77,7 @@
 	<h1>Game description</h1>
 	<p>{data.game?.desc}</p>
 </section>
+
 <!-- 
 <div class="grid grid-cols-3">
 	<div class="col-span-3 md:col-span-1 flex items-start">

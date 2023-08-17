@@ -56,3 +56,39 @@ export const game_invites = pgTable("game_invites", {
 	eventId: serial("game_id").references(() => events.id),
 	inviteGreeting: varchar("inviteText", { length: 80 })
 });
+
+//
+
+export const usersRelations2 = relations(auth_user, ({ many }) => ({
+	usersToFavoriteGames: many(usersToFavoriteGames)
+}));
+
+export const gamesRelations3 = relations(games, ({ many }) => ({
+	usersToFavoriteGames: many(usersToFavoriteGames)
+}));
+
+export const usersToFavoriteGames = pgTable(
+	"users_to_favorite_games",
+	{
+		userId: varchar("user_id")
+			.notNull()
+			.references(() => auth_user.id),
+		gameId: serial("game_id")
+			.notNull()
+			.references(() => games.id)
+	},
+	(t) => ({
+		pk: primaryKey(t.userId, t.gameId)
+	})
+);
+
+export const usersToFavoriteGamesRelations = relations(usersToFavoriteGames, ({ one }) => ({
+	group: one(games, {
+		fields: [usersToFavoriteGames.gameId],
+		references: [games.id]
+	}),
+	user: one(auth_user, {
+		fields: [usersToFavoriteGames.userId],
+		references: [auth_user.id]
+	})
+}));
