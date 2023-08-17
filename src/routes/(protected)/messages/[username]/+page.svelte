@@ -4,14 +4,16 @@
 	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
 	import { formatTimestamp } from "$lib/functions/parseDate";
 	import type { PageData } from "./$types";
+	import { superForm } from "sveltekit-superforms/client";
 
 	export let data: PageData;
+	const { form, errors, constraints } = superForm(data.form);
 </script>
 
 <PageHeaderToolbar title="Conversation with {data.username}" />
 
-<div class="flex space-x-16 grow-1">
-	<div class="flex-col w-1/4 bg-white rounded p-4">
+<div class="flex space-x-0 md:space-x-16 grow-1">
+	<div class="hidden md:flex-col md:flex w-1/4 bg-white rounded p-4">
 		<h2
 			class="mb-4 text-xl font-medium
 		"
@@ -35,14 +37,17 @@
 			<hr />
 		{/each}
 	</div>
-	<div class="flex-col w-3/4">
+	<div class="flex-col w-full md:w-3/4">
 		<section class="mb-4">
 			<form use:enhance method="post" class="flex flex-row">
 				<input
 					name="content"
 					id="content"
-					placeholder="Reply"
-					aria-label="Reply"
+					placeholder="New message"
+					aria-label="New message"
+					bind:value={$form.content}
+					{...$constraints.content}
+					aria-invalid={$errors.content ? "true" : undefined}
 					required
 					class="textarea textarea-bordered w-full"
 				/>
@@ -52,11 +57,13 @@
 					name="conversationId"
 					value={data.conversation.id}
 				/>
-				<button type="submit" class="btn btn-primary btn-wide ml-8">Send</button>
+				<button type="submit" class="btn btn-primary md:btn-wide ml-8">Send</button>
 			</form>
 		</section>
 
-		<section class="overflow-y-scroll max-h-screen">
+		<div class="divider hidden md:flex" />
+
+		<section class="overflow-y-scroll h-[calc(100vh-376px)]">
 			<div>
 				{#each data.conversation.messages as message, i}
 					<div class="chat {message.isYou ? 'chat-end' : 'chat-start'} ">
