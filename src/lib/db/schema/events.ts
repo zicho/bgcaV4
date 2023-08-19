@@ -1,7 +1,7 @@
 import { pgTable, serial, date, varchar } from "drizzle-orm/pg-core";
 import { games } from "./games";
 import { relations } from "drizzle-orm";
-import { auth_user } from "./users";
+import { users } from "./users";
 
 export const events = pgTable("events", {
 	id: serial("id").primaryKey(),
@@ -15,25 +15,25 @@ export const eventsRelations = relations(events, ({ one, many }) => ({
 		fields: [events.gameId],
 		references: [games.id]
 	}),
-	organizer: one(auth_user, {
+	organizer: one(users, {
 		fields: [events.organizerId],
-		references: [auth_user.id]
+		references: [users.id]
 	}),
-	event_players: many(auth_user)
+	event_players: many(users)
 }));
 
-export const event_players = pgTable("event_players", {
+export const eventUsers = pgTable("event_users", {
 	playerId: varchar("player_id"),
 	eventId: serial("event_id")
 });
 
-export const eventPlayersRelations = relations(event_players, ({ one }) => ({
+export const eventPlayersRelations = relations(eventUsers, ({ one }) => ({
 	event: one(events, {
-		fields: [event_players.eventId],
+		fields: [eventUsers.eventId],
 		references: [events.id]
 	}),
-	player: one(auth_user, {
-		fields: [event_players.playerId],
-		references: [auth_user.id]
+	player: one(users, {
+		fields: [eventUsers.playerId],
+		references: [users.id]
 	})
 }));

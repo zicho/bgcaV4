@@ -12,9 +12,9 @@ const connectionPool = new postgres.Pool({
 
 export const auth = lucia({
 	adapter: pg(connectionPool, {
-		user: "auth_user",
-		key: "auth_key",
-		session: "auth_session"
+		user: "auth_users",
+		session: "auth_sessions",
+		key: "auth_keys",
 	}),
 	env: dev ? "DEV" : "PROD",
 	middleware: sveltekit(),

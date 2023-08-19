@@ -1,5 +1,5 @@
 import { db } from "$lib/db/client";
-import { games, usersToGames } from "$lib/db/schema/games";
+import { games, usersToGameCollections } from "$lib/db/schema/games";
 import { parseIntoGame, type IBggGameSimple } from "$lib/interfaces/bgg/IBggGameSimple";
 import { inArray } from "drizzle-orm";
 
@@ -51,10 +51,10 @@ export async function importBggCollection(
 		const mapped = gameIds.map(({ gameId }) => ({ userId: user_id, gameId }));
 
 		const insertedGames = await db
-			.insert(usersToGames)
+			.insert(usersToGameCollections)
 			.values(mapped)
 			.onConflictDoNothing()
-			.returning({ insertedId: usersToGames.gameId });
+			.returning({ insertedId: usersToGameCollections.gameId });
 
 		if (insertedGames.length > 0) {
 			return {

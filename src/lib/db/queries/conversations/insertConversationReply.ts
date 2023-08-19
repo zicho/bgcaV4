@@ -1,5 +1,5 @@
 import { db } from "$lib/db/client";
-import { conversation_messages } from "$lib/db/schema/conversations";
+import { conversationMessages } from "$lib/db/schema/conversations";
 
 export async function insertConversationReply(
     conversationId: number,
@@ -7,7 +7,7 @@ export async function insertConversationReply(
     to_username: string,
     content: string) {
 
-    await db.insert(conversation_messages).values({
+    await db.insert(conversationMessages).values({
         conversationId,
         sender_username: from_username,
         recipient_username: to_username,

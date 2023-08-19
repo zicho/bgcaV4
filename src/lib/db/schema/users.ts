@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { pgTable, bigint, varchar, text, timestamp, serial } from "drizzle-orm/pg-core";
 
-export const auth_user = pgTable("auth_user", {
+export const users = pgTable("auth_users", {
 	id: varchar("id", {
 		length: 15 // change this when using custom user ids
 	}).primaryKey(),
@@ -11,7 +11,7 @@ export const auth_user = pgTable("auth_user", {
 	updatedAt: timestamp("updated_at").defaultNow()
 });
 
-export const auth_session = pgTable("auth_session", {
+export const auth_sessions = pgTable("auth_sessions", {
 	id: varchar("id", {
 		length: 128
 	}).primaryKey(),
@@ -19,7 +19,7 @@ export const auth_session = pgTable("auth_session", {
 		length: 15
 	})
 		.notNull()
-		.references(() => auth_user.id),
+		.references(() => users.id),
 	activeExpires: bigint("active_expires", {
 		mode: "number"
 	}).notNull(),
@@ -28,7 +28,7 @@ export const auth_session = pgTable("auth_session", {
 	}).notNull()
 });
 
-export const auth_key = pgTable("auth_key", {
+export const auth_keys = pgTable("auth_keys", {
 	id: varchar("id", {
 		length: 255
 	}).primaryKey(),
@@ -36,7 +36,7 @@ export const auth_key = pgTable("auth_key", {
 		length: 15
 	})
 		.notNull()
-		.references(() => auth_user.id),
+		.references(() => users.id),
 	hashedPassword: varchar("hashed_password", {
 		length: 255
 	}),
@@ -45,16 +45,16 @@ export const auth_key = pgTable("auth_key", {
 	})
 });
 
-export const userProfileRelations = relations(auth_user, ({ one }) => ({
+export const userProfileRelations = relations(users, ({ one }) => ({
 	profileInfo: one(userProfiles, {
-		fields: [auth_user.id],
+		fields: [users.id],
 		references: [userProfiles.userId]
 	})
 }));
 
 export const userProfiles = pgTable("user_profiles", {
 	id: serial("id").primaryKey(),
-	userId: varchar("user_id").references(() => auth_user.id),
+	userId: varchar("user_id").references(() => users.id),
 	signature: text("signature"),
 	description: text("description")
 });
