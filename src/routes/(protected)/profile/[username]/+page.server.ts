@@ -1,5 +1,5 @@
 import type { PageServerLoad } from "./$types";
-import { auth_user, userProfiles } from "$lib/db/schema/users";
+import { users, userProfiles } from "$lib/db/schema/users";
 import { eq } from "drizzle-orm";
 import { error } from "@sveltejs/kit";
 import { db } from "$lib/db/client";
@@ -10,12 +10,12 @@ export const load = (async ({ parent, params }) => {
 
 	const userAndProfile = await db
 		.select({
-			username: auth_user.username,
+			username: users.username,
 			description: userProfiles.description
 		})
-		.from(auth_user)
-		.where(eq(auth_user.username, params.username))
-		.leftJoin(userProfiles, eq(userProfiles.userId, auth_user.id));
+		.from(users)
+		.where(eq(users.username, params.username))
+		.leftJoin(userProfiles, eq(userProfiles.userId, users.id));
 
 	const profile = userAndProfile[0];
 

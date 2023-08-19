@@ -1,10 +1,10 @@
-import { eq, and, type InferModel } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import type { PageServerLoad } from "./$types";
 import { db } from "$lib/db/client";
 import { isNumber } from "$lib/functions/validators/isNumber";
 import { error, type Actions } from "@sveltejs/kit";
 import { importBggGame } from "$lib/functions/importBggGame";
-import { usersToGames, games, usersToFavoriteGames } from "$lib/db/schema/games";
+import { usersToGameCollections, games, userFavoriteGames } from "$lib/db/schema/games";
 import type { Session } from "lucia";
 
 export const load = (async ({ params, parent }) => {
@@ -28,14 +28,14 @@ export const load = (async ({ params, parent }) => {
 		with: {
 			usersToGames: {
 				where: and(
-					eq(usersToGames.gameId, gameId),
-					eq(usersToGames.userId, user.userId)
+					eq(usersToGameCollections.gameId, gameId),
+					eq(usersToGameCollections.userId, user.userId)
 				)
 			},
 			usersToFavoriteGames: {
 				where: and(
-					eq(usersToGames.gameId, gameId),
-					eq(usersToGames.userId, user.userId)
+					eq(usersToGameCollections.gameId, gameId),
+					eq(usersToGameCollections.userId, user.userId)
 				)
 			},
 		},
@@ -72,8 +72,8 @@ export const actions: Actions = {
 		const { user } = (await locals.auth.validate()) as Session;
 
 		await db
-			.delete(usersToGames)
-			.where(and(eq(usersToGames.gameId, id), eq(usersToGames.userId, user.userId)));
+			.delete(usersToGameCollections)
+			.where(and(eq(usersToGameCollections.gameId, id), eq(usersToGameCollections.userId, user.userId)));
 
 		return {
 			success: true
@@ -86,7 +86,7 @@ export const actions: Actions = {
 		const id = Number(form.get("id"));
 		const { user } = (await locals.auth.validate()) as Session;
 
-		await db.insert(usersToGames).values({
+		await db.insert(usersToGameCollections).values({
 			userId: user.userId,
 			gameId: id
 		});
@@ -102,23 +102,23 @@ export const actions: Actions = {
 		const id = Number(form.get("id"));
 		const { user } = (await locals.auth.validate()) as Session;
 
-		const isFavorite = await db.query.usersToFavoriteGames.findFirst({
+		const isFavorite = await db.query.userFavoriteGames.findFirst({
 			where: and(
-				eq(usersToGames.gameId, id),
-				eq(usersToGames.userId, user.userId)
+				eq(usersToGameCollections.gameId, id),
+				eq(usersToGameCollections.userId, user.userId)
 			)
 		});
 
 		if (!isFavorite) {
-			await db.insert(usersToFavoriteGames).values({
+			await db.insert(userFavoriteGames).values({
 				userId: user.userId,
 				gameId: id
 			});
 		} else {
-			await db.delete(usersToFavoriteGames).where(
+			await db.delete(userFavoriteGames).where(
 				and(
-					eq(usersToFavoriteGames.userId, user.userId),
-					eq(usersToFavoriteGames.gameId, id)
+					eq(userFavoriteGames.userId, user.userId),
+					eq(userFavoriteGames.gameId, id)
 				)
 			);
 		}

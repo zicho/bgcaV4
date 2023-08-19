@@ -1,6 +1,6 @@
 import { db } from "$lib/db/client";
 import type { PageServerLoad } from "./$types";
-import { games, usersToGames } from "$lib/db/schema/games";
+import { games, usersToGameCollections } from "$lib/db/schema/games";
 import { eq, sql, ilike, and } from "drizzle-orm";
 import { isNumber } from "$lib/functions/validators/isNumber";
 import { redirect } from "@sveltejs/kit";
@@ -33,9 +33,9 @@ export const load = (async ({ parent, url }) => {
 	const totalHits = (
 		await db
 			.select({ count: sql<number>`count(*)` })
-			.from(usersToGames)
-			.where(and(eq(usersToGames.userId, user_id), ilike(games.name, `%${searchParam}%`)))
-			.leftJoin(games, eq(usersToGames.gameId, games.id))
+			.from(usersToGameCollections)
+			.where(and(eq(usersToGameCollections.userId, user_id), ilike(games.name, `%${searchParam}%`)))
+			.leftJoin(games, eq(usersToGameCollections.gameId, games.id))
 	)[0].count;
 
 	const totalPages = Math.ceil(totalHits / limit);
@@ -55,9 +55,9 @@ export const load = (async ({ parent, url }) => {
 			thumbnail: games.thumbnailUrl,
 			yearPublished: games.yearPublished
 		})
-		.from(usersToGames)
-		.where(and(eq(usersToGames.userId, user_id), ilike(games.name, `%${searchParam}%`)))
-		.leftJoin(games, eq(usersToGames.gameId, games.id))
+		.from(usersToGameCollections)
+		.where(and(eq(usersToGameCollections.userId, user_id), ilike(games.name, `%${searchParam}%`)))
+		.leftJoin(games, eq(usersToGameCollections.gameId, games.id))
 		.limit(limit)
 		.offset((pageNo - 1) * limit);
 

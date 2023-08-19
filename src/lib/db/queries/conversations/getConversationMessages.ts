@@ -8,7 +8,7 @@ export async function getConversation(to_username: string, from_username: string
     const conversation = await db.query.conversations.findFirst({
         with: {
             messages: {
-                orderBy: (conversation_messages, { desc }) => [desc(conversation_messages.sentAt)],
+                orderBy: (conversationMessages, { desc }) => [desc(conversationMessages.sentAt)],
             }
         },
         where: ((conversations, { eq, or, and }) =>

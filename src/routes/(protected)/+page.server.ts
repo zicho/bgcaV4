@@ -1,14 +1,14 @@
 import { db } from "$lib/db/client";
-import { auth_user } from "$lib/db/schema/users";
+import { users as users_table } from "$lib/db/schema/users";
 import type { PageServerLoad } from "./$types";
 
 export const load = (async () => {
 	const users = await db
 		.select({
-			username: auth_user.username
+			username: users_table.username
 		})
-		.from(auth_user)
-		.orderBy(auth_user.createdAt)
+		.from(users_table)
+		.orderBy(users_table.createdAt)
 		.limit(10);
 
 	return {

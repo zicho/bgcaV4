@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
 import { pgTable, varchar, text, serial, integer, smallint, primaryKey } from "drizzle-orm/pg-core";
-import { auth_user } from "./users";
+import { users } from "./users";
 import { events } from "./events";
 
 export const games = pgTable("games", {
@@ -17,20 +17,20 @@ export const games = pgTable("games", {
 	imageUrl: text("imageUrl")
 });
 
-export const usersRelations = relations(auth_user, ({ many }) => ({
-	usersToGames: many(usersToGames)
+export const usersGamesCollectionRelations = relations(users, ({ many }) => ({
+	usersToGames: many(usersToGameCollections)
 }));
 
-export const gamesRelations = relations(games, ({ many }) => ({
-	usersToGames: many(usersToGames)
+export const gamesUsersCollectionRelations = relations(games, ({ many }) => ({
+	usersToGames: many(usersToGameCollections)
 }));
 
-export const usersToGames = pgTable(
-	"users_to_games",
+export const usersToGameCollections = pgTable(
+	"user_game_collection",
 	{
 		userId: varchar("user_id")
 			.notNull()
-			.references(() => auth_user.id),
+			.references(() => users.id),
 		gameId: serial("game_id")
 			.notNull()
 			.references(() => games.id)
@@ -40,39 +40,39 @@ export const usersToGames = pgTable(
 	})
 );
 
-export const usersToGamesRelations = relations(usersToGames, ({ one }) => ({
+export const usersToGameCollectionRelations = relations(usersToGameCollections, ({ one }) => ({
 	group: one(games, {
-		fields: [usersToGames.gameId],
+		fields: [usersToGameCollections.gameId],
 		references: [games.id]
 	}),
-	user: one(auth_user, {
-		fields: [usersToGames.userId],
-		references: [auth_user.id]
+	user: one(users, {
+		fields: [usersToGameCollections.userId],
+		references: [users.id]
 	})
 }));
 
-export const game_invites = pgTable("game_invites", {
-	userId: varchar("user_id").references(() => auth_user.id),
+export const gameInvites = pgTable("game_invites", {
+	userId: varchar("user_id").references(() => users.id),
 	eventId: serial("game_id").references(() => events.id),
 	inviteGreeting: varchar("inviteText", { length: 80 })
 });
 
 //
 
-export const usersRelations2 = relations(auth_user, ({ many }) => ({
-	usersToFavoriteGames: many(usersToFavoriteGames)
+export const favoriteGamesUsersRelations = relations(users, ({ many }) => ({
+	usersToFavoriteGames: many(userFavoriteGames)
 }));
 
-export const gamesRelations3 = relations(games, ({ many }) => ({
-	usersToFavoriteGames: many(usersToFavoriteGames)
+export const favoriteGamesGamesRelations = relations(games, ({ many }) => ({
+	usersToFavoriteGames: many(userFavoriteGames)
 }));
 
-export const usersToFavoriteGames = pgTable(
-	"users_to_favorite_games",
+export const userFavoriteGames = pgTable(
+	"user_favorite_games",
 	{
 		userId: varchar("user_id")
 			.notNull()
-			.references(() => auth_user.id),
+			.references(() => users.id),
 		gameId: serial("game_id")
 			.notNull()
 			.references(() => games.id)
@@ -82,13 +82,13 @@ export const usersToFavoriteGames = pgTable(
 	})
 );
 
-export const usersToFavoriteGamesRelations = relations(usersToFavoriteGames, ({ one }) => ({
+export const usersToFavoriteGamesRelations = relations(userFavoriteGames, ({ one }) => ({
 	group: one(games, {
-		fields: [usersToFavoriteGames.gameId],
+		fields: [userFavoriteGames.gameId],
 		references: [games.id]
 	}),
-	user: one(auth_user, {
-		fields: [usersToFavoriteGames.userId],
-		references: [auth_user.id]
+	user: one(users, {
+		fields: [userFavoriteGames.userId],
+		references: [users.id]
 	})
 }));

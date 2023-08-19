@@ -11,10 +11,10 @@ export const conversations = pgTable("conversations", {
 });
 
 export const conversationsRelations = relations(conversations, ({ many }) => ({
-    messages: many(conversation_messages),
+    messages: many(conversationMessages),
 }));
 
-export const conversation_messages = pgTable("conversation_messages", {
+export const conversationMessages = pgTable("conversation_messages", {
     id: serial("id").primaryKey(),
     conversationId: serial("conversation_id").notNull(),
     content: text("content").notNull(),
@@ -24,9 +24,9 @@ export const conversation_messages = pgTable("conversation_messages", {
     recipient_username: varchar("recipient_username").notNull(),
 });
 
-export const conversationMessagesRelations = relations(conversation_messages, ({ one }) => ({
+export const conversationMessagesRelations = relations(conversationMessages, ({ one }) => ({
     conversation: one(conversations, {
-        fields: [conversation_messages.conversationId],
+        fields: [conversationMessages.conversationId],
         references: [conversations.id],
     }),
 }));
