@@ -7,8 +7,6 @@
 	import { invalidateAll } from "$app/navigation";
 
 	export let data: PageData;
-
-	onMount(async () => await invalidateAll());
 </script>
 
 <PageHeaderToolbar title={data.game?.name} subheader={data.game?.yearPublished?.toString()}>
@@ -52,7 +50,11 @@
 		</form>
 	{/if}
 
-	<PageHeaderToolbarButton displayText="Create event" url="/events/create" icon="fa-calendar" />
+	<PageHeaderToolbarButton
+		displayText="Create event"
+		url="/events/create?game_id={data.game?.id}&clear_prev=true"
+		icon="fa-calendar"
+	/>
 </PageHeaderToolbar>
 
 <section class="grid grid-cols-5 gap-8">

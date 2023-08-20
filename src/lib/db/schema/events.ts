@@ -10,7 +10,7 @@ export const events = pgTable("events", {
 	organizerId: varchar("organizer_id").notNull()
 });
 
-export const eventsRelations = relations(events, ({ one, many }) => ({
+export const eventUserRelations = relations(events, ({ one, many }) => ({
 	game: one(games, {
 		fields: [events.gameId],
 		references: [games.id]
@@ -27,7 +27,7 @@ export const eventUsers = pgTable("event_users", {
 	eventId: serial("event_id")
 });
 
-export const eventPlayersRelations = relations(eventUsers, ({ one }) => ({
+export const eventUsersRelations = relations(eventUsers, ({ one }) => ({
 	event: one(events, {
 		fields: [eventUsers.eventId],
 		references: [events.id]
@@ -36,4 +36,23 @@ export const eventPlayersRelations = relations(eventUsers, ({ one }) => ({
 		fields: [eventUsers.playerId],
 		references: [users.id]
 	})
+}));
+
+///////// event suggested dates
+
+export const eventDatesRelations = relations(events, ({ many }) => ({
+	dates: many(eventDates),
+}));
+
+export const eventDates = pgTable('dates', {
+	date: date("date").notNull(),
+	startTime: varchar("start_time", { length: 5 }).notNull(),
+	eventId: serial('event_id'),
+});
+
+export const dateEventsRelation = relations(eventDates, ({ one }) => ({
+	author: one(events, {
+		fields: [eventDates.eventId],
+		references: [events.id],
+	}),
 }));
