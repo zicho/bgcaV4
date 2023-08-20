@@ -1,19 +1,23 @@
 import { getGame } from '$lib/db/queries/games/getGame';
-import { message, superValidate } from 'sveltekit-superforms/server';
+import { superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
 import { or, type InferModel, ilike, inArray } from 'drizzle-orm';
 import { games as gamesTable } from '$lib/db/schema/games';
 import { searchGameSchema } from '$lib/validationSchemas/searchGameSchema';
-import { addGamesToEventSchema } from '$lib/validationSchemas/addGamesToEventSchema';
-import { fail, type Cookies } from '@sveltejs/kit';
+import { createEventSchema } from '$lib/validationSchemas/createEventSchema';
+import { fail, type Cookies, error } from '@sveltejs/kit';
 import { db } from '$lib/db/client';
+import type { Session } from 'lucia';
+import { eventGames, events } from '$lib/db/schema/events';
+import type { EVENT_TYPE } from '$lib/enums/eventType';
+import { redirect } from 'sveltekit-flash-message/server';
 
 export const load = (async (event) => {
 
     const { cookies, url } = event;
 
     const searchForm = await superValidate(searchGameSchema);
-    const addEventForm = await superValidate(addGamesToEventSchema);
+    const addEventForm = await superValidate(createEventSchema);
 
     type Game = InferModel<typeof gamesTable, "select">;
 
@@ -66,14 +70,43 @@ export const load = (async (event) => {
 export const actions: Actions = {
     confirm: async (event) => {
 
-        const { request } = event;
+        const { request, locals } = event;
 
-        const addEventForm = await superValidate(request, addGamesToEventSchema);
-
-
+        const addEventForm = await superValidate(request, createEventSchema);
         if (!addEventForm.valid) return fail(400, { addEventForm });
 
-        return message(addEventForm, 'Login form submitted');
+        const { user } = (await locals.auth.validate()) as Session;
+
+        type Event = InferModel<typeof events, "insert">;
+
+        const newEvent: Event = {
+            organizerId: user.userId,
+            eventType: addEventForm.data.eventType as EVENT_TYPE,
+        };
+
+        const eventId = (await db
+            .insert(events)
+            .values(newEvent)
+            .returning({ insertedId: events.id }))[0].insertedId;
+
+        for (const id of addEventForm.data.ids) {
+            await db
+                .insert(eventGames)
+                .values({
+                    gameId: id,
+                    eventId
+                }); // Remove the comma here
+        }
+
+        throw redirect(
+            302,
+            `/events/edit/${eventId}`,
+            {
+                type: "success",
+                message: `Your event was created!`
+            },
+            event
+        );
     },
     search: async ({ request }) => {
         const searchForm = await superValidate(request, searchGameSchema);
@@ -101,9 +134,6 @@ function handleStoreIdsInCookie(cookies: Cookies, ids: number[], deletePrevious:
         const existing_ids = JSON.parse(cookie);
         const mergedArray: number[] = ids.concat(existing_ids);
         const deduplicatedArray = removeDuplicates(mergedArray);
-
-        console.dir("----------")
-        console.dir(deduplicatedArray)
 
         cookies.set("game_ids", JSON.stringify(deduplicatedArray));
     }

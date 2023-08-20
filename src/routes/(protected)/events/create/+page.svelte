@@ -9,11 +9,11 @@
 	import { page } from "$app/stores";
 	import { EVENT_TYPE } from "$lib/enums/eventType";
 
+	const gameIdQueryParam = $page.url.searchParams.get("game_id");
+
 	export let data: PageData;
 
-	const { enhance } = superForm(data.addEventForm);
-
-	const gameIdQueryParam = $page.url.searchParams.get("game_id");
+	const { enhance, errors } = superForm(data.addEventForm);
 
 	const {
 		form: searchForm,
@@ -102,4 +102,5 @@
 </article>
 <div class="divider" />
 
+{#if $errors.ids?._errors}<span class="label-text text-error">{$errors.ids?._errors}</span>{/if}
 <button class="btn btn-primary btn-wide float-right" type="submit" form="event_data">Next</button>
