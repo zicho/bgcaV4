@@ -1,8 +1,6 @@
 <script lang="ts">
 	import Checkbox from "$lib/components/form/Checkbox.svelte";
 	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
-	import { getDate } from "$lib/functions/util/getDate";
-	import { getHourTimeStamps } from "$lib/functions/util/getHourTimestamps";
 	import { superForm } from "sveltekit-superforms/client";
 
 	import type { PageData } from "./$types";
@@ -13,12 +11,13 @@
 
 	export let data: PageData;
 
-	const { form, errors, enhance, message } = superForm(data.addEventForm);
+	const { enhance } = superForm(data.addEventForm);
+
+	const gameIdQueryParam = $page.url.searchParams.get("game_id");
 
 	const {
 		form: searchForm,
 		errors: searchErrors,
-		enhance: searchEnhance,
 		constraints: searchConstraints
 	} = superForm(data.searchForm);
 
@@ -64,7 +63,11 @@
 <article class="w-full md:w-1/2 lg:w-1/3">
 	<section class="mb-8">
 		<h2 class="text-2xl font-semibold mb-4">Add game(s)</h2>
-		<form use:searchEnhance id="search" method="post" action="?/search" class="flex flex-row">
+		<form
+			id="search"
+			action="{gameIdQueryParam ? `?game_id=${gameIdQueryParam}&/search` : '?/search'} "
+			class="flex flex-row"
+		>
 			<input
 				bind:value={$searchForm.query}
 				name="query"
@@ -83,7 +86,7 @@
 				<Checkbox
 					title={game.name}
 					id={`game_id-${game.id}`}
-					checked={$page.url.searchParams.get("game_id") === game.id.toString()}
+					checked={gameIdQueryParam === game.id.toString()}
 					name="ids"
 					value={game.id}
 				/>
