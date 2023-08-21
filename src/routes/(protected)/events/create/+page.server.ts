@@ -9,7 +9,7 @@ import { fail, type Cookies } from '@sveltejs/kit';
 import { db } from '$lib/db/client';
 import type { Session } from 'lucia';
 import { eventGames, events } from '$lib/db/schema/events';
-import type { EVENT_TYPE } from '$lib/enums/EVENT_TYPE';
+import type { EVENT_TYPE } from '$lib/data/enums/EVENT_TYPE';
 import { redirect } from 'sveltekit-flash-message/server';
 
 export const load = (async (event) => {

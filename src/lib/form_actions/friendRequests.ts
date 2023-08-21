@@ -1,6 +1,6 @@
 import { db } from "$lib/db/client";
 import { friends } from "$lib/db/schema/relationships";
-import { REQUEST_STATUS } from "$lib/enums/REQUEST_STATUS";
+import { REQUEST_STATUS } from "$lib/data/enums/REQUEST_STATUS";
 import { answerFriendRequestSchema, removeFriendshipRequestSchema, sendFriendRequestSchema } from "$lib/validationSchemas/friendRequestSchemas";
 import { error, fail, type RequestEvent } from "@sveltejs/kit";
 import { eq, or, and } from "drizzle-orm";

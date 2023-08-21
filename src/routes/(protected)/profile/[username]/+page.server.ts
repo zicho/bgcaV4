@@ -3,12 +3,12 @@ import { users, userProfiles } from "$lib/db/schema/users";
 import { eq, and, or } from "drizzle-orm";
 import { error, type Actions } from "@sveltejs/kit";
 import { db } from "$lib/db/client";
-import { REQUEST_STATUS } from "$lib/enums/REQUEST_STATUS";
+import { REQUEST_STATUS } from "$lib/data/enums/REQUEST_STATUS";
 import { answerFriendRequest, removeFriend, sendFriendRequest } from "$lib/form_actions/friendRequests";
 import { answerFriendRequestSchema, sendFriendRequestSchema } from "$lib/validationSchemas/friendRequestSchemas";
 import { superValidate } from "sveltekit-superforms/server";
 import { friends } from "$lib/db/schema/relationships";
-import { FRIENDSHIP_STATUS } from "$lib/enums/FRIENDSHIP_STATUS";
+import { FRIENDSHIP_STATUS } from "$lib/data/enums/FRIENDSHIP_STATUS";
 
 export const load = (async ({ parent, params }) => {
 

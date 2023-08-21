@@ -1,6 +1,6 @@
 import { db } from "$lib/db/client";
 import { games } from "$lib/db/schema/games";
-import { parseIntoGame } from "$lib/interfaces/bgg/IBggGameDetailed";
+import { parseIntoGame } from "$lib/data/interfaces/bgg/IBggGameDetailed";
 import { eq } from "drizzle-orm";
 
 export async function importBggGame(bggId: number) {

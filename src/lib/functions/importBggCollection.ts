@@ -1,6 +1,6 @@
 import { db } from "$lib/db/client";
 import { games, usersToGameCollections } from "$lib/db/schema/games";
-import { parseIntoGame, type IBggGameSimple } from "$lib/interfaces/bgg/IBggGameSimple";
+import { parseIntoGame, type IBggGameSimple } from "$lib/data/interfaces/bgg/IBggGameSimple";
 import { inArray } from "drizzle-orm";
 
 type BggGameImportResult = {

@@ -4,7 +4,7 @@
 	import PageHeaderToolbarButton from "$lib/components/ui/PageHeaderToolbarButton.svelte";
 	import { superForm } from "sveltekit-superforms/client";
 	import type { PageData } from "./$types";
-	import { FRIENDSHIP_STATUS } from "$lib/enums/FRIENDSHIP_STATUS";
+	import { FRIENDSHIP_STATUS } from "$lib/data/enums/FRIENDSHIP_STATUS";
 
 	export let data: PageData;
 

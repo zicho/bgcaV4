@@ -46,8 +46,8 @@
 			authOnly: true
 		},
 		{
-			url: `/profile/${user?.username}`,
-			aria: "View and edit user profile",
+			url: `/notifications`,
+			aria: "View various notifications",
 			icon: "fa-bell",
 			authOnly: true,
 			indicator: true

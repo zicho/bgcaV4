@@ -1,5 +1,5 @@
 import { db } from "$lib/db/client";
-import type { IConversation } from "$lib/interfaces/IConversation";
+import type { IConversation } from "$lib/data/interfaces/IConversation";
 import type { IConversationMessage } from "$lib/interfaces/IConversationMessage";
 
 
