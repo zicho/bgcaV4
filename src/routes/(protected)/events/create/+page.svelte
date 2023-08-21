@@ -7,7 +7,7 @@
 	import RadioButton from "$lib/components/form/RadioButton.svelte";
 	import type { IRadioButtonOpts } from "$lib/interfaces/components/IRadioButtonOpts";
 	import { page } from "$app/stores";
-	import { EVENT_TYPE } from "$lib/enums/eventType";
+	import { EVENT_TYPE } from "$lib/enums/EVENT_TYPE";
 
 	const gameIdQueryParam = $page.url.searchParams.get("game_id");
 

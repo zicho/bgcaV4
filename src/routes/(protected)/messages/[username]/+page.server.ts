@@ -42,7 +42,6 @@ export const actions: Actions = {
 
             return { success: true };
         } catch {
-            console.dir(form);
             return fail(500);
         }
     },

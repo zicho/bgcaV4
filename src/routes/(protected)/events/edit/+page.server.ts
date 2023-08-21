@@ -14,8 +14,6 @@ export const load = (async (event) => {
     if (game_id) {
         const game = await getGame(game_id);
 
-        console.dir(game);
-
         return {
             form,
             game

@@ -1,0 +1,7 @@
+export enum FRIENDSHIP_STATUS {
+    NONE,
+    REQUEST_SENT,
+    REQUEST_RECEIVED,
+    ACCEPTED,
+    DECLINED,
+}

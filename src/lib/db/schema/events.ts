@@ -1,20 +1,13 @@
-import { pgTable, serial, date, varchar, time, pgEnum, integer } from "drizzle-orm/pg-core";
+import { pgTable, serial, date, varchar, integer, timestamp } from "drizzle-orm/pg-core";
 import { games } from "./games";
 import { relations } from "drizzle-orm";
 import { users } from "./users";
-
-// note: should match "EVENT_TYPE" enum
-const eventTypeEnum = pgEnum('eventType', [
-	"event_type_open",
-	"event_type_friends",
-	"event_type_collab",
-	"event_type_closed",
-]);
+import { eventTypeEnum } from "./types";
 
 export const events = pgTable("events", {
 	id: serial("id").primaryKey(),
 	day: date("date").notNull().defaultNow(),
-	time: time("time", { precision: 6 }).notNull().defaultNow(),
+	time: timestamp("time").notNull().defaultNow(),
 	organizerId: varchar("organizer_id").notNull(),
 	eventType: eventTypeEnum("event_type").notNull()
 });
@@ -68,7 +61,7 @@ export const eventDatesRelations = relations(events, ({ many }) => ({
 	dates: many(eventDates),
 }));
 
-export const eventDates = pgTable('dates', {
+export const eventDates = pgTable('event_dates', {
 	date: date("date").notNull(),
 	startTime: varchar("start_time", { length: 5 }).notNull(),
 	eventId: serial('event_id'),

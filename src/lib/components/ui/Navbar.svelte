@@ -7,10 +7,11 @@
 
 	interface INavbarLink {
 		url: string;
-		displayText: string;
+		displayText?: string;
 		aria: string;
 		icon: string;
 		authOnly: boolean;
+		indicator?: boolean;
 	}
 
 	// reactive to changes in user state
@@ -22,6 +23,7 @@
 			icon: "fa-user",
 			authOnly: true
 		},
+
 		{
 			url: `/messages`,
 			displayText: "Messages",
@@ -42,6 +44,13 @@
 			aria: "Find and organize events",
 			icon: "fa-calendar-alt",
 			authOnly: true
+		},
+		{
+			url: `/profile/${user?.username}`,
+			aria: "View and edit user profile",
+			icon: "fa-bell",
+			authOnly: true,
+			indicator: true
 		},
 		{
 			url: "/logout",
@@ -85,6 +94,7 @@
 					<NavbarLink
 						url={link.url}
 						displayText={link.displayText}
+						indicator={link.indicator}
 						aria={link.aria}
 						icon={link.icon}
 					/>

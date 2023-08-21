@@ -1,9 +1,15 @@
 <script lang="ts">
+	import PageHeaderActionButton from "$lib/components/ui/PageHeaderActionButton.svelte";
 	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
 	import PageHeaderToolbarButton from "$lib/components/ui/PageHeaderToolbarButton.svelte";
+	import { superForm } from "sveltekit-superforms/client";
 	import type { PageData } from "./$types";
+	import { FRIENDSHIP_STATUS } from "$lib/enums/FRIENDSHIP_STATUS";
 
 	export let data: PageData;
+
+	const { enhance: sendFriendRequestEnhance } = superForm(data.sendFriendRequestForm);
+	const { enhance: answerFriendRequestEnhance } = superForm(data.answerFriendRequestForm);
 </script>
 
 <svelte:head>
@@ -30,6 +36,51 @@
 			url="/message/{data.profile.username}"
 			icon="fa-message"
 		/>
+	{/if}
+
+	{#if !data.isProfileYours}
+		<div class="divider divider-horizontal pb-4 hidden md:flex" />
+		{#if data.friendRequestStatus === FRIENDSHIP_STATUS.NONE}
+			<form use:sendFriendRequestEnhance method="post" action="?/sendFriendRequest">
+				<input type="hidden" name="senderUsername" value={data.user.username} />
+				<input type="hidden" name="recipientUsername" value={data.profile.username} />
+				<PageHeaderActionButton displayText="Send friend request" icon="fa-user-plus" />
+			</form>
+		{:else if data.friendRequestStatus === FRIENDSHIP_STATUS.REQUEST_SENT}
+			<PageHeaderActionButton disabled displayText="Friend request sent" icon="fa-hourglass" />
+		{:else if data.friendRequestStatus === FRIENDSHIP_STATUS.REQUEST_RECEIVED}
+			<form use:answerFriendRequestEnhance method="post" action="?/answerFriendRequest">
+				<input type="hidden" name="senderUsername" value={data.friendRequest?.senderUsername} />
+				<input
+					type="hidden"
+					name="recipientUsername"
+					value={data.friendRequest?.recipientUsername}
+				/>
+
+				<PageHeaderActionButton
+					name="accepted"
+					value="true"
+					displayText="Accept friend request"
+					icon="fa-user-check"
+				/>
+				<PageHeaderActionButton
+					name="accepted"
+					value="false"
+					displayText="Decline friend request"
+					className="secondary"
+					icon="fa-user-xmark"
+				/>
+			</form>
+		{:else}
+			<form use:answerFriendRequestEnhance method="post" action="?/removeFriend">
+				<input type="hidden" name="friendshipId" value={data.friendRequest?.id} />
+				<PageHeaderActionButton
+					displayText="Remove friend"
+					className="secondary"
+					icon="fa-user-minus"
+				/>
+			</form>
+		{/if}
 	{/if}
 </PageHeaderToolbar>
 

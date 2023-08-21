@@ -5,11 +5,11 @@ import { or, type InferModel, ilike, inArray } from 'drizzle-orm';
 import { games as gamesTable } from '$lib/db/schema/games';
 import { searchGameSchema } from '$lib/validationSchemas/searchGameSchema';
 import { createEventSchema } from '$lib/validationSchemas/createEventSchema';
-import { fail, type Cookies, error } from '@sveltejs/kit';
+import { fail, type Cookies } from '@sveltejs/kit';
 import { db } from '$lib/db/client';
 import type { Session } from 'lucia';
 import { eventGames, events } from '$lib/db/schema/events';
-import type { EVENT_TYPE } from '$lib/enums/eventType';
+import type { EVENT_TYPE } from '$lib/enums/EVENT_TYPE';
 import { redirect } from 'sveltekit-flash-message/server';
 
 export const load = (async (event) => {
