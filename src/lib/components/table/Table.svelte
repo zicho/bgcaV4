@@ -62,7 +62,12 @@
 				class="input input-bordered w-full md:w-auto"
 			/>
 			<label for="limit" class="label-text">Results per page</label>
-			<select name="limit" id="limit" class="select select-bordered xl:mt-0 w-full xl:w-auto">
+			<select
+				on:change={() => searchForm.requestSubmit()}
+				name="limit"
+				id="limit"
+				class="select select-bordered xl:mt-0 w-full xl:w-auto"
+			>
 				<option selected={limit == 10}>10</option>
 				<option selected={limit == 25}>25</option>
 				<option selected={limit == 50}>50</option>
@@ -100,29 +105,31 @@
 		<div class="py-4 xl:py-0 flex items-center justify-center w-full">
 			<span class="mr-2">Page</span>
 
-			<form method="get" bind:this={searchForm} on:change={() => searchForm.requestSubmit()}>
-				<label for="page" class="hidden" />
-				{#if !scriptUser}
-					<input
-						class="w-16 p-2 border border-gray-300 rounded-md h-full"
-						type="text"
-						name="page"
-						disabled={totalPages == 0}
-						value={pageNo}
-					/>
-				{:else}
-					<select
-						name="page"
-						id="page"
-						class="select select-bordered xl:mt-0 w-full xl:w-auto"
-						value={pageNo}
-					>
-						{#each pagesArray as page}
-							<option selected>{page}</option>
-						{/each}
-					</select>
-				{/if}
-			</form>
+			<label for="page" class="hidden" />
+			{#if !scriptUser}
+				<input
+					class="w-16 p-2 border border-gray-300 rounded-md h-full"
+					form="searchForm"
+					type="text"
+					name="page"
+					disabled={totalPages == 0}
+					value={pageNo}
+				/>
+			{:else}
+				<select
+					name="page"
+					id="page"
+					class="select select-bordered xl:mt-0 w-full xl:w-auto"
+					value={pageNo}
+					form="searchForm"
+					on:change={() => searchForm.requestSubmit()}
+				>
+					{#each pagesArray as page}
+						<option selected>{page}</option>
+					{/each}
+				</select>
+			{/if}
+
 			<span class="ml-2">
 				of {totalPages} <span class="label-text font-thin">({totalHits} hits)</span>
 			</span>

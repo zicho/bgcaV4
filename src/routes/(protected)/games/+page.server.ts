@@ -7,7 +7,6 @@ import { isNumber } from "$lib/functions/validators/isNumber";
 
 export const load = (async ({ url }) => {
 	// todo: refactor this to avoid redundancy where using tables
-
 	let searchParam = url.searchParams.get("search");
 	let pageNo = Number(url.searchParams.get("page"));
 	let limit = Number(url.searchParams.get("limit"));
