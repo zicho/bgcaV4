@@ -8,14 +8,14 @@
 </svelte:head>
 
 <div class="prose prose-sm">
-	<div class="flex flex-col md:flex-row mb-8">
-		<div class="md:mb-0 mb-4">
+	<div class="flex flex-col xl:flex-row mb-8">
+		<div class="xl:mb-0 mb-4">
 			<h1 class="m-0 p-0">{title}</h1>
 			{#if subheader}
 				<h2 class="p-0 m-0 font-extralight">{subheader}</h2>
 			{/if}
 		</div>
-		<div class="md:flex md:flex-row ml-auto w-full md:w-auto space-y-2 md:space-y-0 md:space-x-4">
+		<div class="xl:flex xl:flex-row ml-auto w-full xl:w-auto space-y-2 xl:space-y-0 xl:space-x-4">
 			<slot />
 		</div>
 	</div>

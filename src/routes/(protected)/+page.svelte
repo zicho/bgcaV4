@@ -9,7 +9,7 @@
 	<title>Home</title>
 </svelte:head>
 
-<PageHeaderToolbar title="Home">
+<PageHeaderToolbar title="Home" subheader="Hello hello">
 	<PageHeaderToolbarButton
 		displayText="Go to your profile"
 		url="/profile/{data.user.username}"

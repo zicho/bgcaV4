@@ -6,4 +6,6 @@
 	export let className: "primary" | "secondary" = "primary";
 </script>
 
-<a href={url} class="btn btn-{className} w-full md:btn-wide"><i class="fa {icon}" />{displayText}</a>
+<a href={url} class="btn btn-{className} w-full md:flex-grow xl:btn-wide"
+	><i class="fa {icon}" />{displayText}</a
+>

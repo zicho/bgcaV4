@@ -26,16 +26,21 @@
 							</div>
 						</div>
 						<h2 class="card-title ml-4">Friend request from {request.senderUsername}</h2>
+						<a href="/profile/{request?.senderUsername}" class="btn ml-auto">view profile</a>
 					</div>
-					<p>User {request.senderUsername} wants to be your friend.</p>
+					<p>
+						User <a class="underline" href="/profile/{request.senderUsername}"
+							>{request.senderUsername}</a
+						> wants to be your friend.
+					</p>
 					<div class="card-actions justify-end">
 						<form use:enhance method="post" action="?/answerFriendRequest">
 							<input type="hidden" name="senderUsername" value={request?.senderUsername} />
 							<input type="hidden" name="recipientUsername" value={request?.recipientUsername} />
-							<button name="accepted" value="true" class="btn btn-primary" type="submit"
+							<button name="accepted" value="true" class="btn btn-primary btn-wide" type="submit"
 								>Accept</button
 							>
-							<button name="accepted" value="false" class="btn btn-secondary" type="submit"
+							<button name="accepted" value="false" class="btn btn-secondary btn-wide" type="submit"
 								>Deny</button
 							>
 						</form>

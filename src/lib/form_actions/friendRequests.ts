@@ -6,6 +6,8 @@ import { error, fail, type RequestEvent } from "@sveltejs/kit";
 import { eq, or, and } from "drizzle-orm";
 import type { Session } from "lucia";
 import { superValidate } from "sveltekit-superforms/server";
+import { getFriendship } from "$lib/db/queries/relationships/getFriendship";
+import { upsertFriendship } from "$lib/db/queries/relationships/upsertFriendship";
 
 export async function sendFriendRequest(event: RequestEvent) {
     const sendFriendRequestForm = await superValidate(event.request, sendFriendRequestSchema);
@@ -15,19 +17,7 @@ export async function sendFriendRequest(event: RequestEvent) {
     const { user } = (await event.locals.auth.validate()) as Session;
     const { senderUsername, recipientUsername } = sendFriendRequestForm.data;
 
-    const existing = (await db.select().
-        from(friends).where(
-            or(
-                and(
-                    eq(friends.recipientUsername, recipientUsername),
-                    eq(friends.senderUsername, senderUsername),
-                ),
-                and(
-                    eq(friends.recipientUsername, senderUsername),
-                    eq(friends.senderUsername, recipientUsername),
-                )
-            )
-        ).limit(1))[0];
+    const existing = await getFriendship(senderUsername, recipientUsername);
 
     if (existing && existing.requestStatus !== REQUEST_STATUS.DECLINED) {
         throw error(403, "Friend request already sent.");
@@ -37,18 +27,7 @@ export async function sendFriendRequest(event: RequestEvent) {
         throw error(403, "Forbidden");
     }
 
-    await db.insert(friends).values({
-        id: existing?.id,
-        senderUsername,
-        recipientUsername
-    }).onConflictDoUpdate({
-        target: friends.id,
-        set: {
-            senderUsername,
-            recipientUsername,
-            requestStatus: REQUEST_STATUS.PENDING
-        }
-    });
+    await upsertFriendship(senderUsername, recipientUsername, existing?.id);
 
     return {
         sendFriendRequestForm

@@ -88,7 +88,8 @@
 				<NavbarCountIndicator
 					url="/notifications"
 					aria="notifications"
-					icon="fa-bell"
+					icon="fa-regular fa-bell"
+					altIcon="fa-bell"
 					count={notificationCount}
 				/>
 				{#each menuDataAuthenticated as link}

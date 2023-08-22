@@ -25,6 +25,7 @@
 
 	const opts: IRadioButtonOpts[] = [
 		{
+			title: "Open",
 			tooltip: "Anyone may join",
 			checked: true,
 			id: EVENT_TYPE.OPEN
