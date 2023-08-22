@@ -27,7 +27,7 @@ export async function sendFriendRequest(event: RequestEvent) {
                     eq(friends.senderUsername, recipientUsername),
                 )
             )
-        ))[0];
+        ).limit(1))[0];
 
     if (existing && existing.requestStatus !== REQUEST_STATUS.DECLINED) {
         throw error(403, "Friend request already sent.");
@@ -86,8 +86,6 @@ export async function removeFriend(event: RequestEvent) {
 
     const removeFriendshipRequestForm = await superValidate(event.request, removeFriendshipRequestSchema);
 
-    console.dir(removeFriendshipRequestForm);
-
     if (!removeFriendshipRequestForm.valid) return fail(400, { acceptFriendRequestForm: removeFriendshipRequestForm });
 
     const friendshipDetails = (await db.select(
@@ -96,8 +94,6 @@ export async function removeFriend(event: RequestEvent) {
             recipient: friends.recipientUsername,
         }
     ).from(friends).where(eq(friends.id, removeFriendshipRequestForm.data.friendshipId)))[0];
-
-    console.dir(friendshipDetails);
 
     const { user } = (await event.locals.auth.validate()) as Session;
 

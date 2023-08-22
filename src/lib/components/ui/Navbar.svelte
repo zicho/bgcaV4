@@ -1,8 +1,11 @@
 <script lang="ts">
 	import NavbarLink from "$lib/components/ui/NavbarLink.svelte";
 	import type { User } from "lucia";
+	import NavbarCountIndicator from "./NavbarCountIndicator.svelte";
 
 	export let user: User;
+	export let notificationCount: number | undefined;
+
 	let open: boolean;
 
 	interface INavbarLink {
@@ -11,7 +14,6 @@
 		aria: string;
 		icon: string;
 		authOnly: boolean;
-		indicator?: boolean;
 	}
 
 	// reactive to changes in user state
@@ -44,13 +46,6 @@
 			aria: "Find and organize events",
 			icon: "fa-calendar-alt",
 			authOnly: true
-		},
-		{
-			url: `/notifications`,
-			aria: "View various notifications",
-			icon: "fa-bell",
-			authOnly: true,
-			indicator: true
 		},
 		{
 			url: "/logout",
@@ -90,11 +85,16 @@
 	<div class="flex-none hidden md:flex">
 		<ul class="menu menu-horizontal px-1 bg-neutral text-neutral-content">
 			{#if user}
+				<NavbarCountIndicator
+					url="/notifications"
+					aria="notifications"
+					icon="fa-bell"
+					count={notificationCount}
+				/>
 				{#each menuDataAuthenticated as link}
 					<NavbarLink
 						url={link.url}
 						displayText={link.displayText}
-						indicator={link.indicator}
 						aria={link.aria}
 						icon={link.icon}
 					/>

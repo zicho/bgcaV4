@@ -45,18 +45,21 @@ export const load = (async (event) => {
         }
     }
 
-    const cookieIds = handleGetIdsFromCookie(cookies)?.filter((x: number) => x !== game_id);
+    const cookie = handleGetIdsFromCookie(cookies);
 
-    removeDuplicates(cookieIds);
+    if (cookie) {
+        const cookieIds = cookie?.filter((x: number) => x !== game_id);
+        removeDuplicates(cookieIds);
 
-    if (cookieIds?.length > 0) {
-        const cookieGames = await db.select().from(gamesTable).where(
-            inArray(gamesTable.id, cookieIds)
-        );
+        if (cookieIds?.length > 0) {
+            const cookieGames = await db.select().from(gamesTable).where(
+                inArray(gamesTable.id, cookieIds)
+            );
 
-        cookieGames.forEach(game => {
-            games.push(game);
-        });
+            cookieGames.forEach(game => {
+                games.push(game);
+            });
+        }
     }
 
     return {

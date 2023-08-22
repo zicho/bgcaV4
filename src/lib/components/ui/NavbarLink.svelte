@@ -14,6 +14,7 @@
 	export let aria: string;
 	export let icon: string = "fa-check";
 	export let indicator: boolean = false;
+	export let notificationCount: number = 0;
 </script>
 
 <li class="flex justify-start">
@@ -24,7 +25,9 @@
 		{#if indicator}
 			<div class="indicator">
 				<i class={`fa ${icon} mr-2 md:w-auto text-xl md:text-base`} />
-				<span class="badge badge-warning badge-sm indicator-item">8</span>
+				{#if notificationCount > 0}
+					<span class="badge badge-warning badge-sm indicator-item">{notificationCount}</span>
+				{/if}
 			</div>
 		{/if}
 	</a>

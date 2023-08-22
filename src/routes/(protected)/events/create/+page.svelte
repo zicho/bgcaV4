@@ -5,9 +5,9 @@
 
 	import type { PageData } from "./$types";
 	import RadioButton from "$lib/components/form/RadioButton.svelte";
-	import type { IRadioButtonOpts } from "$lib/interfaces/components/IRadioButtonOpts";
 	import { page } from "$app/stores";
 	import { EVENT_TYPE } from "$lib/data/enums/EVENT_TYPE";
+	import type { IRadioButtonOpts } from "$lib/data/interfaces/components/IRadioButtonOpts";
 
 	const gameIdQueryParam = $page.url.searchParams.get("game_id");
 
@@ -25,7 +25,6 @@
 
 	const opts: IRadioButtonOpts[] = [
 		{
-			title: "Open",
 			tooltip: "Anyone may join",
 			checked: true,
 			id: EVENT_TYPE.OPEN

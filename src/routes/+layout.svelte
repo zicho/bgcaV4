@@ -11,7 +11,7 @@
 
 	export let data: PageData;
 
-	$: ({ user } = data);
+	$: ({ user, notificationCount } = data);
 	$: data.user && realtimeStore.sub(data.user?.username);
 
 	const flash = getFlash(page);
@@ -24,7 +24,7 @@
 </script>
 
 <Toaster richColors closeButton />
-<Navbar {user} />
+<Navbar {user} {notificationCount} />
 
 {#if $flash}
 	<FlashMessage message={$flash.message} type={$flash.type} />

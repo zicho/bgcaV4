@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PageHeaderToolbar from "$lib/components/ui/PageHeaderToolbar.svelte";
 	import PageHeaderToolbarButton from "$lib/components/ui/PageHeaderToolbarButton.svelte";
-	import type { IConversationMessage } from "$lib/interfaces/IConversationMessage";
+	import type { IConversationMessage } from "$lib/data/interfaces/IConversationMessage";
 	import type { PageData } from "./$types";
 
 	export let data: PageData;

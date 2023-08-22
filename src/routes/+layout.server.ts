@@ -1,9 +1,9 @@
 import type { LayoutServerLoad } from "./$types";
 import { loadFlash, redirect } from "sveltekit-flash-message/server";
 import type { User } from "lucia";
+import { getNotificationCount } from "$lib/db/queries/notifications/getNotificationCount";
 
 export const load: LayoutServerLoad = loadFlash(async (event) => {
-
 	const { locals, route, url } = event;
 	const session = await locals.auth.validate();
 
@@ -27,5 +27,8 @@ export const load: LayoutServerLoad = loadFlash(async (event) => {
 		}
 	}
 
-	return { user: session?.user as User };
+	return {
+		notificationCount: await getNotificationCount(event),
+		user: session?.user as User
+	};
 });
